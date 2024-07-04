@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down": { "model": "havenksh:block/lamp_yellow", "x": 180 },
+        "facing=up": { "model": "havenksh:block/lamp_yellow" },
+        "facing=north": { "model": "havenksh:block/lamp_yellow", "x": 90 },
+        "facing=south": { "model": "havenksh:block/lamp_yellow", "x": 90, "y": 180 },
+        "facing=west": { "model": "havenksh:block/lamp_yellow", "x": 90, "y": 270 },
+        "facing=east": { "model": "havenksh:block/lamp_yellow", "x": 90, "y": 90 }
+    }
+}

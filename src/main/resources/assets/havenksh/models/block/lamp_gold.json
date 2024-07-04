@@ -1,0 +1,10 @@
+{
+    "parent": "havenksh:block/lamp_base",
+    "texture_size": [64, 64],
+    "textures": {
+        "0": "havenksh:block/lamp/glow_gold",
+        "1": "havenksh:block/lamp/base",
+        "3": "havenksh:block/lamp/bars",
+        "particle": "havenksh:block/lamp/bars"
+    }
+}
