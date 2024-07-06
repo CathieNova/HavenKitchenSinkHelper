@@ -21,7 +21,7 @@ public class TooltipEventHandler {
         ItemStack stack = event.getItemStack();
         Item item = stack.getItem();
 
-        if (event.getItemStack().getItem() == ModTools.havenite_hammer.get())
+        if (item == ModTools.havenite_hammer.get())
         {
             event.getToolTip().add(Component.translatable("tooltip.havenksh.hammer.durability.infinite").withStyle(net.minecraft.ChatFormatting.GOLD));
         }
