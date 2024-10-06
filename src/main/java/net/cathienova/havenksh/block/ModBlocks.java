@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -57,6 +58,15 @@ public class ModBlocks {
     public static final RegistryObject<Item> charcoal_block_item = ModItems.ITEMS.register("charcoal_block",
             () -> new FuelBlockItem(ModBlocks.charcoal_block.get(),
                     new Item.Properties(), 16000));
+
+    public static final RegistryObject<Block> dust = registerBlock("dust",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SAND)));
+
+    public static final RegistryObject<Block> crushed_netherrack = registerBlock("crushed_netherrack",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.GRAVEL)));
+
+    public static final RegistryObject<Block> crushed_end_stone = registerBlock("crushed_end_stone",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.GRAVEL)));
 
     public static final RegistryObject<Block> diorite_brick = registerBlock("diorite_brick",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIORITE).strength(1.5F, 3.0F)));
@@ -184,7 +194,10 @@ public class ModBlocks {
                     .isRedstoneConductor((state, level, pos) -> false)
                     .isSuffocating((state, level, pos) -> false)
                     .isViewBlocking((state, level, pos) -> false)
+                    .explosionResistance(12000.0F)
                     .noOcclusion()
+                    .friction(0F)
+                    .pushReaction(PushReaction.IGNORE)
             ) {
                 @Override
                 public boolean canEntityDestroy(BlockState state, BlockGetter level, BlockPos pos, Entity entity) {

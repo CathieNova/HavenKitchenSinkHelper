@@ -22,6 +22,10 @@ public class ModTags
         public static final TagKey<Block> needs_gold_tool = minecraftTag("needs_gold_tool");
         public static final TagKey<Block> needs_diamond_tool = minecraftTag("needs_diamond_tool");
         public static final TagKey<Block> needs_netherite_tool = minecraftTag("needs_netherite_tool");
+        public static final TagKey<Block> needs_havenite_tool = tag("needs_havenite_tool");
+        public static final TagKey<Block> needs_pickaxe = forgeTag("mineable/pickaxe");
+        public static final TagKey<Block> needs_shovel = forgeTag("mineable/shovel");
+
         public static final TagKey<Block> scorched_stone = tag("scorched_stone");
         public static final TagKey<Block> forgeOres = forgeTag("ores");
 
@@ -34,7 +38,7 @@ public class ModTags
         public static final TagKey<Block> lapisOres = tag("ores/lapis");
         public static final TagKey<Block> quartzOres = tag("ores/quartz");
         public static final TagKey<Block> redstoneOres = tag("ores/redstone");
-        public static final TagKey<Block> haveniteOres = tag("ores/havenite");
+        public static final TagKey<Block> haveniteOres = forgeTag("ores/havenite");
         public static final TagKey<Block> forgeStone = forgeTag("stone");
 
         private static TagKey<Block> tag(String name)
@@ -51,6 +55,7 @@ public class ModTags
 
     public static class Items
     {
+        public static final TagKey<Item> logs = forgeTag("logs");
         public static final TagKey<Item> lamp = tag("lamp");
         public static final TagKey<Item> cobbleGens = tag("cobble_gens");
         public static final TagKey<Item> cobbleGenUpgrades = tag("cobble_gen_upgrades");
@@ -58,6 +63,7 @@ public class ModTags
         public static final TagKey<Item> seeds = tag("seeds");
         public static final TagKey<Item> bark = tag("bark");
         public static final TagKey<Item> dyes = tag("dyes");
+        public static final TagKey<Item> haveniteOres = forgeTag("ores/havenite");
 
         public static final TagKey<Item> forgeCopperDust = forgeTag("dusts/copper");
         public static final TagKey<Item> forgeTinDust = forgeTag("dusts/tin");
@@ -164,6 +170,9 @@ public class ModTags
         public static final TagKey<Item> emerald_armor = tag("emerald_armor");
         public static final TagKey<Item> obsidian_armor = tag("obsidian_armor");
         public static final TagKey<Item> dragon_armor = tag("dragon_armor");
+
+        public static final TagKey<Item> pickaxes = forgeTag("tools/pickaxes");
+        public static final TagKey<Item> shovels = forgeTag("tools/shovels");
 
         private static TagKey<Item> tag(String name)
         {

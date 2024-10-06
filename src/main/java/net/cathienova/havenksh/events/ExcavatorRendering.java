@@ -3,8 +3,7 @@ package net.cathienova.havenksh.events;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.cathienova.havenksh.HavenKSH;
-import net.cathienova.havenksh.item.excavators.ExcavatorBase;
-import net.cathienova.havenksh.item.hammers.HammerBase;
+import net.cathienova.havenksh.item.ExcavatorBase;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -37,6 +36,8 @@ public class ExcavatorRendering
 
         ItemStack itemStack = player.getMainHandItem();
         if (!(itemStack.getItem() instanceof ExcavatorBase excavator)) return;
+
+        if (player.isCrouching()) return;
 
         List<BlockPos> blocks = excavator.get3x3Area(rtr.getBlockPos(), rtr.getDirection(), player);
         if (blocks == null || blocks.isEmpty()) return;

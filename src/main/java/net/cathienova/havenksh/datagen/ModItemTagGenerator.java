@@ -13,6 +13,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -63,9 +64,28 @@ public class ModItemTagGenerator extends ItemTagsProvider {
             .add(ModArmor.dragon_boots.get())
         ;
 
+        this.tag(ModTags.Items.haveniteOres)
+                .add(ModBlocks.havenite_ore.get().asItem())
+                .add(ModBlocks.deepslate_havenite_ore.get().asItem())
+                ;
+
+        this.tag(ItemTags.BEACON_PAYMENT_ITEMS)
+                .add(ModItems.havenite_ingot.get())
+                ;
+
         this.tag(ItemTags.LOGS_THAT_BURN)
             ;
-        this.tag(ItemTags.LOGS)
+        this.tag(ModTags.Items.logs)
+                .add(Blocks.OAK_LOG.asItem())
+                .add(Blocks.SPRUCE_LOG.asItem())
+                .add(Blocks.BIRCH_LOG.asItem())
+                .add(Blocks.JUNGLE_LOG.asItem())
+                .add(Blocks.ACACIA_LOG.asItem())
+                .add(Blocks.DARK_OAK_LOG.asItem())
+                .add(Blocks.CHERRY_LOG.asItem())
+                .add(Blocks.MANGROVE_LOG.asItem())
+                .add(Blocks.CRIMSON_STEM.asItem())
+                .add(Blocks.WARPED_STEM.asItem())
             ;
 
         this.tag(ItemTags.PLANKS)
@@ -114,6 +134,15 @@ public class ModItemTagGenerator extends ItemTagsProvider {
             .add(ModBlocks.lamp_yellow.get().asItem())
             .add(ModBlocks.lamp_rainbow.get().asItem())
             ;
+
+        this.tag(ModTags.Items.crushers)
+                .add(ModTools.stone_crusher.get())
+                .add(ModTools.iron_crusher.get())
+                .add(ModTools.golden_crusher.get())
+                .add(ModTools.diamond_crusher.get())
+                .add(ModTools.netherite_crusher.get())
+                .add(ModTools.havenite_crusher.get())
+        ;
 
         this.tag(ModTags.Items.forgeCopperDust).add(ModItems.copper_dust.get());
         this.tag(ModTags.Items.forgeGoldDust).add(ModItems.gold_dust.get());

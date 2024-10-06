@@ -3,12 +3,13 @@ package net.cathienova.havenksh;
 import com.mojang.logging.LogUtils;
 import net.cathienova.havenksh.block.ModBlockEntities;
 import net.cathienova.havenksh.block.ModBlocks;
-import net.cathienova.havenksh.events.MobSeedRenderer;
 import net.cathienova.havenksh.commands.ModCommands;
+import net.cathienova.havenksh.events.MobSeedRenderer;
 import net.cathienova.havenksh.config.CommonConfig;
 import net.cathienova.havenksh.events.*;
 import net.cathienova.havenksh.handler.MobDropHandler;
 import net.cathienova.havenksh.item.*;
+import net.cathienova.havenksh.util.ModVillagers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
@@ -32,7 +33,8 @@ public class HavenKSH
     static final ForgeConfigSpec commonSpec;
     public static final CommonConfig c_config;
 
-    static {
+    static
+    {
         final Pair<CommonConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(CommonConfig::new);
         commonSpec = specPair.getRight();
         c_config = specPair.getLeft();
@@ -47,6 +49,7 @@ public class HavenKSH
         ModFoods.register(modEventBus);
         ModArmor.register(modEventBus);
         ModTools.register(modEventBus);
+        ModVillagers.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(new MobDropHandler());
         ModCreativeModTabs.register(modEventBus);
@@ -60,13 +63,14 @@ public class HavenKSH
 
     public static void Log(String message)
     {
-        LogUtils.getLogger().info("["+ MOD_NAME +"] " + message);
+        LogUtils.getLogger().info("[" + MOD_NAME + "] " + message);
     }
 
     @SubscribeEvent
-    public void onRegisterCommands(RegisterCommandsEvent event) {
-    ModCommands.register(event.getDispatcher());
-}
+    public void onRegisterCommands(RegisterCommandsEvent event)
+    {
+        ModCommands.register(event.getDispatcher());
+    }
 
     private void setup(final FMLCommonSetupEvent event)
     {

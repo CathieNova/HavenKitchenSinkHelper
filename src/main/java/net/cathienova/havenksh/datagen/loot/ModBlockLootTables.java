@@ -3,18 +3,23 @@ package net.cathienova.havenksh.datagen.loot;
 import net.cathienova.havenksh.block.ModBlocks;
 import net.cathienova.havenksh.item.ModFoods;
 import net.cathienova.havenksh.item.ModItems;
+import net.cathienova.havenksh.item.ModTools;
+import net.cathienova.havenksh.util.ModTags;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -81,6 +86,17 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.scorched_quartz_ore.get(), block -> createOreLikeOreDrops(ModBlocks.scorched_quartz_ore.get(), ModItems.quartz_nugget.get(), 1, 5));
         this.add(ModBlocks.havenite_ore.get(), block -> createOreLikeOreDrops(ModBlocks.havenite_ore.get(), ModItems.raw_havenite.get(), 1, 1));
         this.add(ModBlocks.deepslate_havenite_ore.get(), block -> createOreLikeOreDrops(ModBlocks.deepslate_havenite_ore.get(), ModItems.raw_havenite.get(), 1, 1));
+
+        this.dropSelf(ModBlocks.dust.get());
+        this.dropSelf(ModBlocks.crushed_netherrack.get());
+        this.dropSelf(ModBlocks.crushed_end_stone.get());
+/*
+        add(Blocks.STONE, block -> createCrusherLootTable(block, Blocks.GRAVEL));
+        add(Blocks.GRAVEL, block -> createCrusherLootTable(block, Blocks.SAND));
+        add(Blocks.SAND, block -> createCrusherLootTable(block, ModBlocks.dust.get()));
+        add(Blocks.END_STONE, block -> createCrusherLootTable(block, ModBlocks.crushed_end_stone.get()));
+        add(Blocks.NETHERRACK, block -> createCrusherLootTable(block, ModBlocks.crushed_netherrack.get()));
+ */
     }
 
     protected LootTable.Builder createOreLikeOreDrops(Block pBlock, Item item, int min, int max) {
@@ -96,6 +112,39 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                 this.applyExplosionDecay(pBlock,
                         LootItem.lootTableItem(item)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))));
+    }
+
+    protected LootTable.Builder createCrusherLootTable(Block inputBlock, Block customDropBlock) {
+        return createSilkTouchOrCrusherTable(inputBlock, customDropBlock, inputBlock.asItem());
+    }
+
+    protected LootTable.Builder createSilkTouchOrCrusherTable(Block inputBlock, Block customDrop, Item regularDrop) {
+        LootPool.Builder crusherPool = LootPool.lootPool()
+                .setRolls(UniformGenerator.between(1.0F, 1.0F))
+                .add(LootItem.lootTableItem(customDrop)
+                        .when(MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                .of(ModTags.Items.crushers)))
+                        .apply(ApplyExplosionDecay.explosionDecay())
+                );
+
+        LootPool.Builder regularToolPool = LootPool.lootPool()
+                .setRolls(UniformGenerator.between(1.0F, 1.0F))
+                .add(LootItem.lootTableItem(regularDrop)
+                        .when(MatchTool.toolMatches(getToolPredicateForBlock(inputBlock)))
+                        .apply(ApplyExplosionDecay.explosionDecay())
+                );
+
+        return LootTable.lootTable().withPool(crusherPool).withPool(regularToolPool);
+    }
+
+    protected ItemPredicate.Builder getToolPredicateForBlock(Block block) {
+        if (block.defaultBlockState().is(ModTags.Blocks.needs_pickaxe)) {
+            return ItemPredicate.Builder.item().of(ModTags.Items.pickaxes);
+        } else if (block.defaultBlockState().is(ModTags.Blocks.needs_shovel)) {
+            return ItemPredicate.Builder.item().of(ModTags.Items.shovels);
+        } else {
+            return ItemPredicate.Builder.item().of(block.asItem());
+        }
     }
 
     @Override

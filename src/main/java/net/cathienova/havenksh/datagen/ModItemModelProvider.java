@@ -55,6 +55,13 @@ public class ModItemModelProvider extends ItemModelProvider {
         handHeldItem(ModTools.netherite_ore_hammer);
         handHeldItem(ModTools.havenite_ore_hammer);
 
+        handHeldItem(ModTools.stone_crusher);
+        handHeldItem(ModTools.iron_crusher);
+        handHeldItem(ModTools.golden_crusher);
+        handHeldItem(ModTools.diamond_crusher);
+        handHeldItem(ModTools.netherite_crusher);
+        handHeldItem(ModTools.havenite_crusher);
+
         simpleItem(ModItems.diamond_nugget);
         simpleItem(ModItems.emerald_nugget);
         simpleItem(ModItems.netherite_nugget);

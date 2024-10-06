@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class CommonConfig {
+    public final ForgeConfigSpec.ConfigValue<List<? extends String>> cobbleGenValidBlocks;
     public final ForgeConfigSpec.IntValue wooden_cobble_gen_speed;
     public final ForgeConfigSpec.IntValue wooden_cobble_gen_output;
     public final ForgeConfigSpec.IntValue stone_cobble_gen_speed;
@@ -63,6 +64,28 @@ public class CommonConfig {
     public final ForgeConfigSpec.IntValue villager_seed_spawn_timer;
 
     public CommonConfig(ForgeConfigSpec.Builder builder) {
+        builder.comment("Block for Cobble Generators").push("block_generator").build();
+        cobbleGenValidBlocks = builder
+                .comment("Valid blocks for cobblestone generators at any side. Format: \"checkforblock;outputblock\", it also supports multiple outputblock with comma, if it does not match any then it will return Cobblestone.")
+                .defineList("cobbleGenValidBlocks",
+                        List.of(
+                                "minecraft:stone;minecraft:cobblestone",
+                                "minecraft:cobblestone;minecraft:cobblestone",
+                                "minecraft:deepslate;minecraft:cobbled_deepslate",
+                                "minecraft:cobbled_deepslate;minecraft:cobbled_deepslate",
+                                "minecraft:tuff;minecraft:tuff",
+                                "minecraft:netherrack;minecraft:netherrack",
+                                "minecraft:basalt;minecraft:basalt",
+                                "minecraft:blackstone;minecraft:blackstone",
+                                "minecraft:andesite;minecraft:andesite",
+                                "minecraft:diorite;minecraft:diorite",
+                                "minecraft:granite;minecraft:granite",
+                                "minecraft:end_stone;minecraft:end_stone",
+                                "minecraft:beacon;minecraft:coal_ore,minecraft:iron_ore,minecraft:gold_ore,minecraft:diamond_ore,minecraft:emerald_ore"
+                        ),
+                        obj -> obj instanceof String && ((String) obj).contains(";"));
+        builder.pop();
+
         builder.comment("Wooden Cobblestone Generator").push("wooden_cobble_gen").build();
         wooden_cobble_gen_speed = builder
                 .comment("Speed of the Wooden Cobblestone Generator (ticks per cobblestone)")
@@ -159,7 +182,7 @@ public class CommonConfig {
         builder.pop();
 
         builder.comment("Mob Seeds").push("mobSeeds").build();
-        playerGrowthDistance = builder.comment("The distance in blocks a player has to be from a mob seed for it to grow. (if 3 then it checks 3x3x3)").defineInRange("playerGrowthDistance", 10, 1, Integer.MAX_VALUE);
+        playerGrowthDistance = builder.comment("The distance in blocks a player has to be from a mob seed for it to grow. (if 3 then it checks 3x3x3)").defineInRange("playerGrowthDistance", 20, 1, Integer.MAX_VALUE);
         axolotl_seed_spawn_timer = builder.comment("The time it takes in ticks for an axolotl to spawn from an axolotl seed. (20 ticks = 1 second)").defineInRange("axolotl_seed_spawn_timer", 12000, 1, Integer.MAX_VALUE);
         bee_seed_spawn_timer = builder.comment("The time it takes in ticks for a bee to spawn from a bee seed. (20 ticks = 1 second)").defineInRange("bee_seed_spawn_timer", 12000, 1, Integer.MAX_VALUE);
         cat_seed_spawn_timer = builder.comment("The time it takes in ticks for a cat to spawn from a cat seed. (20 ticks = 1 second)").defineInRange("cat_seed_spawn_timer", 12000, 1, Integer.MAX_VALUE);

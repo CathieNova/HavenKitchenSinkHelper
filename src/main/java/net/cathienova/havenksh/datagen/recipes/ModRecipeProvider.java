@@ -888,6 +888,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         HammerCraft(output, ModTools.iron_hammer.get(), Items.IRON_INGOT, Items.STICK);
         HammerCraft(output, ModTools.golden_hammer.get(), Items.GOLD_INGOT, Items.STICK);
         HammerCraft(output, ModTools.diamond_hammer.get(), Items.DIAMOND, Items.STICK);
+        HammerCraft(output, ModTools.emerald_hammer.get(), Items.EMERALD, Items.STICK);
         HammerCraft(output, ModTools.netherite_hammer.get(), Items.NETHERITE_INGOT, Items.STICK);
         HammerCraft(output, ModTools.havenite_hammer.get(), ModItems.havenite_ingot.get(), Items.STICK);
 
@@ -1150,6 +1151,20 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('W', Items.WHEAT_SEEDS)
                 .unlockedBy("has_emerald", has(Items.EMERALD))
                 .save(output, HavenKSH.MOD_ID + ":craft/villager_seed");
+
+        crusherRecipe(output, ModTools.stone_crusher.get(), Items.STONE);
+        crusherRecipe(output, ModTools.iron_crusher.get(), Items.IRON_INGOT);
+        crusherRecipe(output, ModTools.golden_crusher.get(), Items.GOLD_INGOT);
+        crusherRecipe(output, ModTools.diamond_crusher.get(), Items.DIAMOND);
+        upgradeSmithing(output, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, ModTools.diamond_crusher.get(), Items.NETHERITE_INGOT, ModTools.netherite_crusher.get());
+        crusherRecipe(output, ModTools.havenite_crusher.get(), ModItems.havenite_ingot.get());
+    }
+
+    protected static void upgradeSmithing(Consumer<FinishedRecipe> consumer, ItemLike template, ItemLike base, ItemLike addition, Item result)
+    {
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(template), Ingredient.of(base), Ingredient.of(addition), RecipeCategory.MISC, result)
+                .unlocks("has_" + getItemName(base), has(base))
+                .save(consumer, HavenKSH.MOD_ID + ":smithing/" + getItemName(result));
     }
 
     protected static void ChopperCraft(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient, ItemLike ingredient2)
@@ -1302,6 +1317,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
+    protected static void crusherRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
+                .pattern(" IS")
+                .pattern(" SI")
+                .pattern("S  ")
+                .define('S', Items.STICK)
+                .define('I', ingredient)
+                .unlockedBy("has_" + getItemName(ingredient), has(ingredient))
+                .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result) + "_from_" + getItemName(ingredient));
+    }
+
     protected static void DragonRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient1, ItemLike ingredient2, ItemLike ingredient3)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
@@ -1333,7 +1360,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("III")
                 .pattern("WGL")
                 .pattern("III")
-                .define('I', ItemTags.LOGS)
+                .define('I', ModTags.Items.logs)
                 .define('G', Blocks.GLASS)
                 .define('L', Items.LAVA_BUCKET)
                 .define('W', Items.WATER_BUCKET)

@@ -3,6 +3,9 @@ package net.cathienova.havenksh.handler;
 import net.cathienova.havenksh.config.HavenConfig;
 import net.cathienova.havenksh.item.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -29,9 +32,75 @@ public class UseBlockHandler {
         BlockPos blockPos = event.getPos();
         InteractionHand hand = event.getHand();
         Block block = level.getBlockState(blockPos).getBlock();
+        ItemStack itemStack = player.getItemInHand(hand);
 
         if (!player.isSpectator() && hand == InteractionHand.MAIN_HAND && player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof AxeItem)
             StripBark(level, blockPos);
+
+        if (event.getLevel().isClientSide) return;
+
+
+        if (itemStack.getItem() == ModItems.acacia_bark.get() && block == Blocks.STRIPPED_ACACIA_LOG)
+        {
+            level.setBlockAndUpdate(new BlockPos(event.getPos()), Blocks.ACACIA_LOG.defaultBlockState());
+            itemStack.shrink(1);
+            player.awardStat(Stats.ITEM_USED.get(ModItems.acacia_bark.get()));
+            level.playSound(null, blockPos, SoundEvents.WOOD_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
+        }
+        else if (itemStack.getItem() == ModItems.birch_bark.get() && block == Blocks.STRIPPED_BIRCH_LOG)
+        {
+            level.setBlockAndUpdate(new BlockPos(event.getPos()), Blocks.BIRCH_LOG.defaultBlockState());
+            itemStack.shrink(1);
+            player.awardStat(Stats.ITEM_USED.get(ModItems.birch_bark.get()));
+        }
+        else if (itemStack.getItem() == ModItems.cherry_bark.get() && block == Blocks.STRIPPED_CHERRY_LOG)
+        {
+            level.setBlockAndUpdate(new BlockPos(event.getPos()), Blocks.CHERRY_LOG.defaultBlockState());
+            itemStack.shrink(1);
+            player.awardStat(Stats.ITEM_USED.get(ModItems.cherry_bark.get()));
+        }
+        else if (itemStack.getItem() == ModItems.crimson_bark.get() && block == Blocks.STRIPPED_CRIMSON_STEM)
+        {
+            level.setBlockAndUpdate(new BlockPos(event.getPos()), Blocks.CRIMSON_STEM.defaultBlockState());
+            itemStack.shrink(1);
+            player.awardStat(Stats.ITEM_USED.get(ModItems.crimson_bark.get()));
+        }
+        else if (itemStack.getItem() == ModItems.dark_oak_bark.get() && block == Blocks.STRIPPED_DARK_OAK_LOG)
+        {
+            level.setBlockAndUpdate(new BlockPos(event.getPos()), Blocks.DARK_OAK_LOG.defaultBlockState());
+            itemStack.shrink(1);
+            player.awardStat(Stats.ITEM_USED.get(ModItems.dark_oak_bark.get()));
+        }
+        else if (itemStack.getItem() == ModItems.jungle_bark.get() && block == Blocks.STRIPPED_JUNGLE_LOG)
+        {
+            level.setBlockAndUpdate(new BlockPos(event.getPos()), Blocks.JUNGLE_LOG.defaultBlockState());
+            itemStack.shrink(1);
+            player.awardStat(Stats.ITEM_USED.get(ModItems.jungle_bark.get()));
+        }
+        else if (itemStack.getItem() == ModItems.mangrove_bark.get() && block == Blocks.STRIPPED_MANGROVE_LOG)
+        {
+            level.setBlockAndUpdate(new BlockPos(event.getPos()), Blocks.MANGROVE_LOG.defaultBlockState());
+            itemStack.shrink(1);
+            player.awardStat(Stats.ITEM_USED.get(ModItems.mangrove_bark.get()));
+        }
+        else if (itemStack.getItem() == ModItems.oak_bark.get() && block == Blocks.STRIPPED_OAK_LOG)
+        {
+            level.setBlockAndUpdate(new BlockPos(event.getPos()), Blocks.OAK_LOG.defaultBlockState());
+            itemStack.shrink(1);
+            player.awardStat(Stats.ITEM_USED.get(ModItems.oak_bark.get()));
+        }
+        else if (itemStack.getItem() == ModItems.spruce_bark.get() && block == Blocks.STRIPPED_SPRUCE_LOG)
+        {
+            level.setBlockAndUpdate(new BlockPos(event.getPos()), Blocks.SPRUCE_LOG.defaultBlockState());
+            itemStack.shrink(1);
+            player.awardStat(Stats.ITEM_USED.get(ModItems.spruce_bark.get()));
+        }
+        else if (itemStack.getItem() == ModItems.warped_bark.get() && block == Blocks.STRIPPED_WARPED_STEM)
+        {
+            level.setBlockAndUpdate(new BlockPos(event.getPos()), Blocks.WARPED_STEM.defaultBlockState());
+            itemStack.shrink(1);
+            player.awardStat(Stats.ITEM_USED.get(ModItems.warped_bark.get()));
+        }
     }
 
     public static void StripBark(Level level, BlockPos blockPos)

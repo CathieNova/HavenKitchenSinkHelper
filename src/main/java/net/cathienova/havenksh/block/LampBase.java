@@ -19,11 +19,14 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -35,16 +38,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class LampBase extends Block
+public class LampBase extends Block implements SimpleWaterloggedBlock
 {
-    public LampBase(Properties pProperties)
-    {
-        super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP).setValue(ON, Boolean.TRUE));
-    }
 
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty ON = BooleanProperty.create("on");
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     private static final VoxelShape SHAPE_FLOOR = Stream.of(
             Block.box(3, 0, 3, 13, 1, 13),
@@ -124,6 +123,12 @@ public class LampBase extends Block
             Block.box(13, 4, 4, 14, 6, 12)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
+    public LampBase(Properties pProperties)
+    {
+        super(pProperties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP).setValue(ON, Boolean.TRUE).setValue(WATERLOGGED, Boolean.FALSE));
+    }
+
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         Direction facing = state.getValue(FACING);
@@ -146,12 +151,18 @@ public class LampBase extends Block
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction direction = context.getClickedFace();
-        return this.defaultBlockState().setValue(FACING, direction).setValue(ON, Boolean.TRUE);
+        FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
+        return this.defaultBlockState().setValue(FACING, direction).setValue(ON, Boolean.TRUE).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, ON);
+        builder.add(FACING, ON, WATERLOGGED);
     }
 
     @Override
@@ -196,7 +207,6 @@ public class LampBase extends Block
     public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag)
     {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-
         pTooltip.add(Component.translatable("block.havenksh.lamp.tooltip").withStyle(ChatFormatting.GOLD));
     }
 }

@@ -1,8 +1,6 @@
 package net.cathienova.havenksh.item;
 
 import net.cathienova.havenksh.HavenKSH;
-import net.cathienova.havenksh.item.excavators.ExcavatorBase;
-import net.cathienova.havenksh.item.hammers.HammerBase;
 import net.cathienova.havenksh.item.orehammers.*;
 import net.cathienova.havenksh.item.treechoppers.TreeChopperBase;
 import net.cathienova.havenksh.util.ModToolTiers;
@@ -101,6 +99,7 @@ public class ModTools
     public static final RegistryObject<Item> copper_sword = TOOLS.register("copper_sword",
             () -> new SwordItem(Tiers.STONE, 3, -2.4F, new Item.Properties().stacksTo(1).durability(250)));
 
+    // Dragon Tools and Weapons
     public static final RegistryObject<Item> dragon_shovel = TOOLS.register("dragon_shovel",
             () -> new ShovelItem(Tiers.NETHERITE, 1.5F, -2.0F, new Item.Properties().stacksTo(1).durability(4096)));
 
@@ -172,7 +171,7 @@ public class ModTools
                     new Item.Properties().stacksTo(1).durability(2031)));
 
     public static final RegistryObject<Item> havenite_hammer = TOOLS.register("havenite_hammer",
-            () -> new HammerBase(ModToolTiers.netherite, 6, -2.4F,
+            () -> new HammerBase(ModToolTiers.havenite, 6, -2.4F,
                     new Item.Properties().stacksTo(1).durability(-1)));
 
     public static final RegistryObject<Item> stone_excavator = TOOLS.register("stone_excavator",
@@ -204,12 +203,13 @@ public class ModTools
                     new Item.Properties().stacksTo(1).durability(2031)));
 
     public static final RegistryObject<Item> havenite_excavator = TOOLS.register("havenite_excavator",
-            () -> new ExcavatorBase(ModToolTiers.netherite, 6, -2.4F,
+            () -> new ExcavatorBase(ModToolTiers.havenite, 6, -2.4F,
                     new Item.Properties().stacksTo(1).durability(-1)));
 
     public static final RegistryObject<Item> stone_chopper = TOOLS.register("stone_chopper",
             () -> new TreeChopperBase(ModToolTiers.stone, 1, -2.8F,
                     new Item.Properties().stacksTo(1).durability(131)));
+
     public static final RegistryObject<Item> copper_chopper = TOOLS.register("copper_chopper",
             () -> new TreeChopperBase(ModToolTiers.iron, 1, -2.8F,
                     new Item.Properties().stacksTo(1).durability(250)));
@@ -235,7 +235,31 @@ public class ModTools
                     new Item.Properties().stacksTo(1).durability(2031)));
 
     public static final RegistryObject<Item> havenite_chopper = TOOLS.register("havenite_chopper",
-            () -> new TreeChopperBase(ModToolTiers.netherite, 6, -2.4F,
+            () -> new TreeChopperBase(ModToolTiers.havenite, 6, -2.4F,
+                    new Item.Properties().stacksTo(1).durability(-1)));
+
+    public static final RegistryObject<Item> stone_crusher = TOOLS.register("stone_crusher",
+            () -> new CrusherBase(ModToolTiers.stone, 1, -1.8F,
+                    new Item.Properties().stacksTo(1).durability(131)));
+
+    public static final RegistryObject<Item> iron_crusher = TOOLS.register("iron_crusher",
+            () -> new CrusherBase(ModToolTiers.iron, 1, -1.8F,
+                    new Item.Properties().stacksTo(1).durability(250)));
+
+    public static final RegistryObject<Item> golden_crusher = TOOLS.register("golden_crusher",
+            () -> new CrusherBase(ModToolTiers.gold, 1, -1.8F,
+                    new Item.Properties().stacksTo(1).durability(169)));
+
+    public static final RegistryObject<Item> diamond_crusher = TOOLS.register("diamond_crusher",
+            () -> new CrusherBase(ModToolTiers.diamond, 1, -1.8F,
+                    new Item.Properties().stacksTo(1).durability(1561)));
+
+    public static final RegistryObject<Item> netherite_crusher = TOOLS.register("netherite_crusher",
+            () -> new CrusherBase(ModToolTiers.netherite, 1, -1.8F,
+                    new Item.Properties().stacksTo(1).durability(2031)));
+
+    public static final RegistryObject<Item> havenite_crusher = TOOLS.register("havenite_crusher",
+            () -> new CrusherBase(ModToolTiers.havenite, 1, -1.8F,
                     new Item.Properties().stacksTo(1).durability(-1)));
 
     public static final RegistryObject<Item> trowel = TOOLS.register("trowel",

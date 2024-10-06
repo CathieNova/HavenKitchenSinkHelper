@@ -7,6 +7,7 @@ import java.util.List;
 
 public class HavenConfig
 {
+    public static List<? extends String> cobbleGenValidBlocks;
     public static int wooden_cobble_gen_speed;
     public static int wooden_cobble_gen_output;
     public static int stone_cobble_gen_speed;
@@ -61,6 +62,7 @@ public class HavenConfig
 
     public static void bake(ModConfig config)
     {
+        cobbleGenValidBlocks = HavenKSH.c_config.cobbleGenValidBlocks.get();
         wooden_cobble_gen_speed = HavenKSH.c_config.wooden_cobble_gen_speed.get();
         wooden_cobble_gen_output = HavenKSH.c_config.wooden_cobble_gen_output.get();
         stone_cobble_gen_speed = HavenKSH.c_config.stone_cobble_gen_speed.get();

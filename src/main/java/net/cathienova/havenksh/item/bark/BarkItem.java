@@ -48,7 +48,6 @@ public class BarkItem extends FuelItem
             }
             if (world.getBlockState(blockPos).getBlock() == this.WoodenLog) {
                 world.setBlock(blockPos, this.WoodenStrippedLog.defaultBlockState(), 3);
-
             }
         }
         return InteractionResult.SUCCESS;

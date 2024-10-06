@@ -21,7 +21,7 @@ public class ModEngLangProvider extends LanguageProvider
     {
         add(ModCreativeModTabs.HavenKSH_tab_title, "Haven Kitchen Sink Helper");
         add("tooltip.cobblegen_1", "§7Holds §6%d §7Blocks!");
-        add("tooltip.cobblegen_2", "§7Generates §6%.2f §7Cobblestone per second!");
+        add("tooltip.cobblegen_2", "§7Generates §6%.2f §7Blocks per second!");
         add("tooltip.cobblegen_3", "§7Outputs to an Inventory Above!");
         add("tooltip.cobblegen_4", "§7Outputs to Hopper Below!");
 
@@ -29,6 +29,8 @@ public class ModEngLangProvider extends LanguageProvider
         add("tooltip.havenksh.ore_hammer.durability", "Durability: %s");
         add("tooltip.havenksh.ore_hammer.durability.infinite", "Durability: §2Infinite§r");
         add("tooltip.havenksh.hammer.durability.infinite", "Durability: §2Infinite§r");
+
+        add("entity.minecraft.villager.havenksh.cobblemaster", "Cobble Master");
 
         add(ModBlocks.wooden_cobble_gen.get(), "Wooden Cobblestone Generator");
         add(ModBlocks.stone_cobble_gen.get(), "Stone Cobblestone Generator");
@@ -121,6 +123,9 @@ public class ModEngLangProvider extends LanguageProvider
         add("block.havenksh.lamp.tooltip", "§bRight click§r to toggle light.");
         add(ModBlocks.nether_star_block.get(), "Nether Star Block");
         add(ModBlocks.reinforced_glass.get(), "Reinforced Glass");
+        add(ModBlocks.dust.get(), "Dust");
+        add(ModBlocks.crushed_end_stone.get(), "Crushed End Stone");
+        add(ModBlocks.crushed_netherrack.get(), "Crushed Netherrack");
 
         add(ModBlocks.scorched_stone.get(), "Scorched Stone");
         add(ModBlocks.scorched_stone_bricks.get(), "Scorched Stone Bricks");
@@ -298,6 +303,7 @@ public class ModEngLangProvider extends LanguageProvider
         add(ModTools.netherite_hammer.get(), "Netherite Hammer");
         add(ModTools.havenite_hammer.get(), "Havenite Hammer");
         add("item.havenksh.hammer.tooltip", "Breaks blocks in a 3x3 area.");
+        add("item.havenksh.hammer.tooltip2", "Crouch while breaking only breaks 1 block.");
 
         add(ModTools.stone_excavator.get(), "Stone Excavator");
         add(ModTools.copper_excavator.get(), "Copper Excavator");
@@ -308,6 +314,7 @@ public class ModEngLangProvider extends LanguageProvider
         add(ModTools.netherite_excavator.get(), "Netherite Excavator");
         add(ModTools.havenite_excavator.get(), "Havenite Excavator");
         add("item.havenksh.excavator.tooltip", "Digs blocks in a 3x3 area.");
+        add("item.havenksh.excavator.tooltip2", "Crouch while digging only digs 1 block.");
 
         add(ModTools.stone_chopper.get(), "Stone Chopper");
         add(ModTools.copper_chopper.get(), "Copper Chopper");
@@ -318,8 +325,16 @@ public class ModEngLangProvider extends LanguageProvider
         add(ModTools.netherite_chopper.get(), "Netherite Chopper");
         add(ModTools.havenite_chopper.get(), "Havenite Chopper");
         add("item.havenksh.chopper.tooltip1", "Chops down entire trees.");
-        add("item.havenksh.chopper.tooltip2", "§7Crouch§r while breaking only breaks 1 Log.");
-        add("item.havenksh.chopper.tooltip3", "§7It breaks every log connected to the one you break.");
+        add("item.havenksh.chopper.tooltip2", "Crouch§r while breaking only breaks 1 Log.");
+        add("item.havenksh.chopper.tooltip3", "It breaks every log connected to the one you break.");
+
+        addItem(ModTools.stone_crusher, "Stone Crusher");
+        addItem(ModTools.iron_crusher, "Iron Crusher");
+        addItem(ModTools.golden_crusher, "Golden Crusher");
+        addItem(ModTools.diamond_crusher, "Diamond Crusher");
+        addItem(ModTools.netherite_crusher, "Netherite Crusher");
+        addItem(ModTools.havenite_crusher, "Havenite Crusher");
+        add("item.havenksh.crusher.tooltip", "Crushes various blocks.");
 
 
 
@@ -447,5 +462,15 @@ public class ModEngLangProvider extends LanguageProvider
 
         add("advancements.havenksh.ender_block.title", "Ender Block");
         add("advancements.havenksh.ender_block.description", "A block made of ender pearls.");
+
+
+
+
+
+
+        add("command.havenksh.no_permission_use", "§6[§5Haven §2KSH§6]§r §4You do not have permission to use this command.");
+        add("command.havenksh.no_block_targeted", "No block targeted or block is too far away.");
+        add("command.havenksh.config_reload_success", "§6[§5Haven §2KSH§6]§r §2Config reloaded.");
+        add("command.havenksh.config_reload_fail", "§6[§5Haven §2KSH§6]§r §4Failed to reload config.");
     }
 }

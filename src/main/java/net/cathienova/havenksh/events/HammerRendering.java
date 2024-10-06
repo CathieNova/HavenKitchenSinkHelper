@@ -3,29 +3,20 @@ package net.cathienova.havenksh.events;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.cathienova.havenksh.HavenKSH;
-import net.cathienova.havenksh.config.HavenConfig;
-import net.cathienova.havenksh.item.hammers.HammerBase;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.MultiPlayerGameMode;
+import net.cathienova.havenksh.item.HammerBase;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderHighlightEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -44,6 +35,8 @@ public class HammerRendering {
 
         ItemStack itemStack = player.getMainHandItem();
         if (!(itemStack.getItem() instanceof HammerBase hammer)) return;
+
+        if (player.isCrouching()) return;
 
         List<BlockPos> blocks = hammer.get3x3Area(rtr.getBlockPos(), rtr.getDirection(), player);
         if (blocks == null || blocks.isEmpty()) return;

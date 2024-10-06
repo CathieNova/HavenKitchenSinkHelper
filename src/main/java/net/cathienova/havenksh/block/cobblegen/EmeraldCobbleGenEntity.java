@@ -7,9 +7,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -17,7 +19,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Random;
 
 public class EmeraldCobbleGenEntity extends BlockEntity implements BlockEntityTicker<EmeraldCobbleGenEntity> {
 
@@ -93,12 +99,16 @@ public class EmeraldCobbleGenEntity extends BlockEntity implements BlockEntityTi
         if (cycle++ >= HavenConfig.emerald_cobble_gen_speed) {
             cycle = 0;
 
+            Block blockToGenerate = getBlockToGenerate();  // Now checks all sides
             ItemStack stack = cobbleGenContents.getItem(0);
-            if (stack.isEmpty() || stack.getItem() != Blocks.COBBLESTONE.asItem()) {
-                cobbleGenContents.setItem(0, new ItemStack(Blocks.COBBLESTONE));
+            if (stack.isEmpty()) {
+                cobbleGenContents.setItem(0, new ItemStack(blockToGenerate));
+            } else if (stack.getItem() == blockToGenerate.asItem()) {
+                int newSize = Math.min(stack.getCount() + 1, HavenConfig.emerald_cobble_gen_output);
+                stack.setCount(newSize);
+                cobbleGenContents.setItem(0, stack);
             } else {
-                stack.grow(1); // Correctly increment the stack size by 1
-                cobbleGenContents.setItem(0, stack); // Update the inventory with the new stack size
+                return;
             }
 
             BlockEntity tileAbove = level.getBlockEntity(pos.above());
@@ -109,7 +119,7 @@ public class EmeraldCobbleGenEntity extends BlockEntity implements BlockEntityTi
                         if (!singleItemStack.isEmpty()) {
                             ItemStack leftoverStack = handler.insertItem(slot, singleItemStack, false);
                             if (!leftoverStack.isEmpty()) {
-                                cobbleGenContents.setItem(0, leftoverStack); // Update the inventory with any leftover stack
+                                cobbleGenContents.setItem(0, leftoverStack);
                             } else {
                                 break;
                             }
@@ -138,5 +148,37 @@ public class EmeraldCobbleGenEntity extends BlockEntity implements BlockEntityTi
 
     public int getMaxStackSize() {
         return HavenConfig.emerald_cobble_gen_output;
+    }
+
+    private Block getBlockToGenerate() {
+        List<? extends String> validBlocks = HavenConfig.cobbleGenValidBlocks;
+        Random random = new Random();
+
+        // Loop through all six directions (up, down, north, south, east, west)
+        for (Direction direction : Direction.values()) {
+            assert this.level != null;
+            Block blockAtSide = this.level.getBlockState(this.worldPosition.relative(direction)).getBlock();
+            String blockAtSideName = ForgeRegistries.BLOCKS.getKey(blockAtSide).toString();
+
+            // Iterate over each config entry (formatted as blockToCheck;blockToGenerate1,blockToGenerate2,...)
+            for (String entry : validBlocks) {
+                String[] parts = entry.split(";");
+                if (parts.length == 2) {
+                    String blockToCheck = parts[0];  // The block to check on the side
+                    String[] blockToGenerateList = parts[1].split(",");  // Blocks to randomly choose from
+
+                    // If the blockAtSide matches blockToCheck, randomly select a block from blockToGenerateList
+                    if (blockAtSideName.equals(blockToCheck)) {
+                        String randomBlockToGenerate = blockToGenerateList[random.nextInt(blockToGenerateList.length)];
+                        Block generateBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(randomBlockToGenerate));
+                        if (generateBlock != null) {
+                            return generateBlock;
+                        }
+                    }
+                }
+            }
+        }
+        // Default to cobblestone if no match
+        return Blocks.COBBLESTONE;
     }
 }

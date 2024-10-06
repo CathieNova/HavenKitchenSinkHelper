@@ -1,6 +1,7 @@
 package net.cathienova.havenksh.util;
 
 import net.cathienova.havenksh.HavenKSH;
+import net.cathienova.havenksh.item.ModItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
@@ -49,8 +50,8 @@ public class ModToolTiers
                     ModTags.Blocks.needs_netherite_tool, () -> Ingredient.of(Tags.Items.INGOTS_NETHERITE)),
             new ResourceLocation(HavenKSH.MOD_ID, "netherite"), List.of(Tiers.DIAMOND), List.of());
 
-    /*public static final Tier havenite = TierSortingRegistry.registerTier(
+    public static final Tier havenite = TierSortingRegistry.registerTier(
             new ForgeTier(5, 3122, 6f, 5f, 25,
                     ModTags.Blocks.needs_havenite_tool, () -> Ingredient.of(ModItems.havenite_ingot.get())),
-            new ResourceLocation(HavenKSH.MOD_ID, "havenite"), List.of(Tiers.NETHERITE), List.of());*/
+            new ResourceLocation(HavenKSH.MOD_ID, "havenite"), List.of(Tiers.NETHERITE), List.of());
 }

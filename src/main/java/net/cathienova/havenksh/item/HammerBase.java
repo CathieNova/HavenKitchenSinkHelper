@@ -1,6 +1,7 @@
-package net.cathienova.havenksh.item.excavators;
+package net.cathienova.havenksh.item;
 
 import net.cathienova.havenksh.config.HavenConfig;
+import net.cathienova.havenksh.util.ModTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,7 +10,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -22,11 +23,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ExcavatorBase extends ShovelItem
+public class HammerBase extends PickaxeItem
 {
     private static final Map<Player, List<BlockPos>> breakingBlocks = new ConcurrentHashMap<>();
 
-    public ExcavatorBase(Tier material, int attackDamage, float attackSpeed, Properties properties)
+    public HammerBase(Tier material, int attackDamage, float attackSpeed, Properties properties)
     {
         super(material, attackDamage, attackSpeed, properties);
     }
@@ -35,7 +36,11 @@ public class ExcavatorBase extends ShovelItem
     public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
     {
         super.appendHoverText(stack, world, tooltip, flag);
-        tooltip.add(Component.translatable("item.havenksh.excavator.tooltip").withStyle(ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("item.havenksh.hammer.tooltip").withStyle(ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("item.havenksh.hammer.tooltip2").withStyle(ChatFormatting.GRAY));
+        if (stack.getItem() == ModTools.havenite_hammer.get()) {
+            tooltip.add(Component.translatable("tooltip.havenksh.ore_hammer.durability.infinite").withStyle(ChatFormatting.GOLD));
+        }
     }
 
     @Override
@@ -55,7 +60,7 @@ public class ExcavatorBase extends ShovelItem
         if (player.level().isClientSide) return false;
 
         BlockState blockState = player.level().getBlockState(pos);
-        if (!isBreakableByTool(blockState)) {
+        if (!isBreakableByTool(blockState, player, this.getTier())) {
             return super.onBlockStartBreak(itemstack, pos, player);
         }
 
@@ -66,7 +71,10 @@ public class ExcavatorBase extends ShovelItem
 
         Direction face = hitResult.getDirection();
 
-        breakAdjacentBlocks(player, pos, face);
+        if (!player.isCrouching())
+            breakAdjacentBlocks(player, pos, face);
+        else
+            destroyBlock(player.level(), pos, player);
 
         return true;
     }
@@ -88,7 +96,7 @@ public class ExcavatorBase extends ShovelItem
                     mutablePos.set(pos.getX() + dx, pos.getY() + dy, pos.getZ() + dz);
                     BlockState adjacentBlock = player.level().getBlockState(mutablePos);
 
-                    if (isBreakableByTool(adjacentBlock)) {
+                    if (isBreakableByTool(adjacentBlock, player, this.getTier())) {
                         destroyBlock(player.level(), mutablePos, player);
                         breakAmount++;
                     }
@@ -96,7 +104,7 @@ public class ExcavatorBase extends ShovelItem
             }
         }
 
-        int finalBreakAmount = HavenConfig.excavatorDurability ? 1 : breakAmount;
+        int finalBreakAmount = HavenConfig.hammerDurability ? 1 : breakAmount;
         consumeDurability(player, finalBreakAmount);
     }
 
@@ -108,8 +116,31 @@ public class ExcavatorBase extends ShovelItem
         }
     }
 
-    private static boolean isBreakableByTool(BlockState state) {
-        return state.is(BlockTags.MINEABLE_WITH_SHOVEL) || state.isAir();
+    private static boolean isBreakableByTool(BlockState state, Player player, Tier toolTier) {
+        if (isBlockAppropriateForPickaxe(state)) {
+            int requiredHarvestLevel = getRequiredHarvestLevel(state);
+            if (toolTier.getLevel() >= requiredHarvestLevel) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isBlockAppropriateForPickaxe(BlockState state) {
+        return state.is(BlockTags.MINEABLE_WITH_PICKAXE);
+    }
+
+    private static int getRequiredHarvestLevel(BlockState state) {
+        if (state.is(BlockTags.NEEDS_STONE_TOOL)) {
+            return 1; // Stone tier
+        } else if (state.is(BlockTags.NEEDS_IRON_TOOL)) {
+            return 2; // Iron tier
+        } else if (state.is(BlockTags.NEEDS_DIAMOND_TOOL)) {
+            return 3; // Diamond tier
+        } else if (state.is(ModTags.Blocks.needs_netherite_tool)) {
+            return 4; // Netherite tier
+        }
+        return 0; // Wood tier if no tag is present
     }
 
     private void destroyBlock(Level level, BlockPos pos, Player player) {
@@ -147,7 +178,7 @@ public class ExcavatorBase extends ShovelItem
                 for (int dz = startZ; dz <= endZ; dz++) {
                     BlockPos blockPos = pos.offset(dx, dy, dz);
                     BlockState blockState = player.level().getBlockState(blockPos);
-                    if (isBreakableByTool(blockState) && !blockState.isAir()) {
+                    if (isBreakableByTool(blockState, player, this.getTier())) {
                         blocks.add(blockPos);
                     }
                 }

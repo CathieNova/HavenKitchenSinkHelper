@@ -21,6 +21,9 @@ public class ModBlockStateProvider extends BlockStateProvider
     @Override
     protected void registerStatesAndModels()
     {
+        blockWithItem(ModBlocks.dust);
+        blockWithItem(ModBlocks.crushed_netherrack);
+        blockWithItem(ModBlocks.crushed_end_stone);
         blockWithItem(ModBlocks.charcoal_block);
         blockWithItem(ModBlocks.andesite_brick);
         blockWithItem(ModBlocks.diorite_brick);

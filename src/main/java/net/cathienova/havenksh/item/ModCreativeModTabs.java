@@ -139,6 +139,13 @@ public class ModCreativeModTabs
                         add.accept(new ItemStack(ModTools.netherite_chopper.get()));
                         add.accept(new ItemStack(ModTools.havenite_chopper.get()));
 
+                        add.accept(new ItemStack(ModTools.stone_crusher.get()));
+                        add.accept(new ItemStack(ModTools.iron_crusher.get()));
+                        add.accept(new ItemStack(ModTools.golden_crusher.get()));
+                        add.accept(new ItemStack(ModTools.diamond_crusher.get()));
+                        add.accept(new ItemStack(ModTools.netherite_crusher.get()));
+                        add.accept(new ItemStack(ModTools.havenite_crusher.get()));
+
                         add.accept(new ItemStack(ModItems.acacia_bark.get()));
                         add.accept(new ItemStack(ModItems.birch_bark.get()));
                         add.accept(new ItemStack(ModItems.dark_oak_bark.get()));
@@ -149,6 +156,9 @@ public class ModCreativeModTabs
                         add.accept(new ItemStack(ModItems.crimson_bark.get()));
 
                         add.accept(new ItemStack(ModBlocks.charcoal_block_item.get()));
+                        add.accept(new ItemStack(ModBlocks.dust.get()));
+                        add.accept(new ItemStack(ModBlocks.crushed_end_stone.get().asItem()));
+                        add.accept(new ItemStack(ModBlocks.crushed_netherrack.get().asItem()));
                         add.accept(new ItemStack(ModBlocks.andesite_brick.get().asItem()));
                         add.accept(new ItemStack(ModBlocks.diorite_brick.get().asItem()));
                         add.accept(new ItemStack(ModBlocks.granite_brick.get().asItem()));

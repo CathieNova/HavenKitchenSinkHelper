@@ -119,6 +119,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.raw_havenite_block.get())
             ;
 
+        this.tag(ModTags.Blocks.haveniteOres)
+                .add(ModBlocks.havenite_ore.get())
+                .add(ModBlocks.deepslate_havenite_ore.get())
+            ;
+
         this.tag(BlockTags.LOGS_THAT_BURN)
             ;
 
@@ -134,6 +139,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         this.tag(ModTags.Blocks.forgeStone)
                 .add(ModBlocks.scorched_stone.get())
                 .add(ModBlocks.scorched_cobblestone.get())
+            ;
+
+        this.tag(BlockTags.BEACON_BASE_BLOCKS)
+                .add(ModBlocks.havenite_block.get())
             ;
 
         this.tag(ModTags.Blocks.forgeOres)
