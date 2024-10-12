@@ -185,6 +185,14 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)
                     .requiresCorrectToolForDrops().sound(SoundType.NETHERRACK).strength(3.0F, 5.0F)));
 
+    public static final RegistryObject<Block> havenite_ore = registerBlock("havenite_ore",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK)
+                    .requiresCorrectToolForDrops().strength(10.0F, 5.0F)));
+
+    public static final RegistryObject<Block> deepslate_havenite_ore = registerBlock("deepslate_havenite_ore",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK)
+                    .requiresCorrectToolForDrops().strength(10.0F, 5.0F)));
+
     public static final RegistryObject<Block> reinforced_glass = registerBlock("reinforced_glass",
             () -> new GlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)
                     .strength(50.0F, 12000.0F)
@@ -208,12 +216,6 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> havenite_block = registerBlock("havenite_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK).strength(5.0F, 12000.0F)));
-
-    public static final RegistryObject<Block> havenite_ore = registerBlock("havenite_ore",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK).strength(3.0F, 5.0F)));
-
-    public static final RegistryObject<Block> deepslate_havenite_ore = registerBlock("deepslate_havenite_ore",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK).strength(3.0F, 5.0F)));
 
     public static final RegistryObject<Block> raw_havenite_block = registerBlock("raw_havenite_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK).strength(3.0F, 5.0F)));

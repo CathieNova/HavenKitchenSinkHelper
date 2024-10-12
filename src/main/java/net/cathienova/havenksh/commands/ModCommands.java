@@ -68,6 +68,8 @@ public class ModCommands
                                         .then(Commands.argument("title", StringArgumentType.string())
                                                 .then(Commands.argument("modid", StringArgumentType.string())
                                                         .executes(ModCommands::generateFTBQuestChapterJson))))
+                                .then(Commands.literal("alltags")
+                                        .executes(ModCommands::generateAllTagsJsons))
 
                         )));
     }
@@ -167,6 +169,12 @@ public class ModCommands
             player.sendSystemMessage(Component.translatable("command.havenksh.no_block_targeted"));
             return 0;
         }
+    }
+
+    private static int generateAllTagsJsons(CommandContext<CommandSourceStack> context) throws CommandSyntaxException
+    {
+        JsonExportHelper.exportAllTagsToJson();
+        return 1;
     }
 
     private static int reloadConfig(CommandContext<CommandSourceStack> context) throws CommandSyntaxException

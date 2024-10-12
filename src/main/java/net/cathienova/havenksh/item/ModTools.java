@@ -239,27 +239,27 @@ public class ModTools
                     new Item.Properties().stacksTo(1).durability(-1)));
 
     public static final RegistryObject<Item> stone_crusher = TOOLS.register("stone_crusher",
-            () -> new CrusherBase(ModToolTiers.stone, 1, -1.8F,
+            () -> new CrusherBase(ModToolTiers.stone, 1, -2.8F,
                     new Item.Properties().stacksTo(1).durability(131)));
 
     public static final RegistryObject<Item> iron_crusher = TOOLS.register("iron_crusher",
-            () -> new CrusherBase(ModToolTiers.iron, 1, -1.8F,
+            () -> new CrusherBase(ModToolTiers.iron, 1, -2.8F,
                     new Item.Properties().stacksTo(1).durability(250)));
 
     public static final RegistryObject<Item> golden_crusher = TOOLS.register("golden_crusher",
-            () -> new CrusherBase(ModToolTiers.gold, 1, -1.8F,
+            () -> new CrusherBase(ModToolTiers.gold, 1, -2.8F,
                     new Item.Properties().stacksTo(1).durability(169)));
 
     public static final RegistryObject<Item> diamond_crusher = TOOLS.register("diamond_crusher",
-            () -> new CrusherBase(ModToolTiers.diamond, 1, -1.8F,
+            () -> new CrusherBase(ModToolTiers.diamond, 1, -2.8F,
                     new Item.Properties().stacksTo(1).durability(1561)));
 
     public static final RegistryObject<Item> netherite_crusher = TOOLS.register("netherite_crusher",
-            () -> new CrusherBase(ModToolTiers.netherite, 1, -1.8F,
+            () -> new CrusherBase(ModToolTiers.netherite, 1, -2.8F,
                     new Item.Properties().stacksTo(1).durability(2031)));
 
     public static final RegistryObject<Item> havenite_crusher = TOOLS.register("havenite_crusher",
-            () -> new CrusherBase(ModToolTiers.havenite, 1, -1.8F,
+            () -> new CrusherBase(ModToolTiers.havenite, 1, -2.8F,
                     new Item.Properties().stacksTo(1).durability(-1)));
 
     public static final RegistryObject<Item> trowel = TOOLS.register("trowel",

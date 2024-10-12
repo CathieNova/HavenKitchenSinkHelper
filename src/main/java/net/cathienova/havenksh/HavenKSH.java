@@ -7,6 +7,7 @@ import net.cathienova.havenksh.commands.ModCommands;
 import net.cathienova.havenksh.events.MobSeedRenderer;
 import net.cathienova.havenksh.config.CommonConfig;
 import net.cathienova.havenksh.events.*;
+import net.cathienova.havenksh.handler.BlockBreakHandler;
 import net.cathienova.havenksh.handler.MobDropHandler;
 import net.cathienova.havenksh.item.*;
 import net.cathienova.havenksh.util.ModVillagers;
@@ -52,6 +53,7 @@ public class HavenKSH
         ModVillagers.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(new MobDropHandler());
+        MinecraftForge.EVENT_BUS.register(new BlockBreakHandler());
         ModCreativeModTabs.register(modEventBus);
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ExcavatorRendering::new);
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> HammerRendering::new);

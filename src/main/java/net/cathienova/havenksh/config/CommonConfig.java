@@ -7,6 +7,7 @@ import net.minecraftforge.fml.config.ModConfig;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommonConfig {
@@ -62,6 +63,9 @@ public class CommonConfig {
     public final ForgeConfigSpec.IntValue polar_bear_seed_spawn_timer;
     public final ForgeConfigSpec.IntValue squid_seed_spawn_timer;
     public final ForgeConfigSpec.IntValue villager_seed_spawn_timer;
+    public final ForgeConfigSpec.BooleanValue enable_trowel_durability;
+    public final ForgeConfigSpec.BooleanValue enable_inventory_blocks;
+    public final ForgeConfigSpec.ConfigValue<List<String>> trowel_blacklist;
 
     public CommonConfig(ForgeConfigSpec.Builder builder) {
         builder.comment("Block for Cobble Generators").push("block_generator").build();
@@ -176,7 +180,7 @@ public class CommonConfig {
         wateringCanCooldown = builder.comment("The cooldown in ticks for the watering can.").defineInRange("wateringCanCooldown", 10, 1, 1000);
         builder.pop();
 
-        builder.comment("Hammer & Excavator Durability").push("hammerDurability").build();
+        builder.comment("Hammer And Excavator Durability").push("hammerDurability").build();
         hammerDurability = builder.comment("If enabled, the hammers only takes 1 durability instead of the amount it breaks.").define("hammerDurability", true);
         excavatorDurability = builder.comment("If enabled, the excavators only takes 1 durability instead of the amount it breaks.").define("excavatorDurability", true);
         builder.pop();
@@ -209,6 +213,19 @@ public class CommonConfig {
         polar_bear_seed_spawn_timer = builder.comment("The time in ticks it takes for a polar bear to spawn from a polar bear seed. (20 ticks = 1 second)").defineInRange("polar_bear_seed_spawn_timer", 12000, 1, Integer.MAX_VALUE);
         squid_seed_spawn_timer = builder.comment("The time in ticks it takes for a squid to spawn from a squid seed. (20 ticks = 1 second)").defineInRange("squid_seed_spawn_timer", 12000, 1, Integer.MAX_VALUE);
         villager_seed_spawn_timer = builder.comment("The time in ticks it takes for a villager to spawn from a villager seed. (20 ticks = 1 second)").defineInRange("villager_seed_spawn_timer", 12000, 1, Integer.MAX_VALUE);
+        builder.pop();
+
+        builder.comment("Trowel").push("trowel").build();
+        enable_trowel_durability = builder.comment("If true, it will have durability when used.").define("enable_trowel_durability", true);
+        enable_inventory_blocks = builder.comment("If true, the trowel will use the inventory blocks as well as hotbar blocks, if false it will only use hotbar blocks.").define("enable_inventory_blocks", false);
+
+        List<String> trowelBlacklist = new ArrayList<>(List.of(
+                "#minecraft:saplings", "#minecraft:buttons", "#minecraft:pressure_plates", "minecraft:chain", "#minecraft:doors", "#minecraft:candles",
+                "#minecraft:banners", "minecraft:snow", "minecraft:moss_carpet", "minecraft:pointed_dripstone", "#forge:mushrooms", "#minecraft:flowers",
+                "minecraft:torch", "minecraft:ladder", "minecraft:lever", "minecraft:redstone_torch", "minecraft:redstone", "minecraft:tripwire_hook",
+                "minecraft:tripwire", "minecraft:repeater", "minecraft:comparator", "minecraft:observer", "minecraft:daylight_detector", "minecraft:daylight_detector_inverted"));
+
+        trowel_blacklist = builder.comment("The blacklist of blocks that can't be placed with the trowel.").define("trowel_blacklist", trowelBlacklist);
         builder.pop();
     }
 }

@@ -32,26 +32,23 @@ public class ModItems {
     public static final RegistryObject<Item> mini_charcoal = ITEMS.register("mini_charcoal",
             () -> new FuelItem(new Item.Properties(), 200));
 
+    // Nugget Resources
     public static final RegistryObject<Item> copper_nugget = ITEMS.register("copper_nugget",
             () -> new Item(new Item.Properties()));
-
     public static final RegistryObject<Item> diamond_nugget = ITEMS.register("diamond_nugget",
             () -> new Item(new Item.Properties()));
-
     public static final RegistryObject<Item> emerald_nugget = ITEMS.register("emerald_nugget",
             () -> new Item(new Item.Properties()));
-
     public static final RegistryObject<Item> netherite_nugget = ITEMS.register("netherite_nugget",
             () -> new Item(new Item.Properties()));
-
     public static final RegistryObject<Item> lapis_nugget = ITEMS.register("lapis_nugget",
             () -> new Item(new Item.Properties()));
-
     public static final RegistryObject<Item> quartz_nugget = ITEMS.register("quartz_nugget",
             () -> new Item(new Item.Properties()));
-
     public static final RegistryObject<Item> redstone_nugget = ITEMS.register("redstone_nugget",
             () -> new Item(new Item.Properties()));
+
+    // Dust Resources
     public static final RegistryObject<Item> copper_dust = ITEMS.register("copper_dust",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> iron_dust = ITEMS.register("iron_dust",
@@ -77,6 +74,7 @@ public class ModItems {
     public static final RegistryObject<Item> aluminum_dust = ITEMS.register("aluminum_dust",
             () -> new Item(new Item.Properties()));
 
+    // Ingot Resources
     public static final RegistryObject<Item> tin_ingot = ITEMS.register("tin_ingot",
             () -> new Item(new Item.Properties()));
 
@@ -113,7 +111,7 @@ public class ModItems {
     public static final RegistryObject<Item> havenite_nugget = ITEMS.register("havenite_nugget",
             () -> new Item(new Item.Properties()));
 
-
+    // Bark
     public static final RegistryObject<Item> acacia_bark = ITEMS.register("acacia_bark",
             () -> new AcaciaBark(new Item.Properties()));
 
@@ -144,6 +142,7 @@ public class ModItems {
     public static final RegistryObject<Item> warped_bark = ITEMS.register("warped_bark",
             () -> new WarpedBark(new Item.Properties()));
 
+    // Research Tiers
     public static final RegistryObject<Item> research_tier_basic = ITEMS.register("research_tier_basic",
             () -> new Item(new Item.Properties().stacksTo(64).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> research_tier_intermediate = ITEMS.register("research_tier_intermediate",

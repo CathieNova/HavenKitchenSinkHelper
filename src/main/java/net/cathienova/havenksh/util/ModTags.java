@@ -21,7 +21,7 @@ public class ModTags
         public static final TagKey<Block> needs_iron_tool = minecraftTag("needs_iron_tool");
         public static final TagKey<Block> needs_gold_tool = minecraftTag("needs_gold_tool");
         public static final TagKey<Block> needs_diamond_tool = minecraftTag("needs_diamond_tool");
-        public static final TagKey<Block> needs_netherite_tool = minecraftTag("needs_netherite_tool");
+        public static final TagKey<Block> needs_netherite_tool = forgeTag("needs_netherite_tool");
         public static final TagKey<Block> needs_havenite_tool = tag("needs_havenite_tool");
         public static final TagKey<Block> needs_pickaxe = forgeTag("mineable/pickaxe");
         public static final TagKey<Block> needs_shovel = forgeTag("mineable/shovel");

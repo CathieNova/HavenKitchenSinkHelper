@@ -229,8 +229,7 @@ public class JsonExportHelper
     }
 
     public static void exportFTBQuestRewardsToJson(ServerPlayer player, BlockPos containerPos, String title) {
-        List<String> rewards = new ArrayList<>();
-        List<String> rewardsWithNBT = new ArrayList<>();
+        List<Map<String, Object>> rewards = new ArrayList<>();
         BlockEntity blockEntity = player.level().getBlockEntity(containerPos);
 
         if (blockEntity instanceof Container) {
@@ -238,12 +237,10 @@ public class JsonExportHelper
             for (int i = 0; i < container.getContainerSize(); i++) {
                 ItemStack itemStack = container.getItem(i);
                 if (!itemStack.isEmpty()) {
-                    // Check if item has NBT data
-                    if (itemStack.hasTag() && !itemStack.getTag().isEmpty()) {
-                        rewardsWithNBT.add(constructNBTItemString(itemStack));
-                    } else {
-                        rewards.add(ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString());
-                    }
+                    Map<String, Object> reward = new HashMap<>();
+                    reward.put("count", itemStack.getCount());
+                    reward.put("item", ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString());
+                    rewards.add(reward);
                 }
             }
         } else if (blockEntity != null && blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
@@ -251,11 +248,10 @@ public class JsonExportHelper
                 for (int i = 0; i < handler.getSlots(); i++) {
                     ItemStack itemStack = handler.getStackInSlot(i);
                     if (!itemStack.isEmpty()) {
-                        if (itemStack.hasTag() && !itemStack.getTag().isEmpty()) {
-                            rewardsWithNBT.add(constructNBTItemString(itemStack));
-                        } else {
-                            rewards.add(ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString());
-                        }
+                        Map<String, Object> reward = new HashMap<>();
+                        reward.put("count", itemStack.getCount());
+                        reward.put("item", ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString());
+                        rewards.add(reward);
                     }
                 }
             });
@@ -264,41 +260,39 @@ public class JsonExportHelper
             return;
         }
 
+        // Transform the title to capitalized words with spaces
+        String transformedTitle = formatTitle(title);
+
         // Check if file exists
         File snbtFile = new File(FTBQUESTREWARD_DIR, title.toLowerCase() + ".snbt");
         if (snbtFile.exists()) {
             // If the file exists, append the new rewards to the existing rewards
             String existingContent = readSnbtFile(snbtFile);
-            String updatedContent = addRewardsToExistingSnbt(existingContent, rewards, rewardsWithNBT);
+            String updatedContent = addRewardsToExistingSnbt(existingContent, rewards);
             writeToSnbtFile(title.toLowerCase() + ".snbt", updatedContent, FTBQUESTREWARD_DIR);
         } else {
             // If file does not exist, create a new one
             StringBuilder snbtBuilder = new StringBuilder();
             snbtBuilder.append("{\n")
                     .append("  hide_tooltip: true,\n")
-                    .append("  icon: \"havenksh:research_tier_basic\",\n")  // Default icon
+                    .append("  icon: \"havenksh:research_tier_basic\",\n")
                     .append("  id: \"").append(generateRandomHexID()).append("\",\n")
                     .append("  loot_size: 1,\n")
                     .append("  order_index: 0,\n")
                     .append("  rewards: [\n");
 
-            // Add basic items (without NBT)
-            for (String reward : rewards) {
-                snbtBuilder.append("    { item: \"").append(reward).append("\" },\n");
+            // Add rewards without the trailing comma
+            for (int i = 0; i < rewards.size(); i++) {
+                snbtBuilder.append("    { count: ").append(rewards.get(i).get("count"))
+                        .append(", item: \"").append(rewards.get(i).get("item")).append("\" }");
+                if (i < rewards.size() - 1) {
+                    snbtBuilder.append(",");  // Add a comma if it's not the last item
+                }
+                snbtBuilder.append("\n");
             }
 
-            // Add items with NBT
-            for (String rewardWithNBT : rewardsWithNBT) {
-                snbtBuilder.append("    { item: ").append(rewardWithNBT).append(" },\n");
-            }
-
-            // Remove last comma
-            if (!rewards.isEmpty() || !rewardsWithNBT.isEmpty()) {
-                snbtBuilder.setLength(snbtBuilder.length() - 2);
-            }
-
-            snbtBuilder.append("\n  ],\n")
-                    .append("  title: \"").append(title).append("\"\n")
+            snbtBuilder.append("  ],\n")
+                    .append("  title: \"").append(transformedTitle).append("\"\n")
                     .append("}");
 
             // Write to SNBT file
@@ -308,7 +302,7 @@ public class JsonExportHelper
 
     public static void exportFTBQuestChapterToJson(String title, String modId) {
         List<String> modElements = new ArrayList<>();
-
+        String transformedTitle = formatTitle(title);
         // Fetch mod's items
         for (var item : ForgeRegistries.ITEMS) {
             var itemKey = ForgeRegistries.ITEMS.getKey(item);
@@ -342,7 +336,7 @@ public class JsonExportHelper
                 .append("  default_hide_dependency_lines: false,\n")
                 .append("  default_quest_shape: \"\",\n")
                 .append("  filename: \"").append(title.toLowerCase()).append("\",\n")
-                .append("  group: \"").append(generateRandomHexID()).append("\",\n")
+                .append("  group: \"").append("\",\n")
                 .append("  id: \"").append(generateRandomHexID()).append("\",\n")
                 .append("  order_index: 0,\n")
                 .append("  quest_links: [ ],\n")
@@ -374,11 +368,24 @@ public class JsonExportHelper
         }
 
         snbtBuilder.append("\n  ],\n")
-                .append("  title: \"").append(title).append("\"\n")
+                .append("  title: \"").append(transformedTitle).append("\"\n")
                 .append("}");
 
         // Write to SNBT file
         writeToSnbtFile(title.toLowerCase() + ".snbt", snbtBuilder.toString(), FTBQUEST_DIR);
+    }
+
+    private static String formatTitle(String title) {
+        // Replace underscores with spaces
+        title = title.replace("_", " ");
+        // Capitalize each word
+        String[] words = title.split(" ");
+        StringBuilder capitalizedTitle = new StringBuilder();
+        for (String word : words) {
+            capitalizedTitle.append(Character.toUpperCase(word.charAt(0)))
+                    .append(word.substring(1).toLowerCase()).append(" ");
+        }
+        return capitalizedTitle.toString().trim();
     }
 
     private static String generateRandomHexID()
@@ -395,7 +402,7 @@ public class JsonExportHelper
         return "";
     }
 
-    private static String addRewardsToExistingSnbt(String existingContent, List<String> rewards, List<String> rewardsWithNBT) {
+    private static String addRewardsToExistingSnbt(String existingContent, List<Map<String, Object>> rewards) {
         StringBuilder newContent = new StringBuilder();
 
         // Find the "rewards" section and append new rewards
@@ -403,16 +410,26 @@ public class JsonExportHelper
         if (rewardsIndex != -1) {
             int rewardsEndIndex = existingContent.indexOf("]", rewardsIndex);
             if (rewardsEndIndex != -1) {
+                // Copy existing content up to the end of the rewards list
                 newContent.append(existingContent, 0, rewardsEndIndex);
 
-                // Add the new rewards (without NBT)
-                for (String reward : rewards) {
-                    newContent.append(",\n    { item: \"").append(reward).append("\" }");
+                // Check if the last reward in the existing content ends with a comma
+                boolean hasExistingRewards = existingContent.substring(rewardsIndex, rewardsEndIndex).contains("{");
+
+                // Add a comma if there are existing rewards
+                if (hasExistingRewards) {
+                    newContent.append(",\n");
                 }
 
-                // Add the new rewards (with NBT)
-                for (String rewardWithNBT : rewardsWithNBT) {
-                    newContent.append(",\n    { item: ").append(rewardWithNBT).append(" }");
+                // Add the new rewards
+                for (Map<String, Object> reward : rewards) {
+                    newContent.append("    { count: ").append(reward.get("count"))
+                            .append(", item: \"").append(reward.get("item")).append("\" },\n");
+                }
+
+                // Remove the last comma
+                if (newContent.charAt(newContent.length() - 2) == ',') {
+                    newContent.setLength(newContent.length() - 2);
                 }
 
                 // Append the rest of the file after the rewards section
@@ -501,6 +518,31 @@ public class JsonExportHelper
         {
             e.printStackTrace();
         }
+    }
+
+    public static void exportAllTagsToJson()
+    {
+        // Export item tag names
+        List<String> itemTags = new ArrayList<>();
+        for (var tag : ForgeRegistries.ITEMS.tags()) {
+            String tagName = tag.getKey().location().toString();
+            itemTags.add(tagName);
+        }
+
+        // Sort and write item tags to JSON
+        Collections.sort(itemTags);
+        writeToJson("all_item_tags.json", itemTags, CONFIG_DIR);
+
+        // Export block tag names
+        List<String> blockTags = new ArrayList<>();
+        for (var tag : ForgeRegistries.BLOCKS.tags()) {
+            String tagName = tag.getKey().location().toString();
+            blockTags.add(tagName);
+        }
+
+        // Sort and write block tags to JSON
+        Collections.sort(blockTags);
+        writeToJson("all_block_tags.json", blockTags, CONFIG_DIR);
     }
 
     private static void writeToSnbtFile(String fileName, String snbtData, File directory) {

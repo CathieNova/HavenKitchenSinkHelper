@@ -59,6 +59,9 @@ public class HavenConfig
     public static int polar_bear_seed_spawn_timer;
     public static int squid_seed_spawn_timer;
     public static int villager_seed_spawn_timer;
+    public static boolean enable_trowel_durability;
+    public static boolean enable_inventory_blocks;
+    public static List<String> trowel_blacklist;
 
     public static void bake(ModConfig config)
     {
@@ -114,5 +117,8 @@ public class HavenConfig
         polar_bear_seed_spawn_timer = HavenKSH.c_config.polar_bear_seed_spawn_timer.get();
         squid_seed_spawn_timer = HavenKSH.c_config.squid_seed_spawn_timer.get();
         villager_seed_spawn_timer = HavenKSH.c_config.villager_seed_spawn_timer.get();
+        enable_trowel_durability = HavenKSH.c_config.enable_trowel_durability.get();
+        enable_inventory_blocks = HavenKSH.c_config.enable_inventory_blocks.get();
+        trowel_blacklist = HavenKSH.c_config.trowel_blacklist.get();
     }
 }

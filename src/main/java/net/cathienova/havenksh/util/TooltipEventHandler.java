@@ -1,7 +1,9 @@
 package net.cathienova.havenksh.util;
 
 import net.cathienova.havenksh.block.ModBlocks;
+import net.cathienova.havenksh.config.HavenConfig;
 import net.cathienova.havenksh.item.ModTools;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
@@ -23,7 +25,14 @@ public class TooltipEventHandler {
 
         if (item == ModTools.havenite_hammer.get())
         {
-            event.getToolTip().add(Component.translatable("tooltip.havenksh.hammer.durability.infinite").withStyle(net.minecraft.ChatFormatting.GOLD));
+            event.getToolTip().add(Component.translatable("tooltip.havenksh.hammer.durability.infinite").withStyle(ChatFormatting.GOLD));
+        }
+        if (item == ModTools.trowel.get())
+        {
+            if (HavenConfig.enable_inventory_blocks)
+                event.getToolTip().add(Component.translatable("item.havenksh.trowel.tooltip.inventory").withStyle(ChatFormatting.GOLD));
+            else
+                event.getToolTip().add(Component.translatable("item.havenksh.trowel.tooltip.hotbar").withStyle(ChatFormatting.GOLD));
         }
     }
 }

@@ -92,14 +92,14 @@ public class CustomTradesEvent
                     12, 8, 0.02f));
 
             trades.computeIfAbsent(5, k -> new ArrayList<>()).add((pTrader, pRandom) -> new MerchantOffer(
-                    new ItemStack(Items.EMERALD, 5), // item paid
-                    new ItemStack(Items.POINTED_DRIPSTONE, 1),
-                    12, 6, 0.02f));
-
-            trades.computeIfAbsent(5, k -> new ArrayList<>()).add((pTrader, pRandom) -> new MerchantOffer(
                     new ItemStack(Items.EMERALD, 3), // item paid
                     new ItemStack(ModBlocks.scorched_stone.get(), 4),
                     16, 8, 0.02f));
+
+            trades.computeIfAbsent(5, k -> new ArrayList<>()).add((pTrader, pRandom) -> new MerchantOffer(
+                    new ItemStack(Items.EMERALD, 32), // item paid
+                    new ItemStack(ModItems.raw_havenite.get(), 2),
+                    4, 8, 0.02f));
         }
     }
 
@@ -108,7 +108,7 @@ public class CustomTradesEvent
         List<VillagerTrades.ItemListing> genericTrades = event.getGenericTrades();
         List<VillagerTrades.ItemListing> rareTrades = event.getRareTrades();
 
-        rareTrades.add((pTrader, pRandom) -> new MerchantOffer(
+        genericTrades.add((pTrader, pRandom) -> new MerchantOffer(
                 new ItemStack(Items.EMERALD, 48), // item paid
                 new ItemStack(ModItems.raw_havenite.get(), 2),
                 8, 8, 0.15f));

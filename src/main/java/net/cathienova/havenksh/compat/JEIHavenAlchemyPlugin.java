@@ -99,7 +99,9 @@ public class JEIHavenAlchemyPlugin implements IModPlugin
         Component[] barkDescription = new Component[] {
                 Component.translatable("jei.havenksh.bark.desc.line1"),
                 Component.literal(" "),
-                Component.translatable("jei.havenksh.bark.desc.line2")
+                Component.translatable("jei.havenksh.bark.desc.line2"),
+                Component.literal(" "),
+                Component.translatable("jei.havenksh.bark.desc.line3")
         };
 
         ItemStack acacia_bark = new ItemStack(ModItems.acacia_bark.get());

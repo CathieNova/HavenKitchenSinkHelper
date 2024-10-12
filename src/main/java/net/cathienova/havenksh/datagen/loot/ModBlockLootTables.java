@@ -90,13 +90,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.dust.get());
         this.dropSelf(ModBlocks.crushed_netherrack.get());
         this.dropSelf(ModBlocks.crushed_end_stone.get());
-/*
-        add(Blocks.STONE, block -> createCrusherLootTable(block, Blocks.GRAVEL));
-        add(Blocks.GRAVEL, block -> createCrusherLootTable(block, Blocks.SAND));
-        add(Blocks.SAND, block -> createCrusherLootTable(block, ModBlocks.dust.get()));
-        add(Blocks.END_STONE, block -> createCrusherLootTable(block, ModBlocks.crushed_end_stone.get()));
-        add(Blocks.NETHERRACK, block -> createCrusherLootTable(block, ModBlocks.crushed_netherrack.get()));
- */
     }
 
     protected LootTable.Builder createOreLikeOreDrops(Block pBlock, Item item, int min, int max) {
