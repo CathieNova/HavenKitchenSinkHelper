@@ -33,7 +33,7 @@ public class BarkItem extends FuelItem
             final Level world = context.getLevel();
             final Player player = context.getPlayer();
 
-            if (world.getBlockState(blockPos).getBlock() == this.Log || world.getBlockState(blockPos).getBlock() == this.WoodenLog) {
+            if (world.getBlockState(blockPos).getBlock() == this.StrippedLog || world.getBlockState(blockPos).getBlock() == this.WoodenStrippedLog) {
                 assert player != null;
                 player.swing(InteractionHand.MAIN_HAND, true);
                 world.playSound(null, blockPos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1f, 1f);
@@ -43,11 +43,11 @@ public class BarkItem extends FuelItem
                 }
             }
 
-            if (world.getBlockState(blockPos).getBlock() == this.Log) {
-                world.setBlock(blockPos, this.StrippedLog.defaultBlockState(), 3);
+            if (world.getBlockState(blockPos).getBlock() == this.StrippedLog) {
+                world.setBlock(blockPos, this.Log.defaultBlockState(), 3);
             }
-            if (world.getBlockState(blockPos).getBlock() == this.WoodenLog) {
-                world.setBlock(blockPos, this.WoodenStrippedLog.defaultBlockState(), 3);
+            if (world.getBlockState(blockPos).getBlock() == this.WoodenStrippedLog) {
+                world.setBlock(blockPos, this.WoodenLog.defaultBlockState(), 3);
             }
         }
         return InteractionResult.SUCCESS;

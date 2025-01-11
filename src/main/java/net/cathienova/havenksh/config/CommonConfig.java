@@ -1,73 +1,68 @@
 package net.cathienova.havenksh.config;
 
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import net.cathienova.havenksh.HavenKSH;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommonConfig {
-    public final ForgeConfigSpec.ConfigValue<List<? extends String>> cobbleGenValidBlocks;
-    public final ForgeConfigSpec.IntValue wooden_cobble_gen_speed;
-    public final ForgeConfigSpec.IntValue wooden_cobble_gen_output;
-    public final ForgeConfigSpec.IntValue stone_cobble_gen_speed;
-    public final ForgeConfigSpec.IntValue stone_cobble_gen_output;
-    public final ForgeConfigSpec.IntValue iron_cobble_gen_speed;
-    public final ForgeConfigSpec.IntValue iron_cobble_gen_output;
-    public final ForgeConfigSpec.IntValue gold_cobble_gen_speed;
-    public final ForgeConfigSpec.IntValue gold_cobble_gen_output;
-    public final ForgeConfigSpec.IntValue diamond_cobble_gen_speed;
-    public final ForgeConfigSpec.IntValue diamond_cobble_gen_output;
-    public final ForgeConfigSpec.IntValue emerald_cobble_gen_speed;
-    public final ForgeConfigSpec.IntValue emerald_cobble_gen_output;
-    public final ForgeConfigSpec.IntValue netherite_cobble_gen_speed;
-    public final ForgeConfigSpec.IntValue netherite_cobble_gen_output;
-    public final ForgeConfigSpec.IntValue creative_cobble_gen_speed;
-    public final ForgeConfigSpec.IntValue creative_cobble_gen_output;
-    public final ForgeConfigSpec.IntValue mendingNecklaceRepairInterval;
-    public final ForgeConfigSpec.IntValue miniCoalBurnTime;
-    public final ForgeConfigSpec.IntValue miniCharcoalBurnTime;
-    public final ForgeConfigSpec.IntValue dragonScaleDropChance;
-    public final ForgeConfigSpec.IntValue dragonScaleDropAmount;
-    public final ForgeConfigSpec.IntValue wateringCanCooldown;
-    public final ForgeConfigSpec.BooleanValue hammerDurability;
-    public final ForgeConfigSpec.BooleanValue excavatorDurability;
-    public final ForgeConfigSpec.IntValue playerGrowthDistance;
-    public final ForgeConfigSpec.IntValue axolotl_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue bee_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue cat_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue chicken_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue cow_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue donkey_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue fox_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue goat_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue horse_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue llama_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue mooshroom_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue mule_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue ocelot_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue panda_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue pig_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue rabbit_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue sheep_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue sniffer_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue parrot_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue turtle_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue wolf_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue dolphin_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue glow_squid_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue polar_bear_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue squid_seed_spawn_timer;
-    public final ForgeConfigSpec.IntValue villager_seed_spawn_timer;
-    public final ForgeConfigSpec.BooleanValue enable_trowel_durability;
-    public final ForgeConfigSpec.BooleanValue enable_inventory_blocks;
-    public final ForgeConfigSpec.ConfigValue<List<String>> trowel_blacklist;
+    public final ModConfigSpec.ConfigValue<List<? extends String>> cobbleGenValidBlocks;
+    public final ModConfigSpec.IntValue wooden_cobble_gen_speed;
+    public final ModConfigSpec.IntValue wooden_cobble_gen_output;
+    public final ModConfigSpec.IntValue stone_cobble_gen_speed;
+    public final ModConfigSpec.IntValue stone_cobble_gen_output;
+    public final ModConfigSpec.IntValue iron_cobble_gen_speed;
+    public final ModConfigSpec.IntValue iron_cobble_gen_output;
+    public final ModConfigSpec.IntValue gold_cobble_gen_speed;
+    public final ModConfigSpec.IntValue gold_cobble_gen_output;
+    public final ModConfigSpec.IntValue diamond_cobble_gen_speed;
+    public final ModConfigSpec.IntValue diamond_cobble_gen_output;
+    public final ModConfigSpec.IntValue emerald_cobble_gen_speed;
+    public final ModConfigSpec.IntValue emerald_cobble_gen_output;
+    public final ModConfigSpec.IntValue netherite_cobble_gen_speed;
+    public final ModConfigSpec.IntValue netherite_cobble_gen_output;
+    public final ModConfigSpec.IntValue creative_cobble_gen_speed;
+    public final ModConfigSpec.IntValue creative_cobble_gen_output;
+    public final ModConfigSpec.IntValue mendingNecklaceRepairInterval;
+    public final ModConfigSpec.IntValue miniCoalBurnTime;
+    public final ModConfigSpec.IntValue miniCharcoalBurnTime;
+    public final ModConfigSpec.IntValue dragonScaleDropChance;
+    public final ModConfigSpec.IntValue dragonScaleDropAmount;
+    public final ModConfigSpec.IntValue wateringCanCooldown;
+    public final ModConfigSpec.BooleanValue hammerDurability;
+    public final ModConfigSpec.BooleanValue excavatorDurability;
+    public final ModConfigSpec.IntValue playerGrowthDistance;
+    public final ModConfigSpec.IntValue axolotl_seed_spawn_timer;
+    public final ModConfigSpec.IntValue bee_seed_spawn_timer;
+    public final ModConfigSpec.IntValue cat_seed_spawn_timer;
+    public final ModConfigSpec.IntValue chicken_seed_spawn_timer;
+    public final ModConfigSpec.IntValue cow_seed_spawn_timer;
+    public final ModConfigSpec.IntValue donkey_seed_spawn_timer;
+    public final ModConfigSpec.IntValue fox_seed_spawn_timer;
+    public final ModConfigSpec.IntValue goat_seed_spawn_timer;
+    public final ModConfigSpec.IntValue horse_seed_spawn_timer;
+    public final ModConfigSpec.IntValue llama_seed_spawn_timer;
+    public final ModConfigSpec.IntValue mooshroom_seed_spawn_timer;
+    public final ModConfigSpec.IntValue mule_seed_spawn_timer;
+    public final ModConfigSpec.IntValue ocelot_seed_spawn_timer;
+    public final ModConfigSpec.IntValue panda_seed_spawn_timer;
+    public final ModConfigSpec.IntValue pig_seed_spawn_timer;
+    public final ModConfigSpec.IntValue rabbit_seed_spawn_timer;
+    public final ModConfigSpec.IntValue sheep_seed_spawn_timer;
+    public final ModConfigSpec.IntValue sniffer_seed_spawn_timer;
+    public final ModConfigSpec.IntValue parrot_seed_spawn_timer;
+    public final ModConfigSpec.IntValue turtle_seed_spawn_timer;
+    public final ModConfigSpec.IntValue wolf_seed_spawn_timer;
+    public final ModConfigSpec.IntValue dolphin_seed_spawn_timer;
+    public final ModConfigSpec.IntValue glow_squid_seed_spawn_timer;
+    public final ModConfigSpec.IntValue polar_bear_seed_spawn_timer;
+    public final ModConfigSpec.IntValue squid_seed_spawn_timer;
+    public final ModConfigSpec.IntValue villager_seed_spawn_timer;
+    public final ModConfigSpec.BooleanValue enable_trowel_durability;
+    public final ModConfigSpec.BooleanValue enable_inventory_blocks;
+    public final ModConfigSpec.ConfigValue<List<String>> trowel_blacklist;
 
-    public CommonConfig(ForgeConfigSpec.Builder builder) {
+    public CommonConfig(ModConfigSpec.Builder builder) {
         builder.comment("Block for Cobble Generators").push("block_generator").build();
         cobbleGenValidBlocks = builder
                 .comment("Valid blocks for cobblestone generators at any side. Format: \"checkforblock;outputblock\", it also supports multiple outputblock with comma, if it does not match any then it will return Cobblestone.")
@@ -96,7 +91,7 @@ public class CommonConfig {
                 .defineInRange("wooden_cobble_gen_speed", 100, 1, Integer.MAX_VALUE);
         wooden_cobble_gen_output = builder
                 .comment("The storage capacity of the Wooden Cobblestone Generator")
-                .defineInRange("wooden_cobble_gen_output", 8, 1, Integer.MAX_VALUE);
+                .defineInRange("wooden_cobble_gen_output", 8, 1, 64);
         builder.pop();
 
         builder.comment("Stone Cobblestone Generator").push("stone_cobble_gen").build();
@@ -105,7 +100,7 @@ public class CommonConfig {
                 .defineInRange("stone_cobble_gen_speed", 80, 1, Integer.MAX_VALUE);
         stone_cobble_gen_output = builder
                 .comment("The storage capacity of the Stone Cobblestone Generator")
-                .defineInRange("stone_cobble_gen_output", 16, 1, Integer.MAX_VALUE);
+                .defineInRange("stone_cobble_gen_output", 16, 1, 64);
         builder.pop();
 
         builder.comment("Iron Cobblestone Generator").push("iron_cobble_gen").build();
@@ -114,7 +109,7 @@ public class CommonConfig {
                 .defineInRange("iron_cobble_gen_speed", 60, 1, Integer.MAX_VALUE);
         iron_cobble_gen_output = builder
                 .comment("The storage capacity of the Iron Cobblestone Generator")
-                .defineInRange("iron_cobble_gen_output", 32, 1, Integer.MAX_VALUE);
+                .defineInRange("iron_cobble_gen_output", 32, 1, 64);
         builder.pop();
 
         builder.comment("Gold Cobblestone Generator").push("gold_cobble_gen").build();
@@ -123,7 +118,7 @@ public class CommonConfig {
                 .defineInRange("gold_cobble_gen_speed", 40, 1, Integer.MAX_VALUE);
         gold_cobble_gen_output = builder
                 .comment("The storage capacity of the Gold Cobblestone Generator")
-                .defineInRange("gold_cobble_gen_output", 64, 1, Integer.MAX_VALUE);
+                .defineInRange("gold_cobble_gen_output", 64, 1, 64);
         builder.pop();
 
         builder.comment("Diamond Cobblestone Generator").push("diamond_cobble_gen").build();
@@ -132,7 +127,7 @@ public class CommonConfig {
                 .defineInRange("diamond_cobble_gen_speed", 20, 1, Integer.MAX_VALUE);
         diamond_cobble_gen_output = builder
                 .comment("The storage capacity of the Diamond Cobblestone Generator")
-                .defineInRange("diamond_cobble_gen_output", 128, 1, Integer.MAX_VALUE);
+                .defineInRange("diamond_cobble_gen_output", 64, 1, 64);
         builder.pop();
 
         builder.comment("Emerald Cobblestone Generator").push("emerald_cobble_gen").build();
@@ -141,7 +136,7 @@ public class CommonConfig {
                 .defineInRange("emerald_cobble_gen_speed", 10, 1, Integer.MAX_VALUE);
         emerald_cobble_gen_output = builder
                 .comment("The storage capacity of the Emerald Cobblestone Generator")
-                .defineInRange("emerald_cobble_gen_output", 256, 1, Integer.MAX_VALUE);
+                .defineInRange("emerald_cobble_gen_output", 64, 1, 64);
         builder.pop();
 
         builder.comment("Netherite Cobblestone Generator").push("netherite_cobble_gen").build();
@@ -150,7 +145,7 @@ public class CommonConfig {
                 .defineInRange("netherite_cobble_gen_speed", 5, 1, Integer.MAX_VALUE);
         netherite_cobble_gen_output = builder
                 .comment("The storage capacity of the Netherite Cobblestone Generator")
-                .defineInRange("netherite_cobble_gen_output", 512, 1, Integer.MAX_VALUE);
+                .defineInRange("netherite_cobble_gen_output", 64, 1, 64);
         builder.pop();
 
         builder.comment("Creative Cobblestone Generator").push("creative_cobble_gen").build();
@@ -159,7 +154,7 @@ public class CommonConfig {
                 .defineInRange("creative_cobble_gen_speed", 1, 1, Integer.MAX_VALUE);
         creative_cobble_gen_output = builder
                 .comment("The storage capacity of the Creative Cobblestone Generator")
-                .defineInRange("creative_cobble_gen_output", 10240, 1, Integer.MAX_VALUE);
+                .defineInRange("creative_cobble_gen_output", 64, 1, 64);
         builder.pop();
 
         builder.comment("Mending Necklace").push("mendingNecklace").build();
@@ -221,7 +216,7 @@ public class CommonConfig {
 
         List<String> trowelBlacklist = new ArrayList<>(List.of(
                 "#minecraft:saplings", "#minecraft:buttons", "#minecraft:pressure_plates", "minecraft:chain", "#minecraft:doors", "#minecraft:candles",
-                "#minecraft:banners", "minecraft:snow", "minecraft:moss_carpet", "minecraft:pointed_dripstone", "#forge:mushrooms", "#minecraft:flowers",
+                "#minecraft:banners", "minecraft:snow", "minecraft:moss_carpet", "minecraft:pointed_dripstone", "#c:mushrooms", "#minecraft:flowers",
                 "minecraft:torch", "minecraft:ladder", "minecraft:lever", "minecraft:redstone_torch", "minecraft:redstone", "minecraft:tripwire_hook",
                 "minecraft:tripwire", "minecraft:repeater", "minecraft:comparator", "minecraft:observer", "minecraft:daylight_detector", "minecraft:daylight_detector_inverted"));
 

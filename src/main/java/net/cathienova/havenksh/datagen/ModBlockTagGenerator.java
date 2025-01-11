@@ -6,19 +6,16 @@ import net.cathienova.havenksh.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.TieredItem;
-import net.minecraft.world.item.Tiers;
-import net.minecraftforge.common.ForgeTier;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ModBlockTagGenerator extends BlockTagsProvider {
+public class ModBlockTagGenerator extends BlockTagsProvider
+{
     public ModBlockTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, HavenKSH.MOD_ID, existingFileHelper);
     }
@@ -76,7 +73,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.raw_havenite_block.get())
             ;
 
-        this.tag(ModTags.Blocks.needs_stone_tool)
+        this.tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(ModBlocks.stone_cobble_gen.get())
                 .add(ModBlocks.scorched_iron_ore.get())
                 .add(ModBlocks.scorched_copper_ore.get())
@@ -99,7 +96,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.lamp_rainbow.get())
             ;
 
-        this.tag(ModTags.Blocks.needs_iron_tool)
+        this.tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(ModBlocks.iron_cobble_gen.get())
                 .add(ModBlocks.gold_cobble_gen.get())
                 .add(ModBlocks.scorched_gold_ore.get())
@@ -109,12 +106,9 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.reinforced_glass.get())
             ;
 
-        this.tag(ModTags.Blocks.needs_diamond_tool)
+        this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ModBlocks.diamond_cobble_gen.get())
                 .add(ModBlocks.emerald_cobble_gen.get())
-            ;
-
-        this.tag(ModTags.Blocks.needs_netherite_tool)
                 .add(ModBlocks.netherite_cobble_gen.get())
                 .add(ModBlocks.creative_cobble_gen.get())
                 .add(ModBlocks.havenite_block.get())
@@ -129,9 +123,27 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
             ;
 
         this.tag(BlockTags.LOGS_THAT_BURN)
+                .add(Blocks.ACACIA_LOG)
+                .add(Blocks.BIRCH_LOG)
+                .add(Blocks.CHERRY_LOG)
+                .add(Blocks.DARK_OAK_LOG)
+                .add(Blocks.JUNGLE_LOG)
+                .add(Blocks.MANGROVE_LOG)
+                .add(Blocks.OAK_LOG)
+                .add(Blocks.SPRUCE_LOG)
             ;
 
         this.tag(BlockTags.LOGS)
+                .add(Blocks.ACACIA_LOG)
+                .add(Blocks.BIRCH_LOG)
+                .add(Blocks.CHERRY_LOG)
+                .add(Blocks.DARK_OAK_LOG)
+                .add(Blocks.JUNGLE_LOG)
+                .add(Blocks.MANGROVE_LOG)
+                .add(Blocks.OAK_LOG)
+                .add(Blocks.SPRUCE_LOG)
+                .add(Blocks.WARPED_STEM)
+                .add(Blocks.CRIMSON_STEM)
             ;
 
         this.tag(BlockTags.PLANKS)

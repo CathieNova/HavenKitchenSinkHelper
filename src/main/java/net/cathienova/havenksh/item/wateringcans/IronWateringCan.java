@@ -1,15 +1,15 @@
 package net.cathienova.havenksh.item.wateringcans;
 
+import net.cathienova.havenksh.config.CommonConfig;
 import net.cathienova.havenksh.config.HavenConfig;
 import net.cathienova.havenksh.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -40,14 +39,17 @@ public class IronWateringCan extends Item
             waterArea((ServerLevel) level, pos);
             spawnParticles((ServerLevel) level, pos);
 
-            if (itemstack.getDamageValue() >= itemstack.getMaxDamage() - 1) {
+            if (itemstack.getDamageValue() >= itemstack.getMaxDamage() - 1 && !player.isCreative()) {
                 ItemStack emptyWateringCan = new ItemStack(ModItems.empty_iron_watering_can.get());
                 player.setItemInHand(hand, emptyWateringCan);
             }
 
             level.gameEvent(player, GameEvent.FLUID_PLACE, pos);
-            itemstack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
-            player.getCooldowns().addCooldown(this, HavenConfig.wateringCanCooldown);
+            if (!player.isCreative())
+            {
+                itemstack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+                player.getCooldowns().addCooldown(this, HavenConfig.wateringCanCooldown);
+            }
         }
 
         return InteractionResultHolder.pass(itemstack);
@@ -82,10 +84,10 @@ public class IronWateringCan extends Item
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced)
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag)
     {
-        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
 
-        pTooltipComponents.add(Component.translatable("item.havenksh.iron_watering_can.tooltip"));
+        tooltipComponents.add(Component.translatable("item.havenksh.iron_watering_can.tooltip"));
     }
 }

@@ -6,9 +6,10 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Supplier;
 
 public class ModCreativeModTabs
 {
@@ -16,7 +17,7 @@ public class ModCreativeModTabs
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, HavenKSH.MOD_ID);
 
     public static String HavenKSH_tab_title = "itemgroup.havenksh.havenksh_tab";
-    public static final RegistryObject<CreativeModeTab> Haven_TAB = CREATIVE_MODE_TABS.register("havenksh_tab",
+    public static final Supplier<CreativeModeTab> Haven_TAB = CREATIVE_MODE_TABS.register("havenksh_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.dice.get()))
                     .title(Component.translatable(HavenKSH_tab_title))
                     .displayItems((pParameters, add) -> {
@@ -138,13 +139,6 @@ public class ModCreativeModTabs
                         add.accept(new ItemStack(ModTools.emerald_chopper.get()));
                         add.accept(new ItemStack(ModTools.netherite_chopper.get()));
                         add.accept(new ItemStack(ModTools.havenite_chopper.get()));
-
-                        add.accept(new ItemStack(ModTools.stone_crusher.get()));
-                        add.accept(new ItemStack(ModTools.iron_crusher.get()));
-                        add.accept(new ItemStack(ModTools.golden_crusher.get()));
-                        add.accept(new ItemStack(ModTools.diamond_crusher.get()));
-                        add.accept(new ItemStack(ModTools.netherite_crusher.get()));
-                        add.accept(new ItemStack(ModTools.havenite_crusher.get()));
 
                         add.accept(new ItemStack(ModItems.acacia_bark.get()));
                         add.accept(new ItemStack(ModItems.birch_bark.get()));

@@ -1,105 +1,111 @@
 package net.cathienova.havenksh.item;
 
 import net.cathienova.havenksh.HavenKSH;
+import net.minecraft.Util;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
+import java.util.EnumMap;
+import java.util.List;
 import java.util.function.Supplier;
 
-public enum ModArmorMaterials implements ArmorMaterial
+public class ModArmorMaterials
 {
-    wooden("wooden", 5, new int[] {1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_CHAIN,
-            0.0F, 0.0F, () -> Ingredient.of(Items.OAK_PLANKS)),
-    flint("flint", 0, new int[] {1, 2, 2, 1}, 10, SoundEvents.ARMOR_EQUIP_CHAIN,
-            0.0F, 0.0F, () -> Ingredient.of(Items.FLINT)),
-    bone("bone", 0, new int[] {1, 2, 2, 1}, 15, SoundEvents.ARMOR_EQUIP_CHAIN,
-            0.0F, 0.0F, () -> Ingredient.of(Items.BONE)),
-    copper("copper", 0, new int[] {2, 5, 3, 1}, 20, SoundEvents.ARMOR_EQUIP_CHAIN,
-            0.0F, 0.0F, () -> Ingredient.of(Items.COPPER_INGOT)),
-    stone("stone", 0, new int[] {1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_CHAIN,
-            0.0F, 0.0F, () -> Ingredient.of(Items.STONE)),
-    obsidian("obsidian", 0, new int[] {1, 3, 4, 2}, 25, SoundEvents.ARMOR_EQUIP_CHAIN,
-            3.0F, 0.0F, () -> Ingredient.of(Items.OBSIDIAN)),
-    emerald("emerald", 0, new int[] {2, 7, 5, 2}, 25, SoundEvents.ARMOR_EQUIP_CHAIN,
-            2.0F, 0.0F, () -> Ingredient.of(Items.EMERALD)),
-    dragon("dragon", 0, new int[] {1, 3, 4, 2}, 25, SoundEvents.ARMOR_EQUIP_CHAIN,
-            4.0F, 0.4F, () -> Ingredient.of(ModItems.dragon_scale.get())),
+    public static final Holder<ArmorMaterial> wooden = register("wooden",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), attribute -> {
+                attribute.put(ArmorItem.Type.BOOTS, 1);
+                attribute.put(ArmorItem.Type.LEGGINGS, 1);
+                attribute.put(ArmorItem.Type.CHESTPLATE, 1);
+                attribute.put(ArmorItem.Type.HELMET, 1);
+                attribute.put(ArmorItem.Type.BODY, 1);
+            }), 10, 0f, 0f, () -> Items.OAK_PLANKS);
 
-    ;
+    public static final Holder<ArmorMaterial> flint = register("flint",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), attribute -> {
+                attribute.put(ArmorItem.Type.BOOTS, 1);
+                attribute.put(ArmorItem.Type.LEGGINGS, 2);
+                attribute.put(ArmorItem.Type.CHESTPLATE, 2);
+                attribute.put(ArmorItem.Type.HELMET, 1);
+                attribute.put(ArmorItem.Type.BODY, 2);
+            }), 10, 0f, 0f, () -> Items.FLINT);
 
-    private final String name;
-    private final int durabilityMultiplier;
-    private final int[] slotProtections;
-    private final int enchantmentValue;
-    private final SoundEvent equipSound;
-    private final float toughness;
-    private final float knockbackResistance;
-    private final Supplier<Ingredient> repairIngredient;
+    public static final Holder<ArmorMaterial> bone = register("bone",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), attribute -> {
+                attribute.put(ArmorItem.Type.BOOTS, 1);
+                attribute.put(ArmorItem.Type.LEGGINGS, 2);
+                attribute.put(ArmorItem.Type.CHESTPLATE, 2);
+                attribute.put(ArmorItem.Type.HELMET, 1);
+                attribute.put(ArmorItem.Type.BODY, 2);
+            }), 15, 0f, 0f, () -> Items.BONE);
 
-    private static final int[] BASE_DURABILITY = new int[] {13, 15, 16, 11};
+    public static final Holder<ArmorMaterial> copper = register("copper",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), attribute -> {
+                attribute.put(ArmorItem.Type.BOOTS, 2);
+                attribute.put(ArmorItem.Type.LEGGINGS, 5);
+                attribute.put(ArmorItem.Type.CHESTPLATE, 3);
+                attribute.put(ArmorItem.Type.HELMET, 1);
+                attribute.put(ArmorItem.Type.BODY, 3);
+            }), 20, 0f, 0f, () -> Items.COPPER_INGOT);
 
-    ModArmorMaterials(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue, SoundEvent equipSound,
-                      float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient)
-    {
-        this.name = name;
-        this.durabilityMultiplier = durabilityMultiplier;
-        this.slotProtections = slotProtections;
-        this.enchantmentValue = enchantmentValue;
-        this.equipSound = equipSound;
-        this.toughness = toughness;
-        this.knockbackResistance = knockbackResistance;
-        this.repairIngredient = repairIngredient;
-    }
+    public static final Holder<ArmorMaterial> stone = register("stone",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), attribute -> {
+                attribute.put(ArmorItem.Type.BOOTS, 1);
+                attribute.put(ArmorItem.Type.LEGGINGS, 1);
+                attribute.put(ArmorItem.Type.CHESTPLATE, 1);
+                attribute.put(ArmorItem.Type.HELMET, 1);
+                attribute.put(ArmorItem.Type.BODY, 1);
+            }), 10, 0f, 0f, () -> Items.STONE);
 
-    @Override
-    public int getDurabilityForType(ArmorItem.Type pType)
-    {
-        return BASE_DURABILITY[pType.ordinal()] * this.durabilityMultiplier;
-    }
+    public static final Holder<ArmorMaterial> obsidian = register("obsidian",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), attribute -> {
+                attribute.put(ArmorItem.Type.BOOTS, 1);
+                attribute.put(ArmorItem.Type.LEGGINGS, 3);
+                attribute.put(ArmorItem.Type.CHESTPLATE, 4);
+                attribute.put(ArmorItem.Type.HELMET, 2);
+                attribute.put(ArmorItem.Type.BODY, 4);
+            }), 25, 3f, 0f, () -> Items.OBSIDIAN);
 
-    @Override
-    public int getDefenseForType(ArmorItem.Type pType)
-    {
-        return this.slotProtections[pType.ordinal()];
-    }
+    public static final Holder<ArmorMaterial> emerald = register("emerald",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), attribute -> {
+                attribute.put(ArmorItem.Type.BOOTS, 2);
+                attribute.put(ArmorItem.Type.LEGGINGS, 7);
+                attribute.put(ArmorItem.Type.CHESTPLATE, 5);
+                attribute.put(ArmorItem.Type.HELMET, 2);
+                attribute.put(ArmorItem.Type.BODY, 5);
+            }), 25, 2f, 0f, () -> Items.EMERALD);
 
-    @Override
-    public int getEnchantmentValue()
-    {
-        return this.enchantmentValue;
-    }
+    public static final Holder<ArmorMaterial> dragon = register("dragon",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), attribute -> {
+                attribute.put(ArmorItem.Type.BOOTS, 1);
+                attribute.put(ArmorItem.Type.LEGGINGS, 3);
+                attribute.put(ArmorItem.Type.CHESTPLATE, 4);
+                attribute.put(ArmorItem.Type.HELMET, 2);
+                attribute.put(ArmorItem.Type.BODY, 4);
+            }), 25, 4f, 0.4f, () -> ModItems.dragon_scale.get());
 
-    @Override
-    public SoundEvent getEquipSound()
-    {
-        return this.equipSound;
-    }
+    private static Holder<ArmorMaterial> register(String name, EnumMap<ArmorItem.Type, Integer> typeProtection,
+                                                  int enchantability, float toughness, float knockbackResistance,
+                                                  Supplier<Item> ingredientItem) {
+        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, name);
+        Holder<SoundEvent> equipSound = SoundEvents.ARMOR_EQUIP_NETHERITE;
+        Supplier<Ingredient> ingredient = () -> Ingredient.of(ingredientItem.get());
+        List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(location));
 
-    @Override
-    public Ingredient getRepairIngredient()
-    {
-        return this.repairIngredient.get();
-    }
+        EnumMap<ArmorItem.Type, Integer> typeMap = new EnumMap<>(ArmorItem.Type.class);
+        for (ArmorItem.Type type : ArmorItem.Type.values()) {
+            typeMap.put(type, typeProtection.get(type));
+        }
 
-    @Override
-    public String getName()
-    {
-        return HavenKSH.MOD_ID + ":" + this.name;
-    }
-
-    @Override
-    public float getToughness()
-    {
-        return this.toughness;
-    }
-
-    @Override
-    public float getKnockbackResistance()
-    {
-        return this.knockbackResistance;
+        return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, location,
+                new ArmorMaterial(typeProtection, enchantability, equipSound, ingredient, layers, toughness, knockbackResistance));
     }
 }

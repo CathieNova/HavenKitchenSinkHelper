@@ -2,15 +2,14 @@ package net.cathienova.havenksh.datagen;
 
 import net.cathienova.havenksh.HavenKSH;
 import net.cathienova.havenksh.block.ModBlocks;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.ModelProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredBlock;
 
 public class ModBlockStateProvider extends BlockStateProvider
 {
@@ -77,20 +76,20 @@ public class ModBlockStateProvider extends BlockStateProvider
         crossBlock(ModBlocks.villager_seed);
     }
 
-    private void blockItem(RegistryObject<Block> blockRegistryObject) {
+    private void blockItem(DeferredBlock<Block> blockRegistryObject) {
         simpleBlockItem(blockRegistryObject.get(), new ModelFile.UncheckedModelFile(HavenKSH.MOD_ID +
-                ":block/" + ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath()));
+                ":block/" + BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath()));
     }
 
-    private void blockWithItem(RegistryObject<Block> blockRegistryObject) {
+    private void blockWithItem(DeferredBlock<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
     }
 
-    private void crossBlock(RegistryObject<Block> blockRegistryObject) {
-        ModelFile blockModel = models().cross(blockRegistryObject.getId().getPath(), new ResourceLocation(HavenKSH.MOD_ID, "block/animalgrass"));
+    private void crossBlock(DeferredBlock<Block> blockRegistryObject) {
+        ModelFile blockModel = models().cross(blockRegistryObject.getId().getPath(), ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, "block/animalgrass"));
         simpleBlock(blockRegistryObject.get(), blockModel);
 
         itemModels().withExistingParent(blockRegistryObject.getId().getPath(), "item/generated")
-                .texture("layer0", new ResourceLocation(HavenKSH.MOD_ID, "item/" + blockRegistryObject.getId().getPath()));
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, "item/" + blockRegistryObject.getId().getPath()));
     }
 }

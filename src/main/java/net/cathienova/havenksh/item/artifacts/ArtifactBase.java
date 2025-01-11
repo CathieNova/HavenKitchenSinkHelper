@@ -8,8 +8,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
@@ -20,17 +18,14 @@ public abstract  class ArtifactBase extends Item implements ICurioItem
 {
     protected abstract boolean isCosmetic();
 
-    public ArtifactBase(Properties pProperties)
-    {
-        super(pProperties);
-    }
+    public ArtifactBase(Properties pProperties){super(pProperties);}
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level pLevel, List<Component> components, TooltipFlag tooltipFlag)
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> pTooltip, TooltipFlag flag)
     {
         List<MutableComponent> tooltip = new ArrayList<>();
         addTooltip(stack, tooltip);
-        tooltip.forEach(line -> components.add(line.withStyle(ChatFormatting.GRAY)));
+        tooltip.forEach(line -> pTooltip.add(line.withStyle(ChatFormatting.GRAY)));
     }
 
     protected void addTooltip(ItemStack stack, List<MutableComponent> tooltip) {
@@ -45,13 +40,8 @@ public abstract  class ArtifactBase extends Item implements ICurioItem
         tooltip.add(Component.translatable("%s.tooltip.item.%s".formatted(HavenKSH.MOD_ID, getTooltipItemName())));
     }
 
-    protected String getTooltipItemName() {
-        return BuiltInRegistries.ITEM.getKey(this).getPath();
-    }
+    protected String getTooltipItemName() {return BuiltInRegistries.ITEM.getKey(this).getPath();}
 
     @Override
-    public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack)
-    {
-        return true;
-    }
+    public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {return true;}
 }

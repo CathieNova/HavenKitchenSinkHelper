@@ -1,19 +1,14 @@
 package net.cathienova.havenksh.item;
 
-import net.cathienova.havenksh.config.HavenConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.stats.Stats;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShovelItem;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
@@ -22,25 +17,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ExcavatorBase extends ShovelItem
+public class ExcavatorBase extends DiggerItem
 {
     private static final Map<Player, List<BlockPos>> breakingBlocks = new ConcurrentHashMap<>();
 
-    public ExcavatorBase(Tier material, int attackDamage, float attackSpeed, Properties properties)
+    public ExcavatorBase(Tier material, Properties properties)
     {
-        super(material, attackDamage, attackSpeed, properties);
+        super(material, BlockTags.MINEABLE_WITH_SHOVEL, properties);
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag)
     {
-        super.appendHoverText(stack, world, tooltip, flag);
+        super.appendHoverText(stack, context, tooltip, flag);
         tooltip.add(Component.translatable("item.havenksh.excavator.tooltip").withStyle(ChatFormatting.GOLD));
         tooltip.add(Component.translatable("item.havenksh.excavator.tooltip2").withStyle(ChatFormatting.GRAY));
-        if (stack.getItem() == ModTools.havenite_excavator.get())
-        {
-            tooltip.add(Component.translatable("tooltip.havenksh.ore_hammer.durability.infinite").withStyle(ChatFormatting.GOLD));
-        }
+        tooltip.add(Component.translatable("tooltip.havenksh.ore_hammer.durability", "§2" + (stack.getMaxDamage() - stack.getDamageValue())).withStyle(ChatFormatting.GOLD));
     }
 
     @Override
@@ -55,93 +47,47 @@ public class ExcavatorBase extends ShovelItem
         return 25;
     }
 
-    @Override
-    public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, Player player) {
-        if (player.level().isClientSide) return false;
+    public static List<BlockPos> blockPosList = new ArrayList<>();
 
-        BlockState blockState = player.level().getBlockState(pos);
-        if (!isBreakableByTool(blockState)) {
-            return super.onBlockStartBreak(itemstack, pos, player);
+    public static List<BlockPos> getBlocksToBeDestroyed(int range, BlockPos initalBlockPos, ServerPlayer player) {
+        List<BlockPos> positions = new ArrayList<>();
+
+        BlockHitResult traceResult = player.level().clip(new ClipContext(player.getEyePosition(1f),
+                (player.getEyePosition(1f).add(player.getViewVector(1f).scale(6f))),
+                ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
+        if(traceResult.getType() == HitResult.Type.MISS) {
+            return positions;
         }
 
-        BlockHitResult hitResult = (BlockHitResult) player.pick(10.0D, 1.0F, false);
-        if (hitResult.getType() != HitResult.Type.BLOCK) {
-            return false;
-        }
-
-        Direction face = hitResult.getDirection();
-
-        if (!player.isCrouching())
-            breakAdjacentBlocks(player, pos, face);
-        else
-            destroyBlock(player.level(), pos, player);
-
-        return true;
-    }
-
-    private void breakAdjacentBlocks(Player player, BlockPos pos, Direction face) {
-        int breakAmount = 0;
-        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
-
-        int startX = face.getAxis() == Direction.Axis.X ? 0 : -1;
-        int endX = face.getAxis() == Direction.Axis.X ? 0 : 1;
-        int startY = face.getAxis() == Direction.Axis.Y ? 0 : -1;
-        int endY = face.getAxis() == Direction.Axis.Y ? 0 : 1;
-        int startZ = face.getAxis() == Direction.Axis.Z ? 0 : -1;
-        int endZ = face.getAxis() == Direction.Axis.Z ? 0 : 1;
-
-        for (int dx = startX; dx <= endX; dx++) {
-            for (int dy = startY; dy <= endY; dy++) {
-                for (int dz = startZ; dz <= endZ; dz++) {
-                    mutablePos.set(pos.getX() + dx, pos.getY() + dy, pos.getZ() + dz);
-                    BlockState adjacentBlock = player.level().getBlockState(mutablePos);
-
-                    if (isBreakableByTool(adjacentBlock)) {
-                        destroyBlock(player.level(), mutablePos, player);
-                        breakAmount++;
-                    }
+        if(traceResult.getDirection() == Direction.DOWN || traceResult.getDirection() == Direction.UP) {
+            for(int x = -range; x <= range; x++) {
+                for(int y = -range; y <= range; y++) {
+                    positions.add(new BlockPos(initalBlockPos.getX() + x, initalBlockPos.getY(), initalBlockPos.getZ() + y));
                 }
             }
         }
 
-        int finalBreakAmount = HavenConfig.excavatorDurability ? 1 : breakAmount;
-        consumeDurability(player, finalBreakAmount);
-    }
-
-    private void consumeDurability(Player player, int durabilityCost)
-    {
-        if (!player.isCreative() && durabilityCost > 0)
-        {
-            player.getMainHandItem().hurtAndBreak(durabilityCost, player, p -> p.broadcastBreakEvent(player.getUsedItemHand()));
-        }
-    }
-
-    private static boolean isBreakableByTool(BlockState state) {
-        return state.is(BlockTags.MINEABLE_WITH_SHOVEL) || state.isAir();
-    }
-
-    private void destroyBlock(Level level, BlockPos pos, Player player) {
-        BlockState blockState = level.getBlockState(pos);
-        boolean canHarvest = canHarvestBlock(blockState, player);
-        boolean isCreative = player.isCreative();
-
-        if (canHarvest) {
-            if (isCreative) {
-                level.destroyBlock(pos, false, player);
-            } else {
-                level.destroyBlock(pos, true, player);
-                player.awardStat(Stats.ITEM_USED.get(player.getMainHandItem().getItem()));
-                player.awardStat(Stats.BLOCK_MINED.get(blockState.getBlock()));
+        if(traceResult.getDirection() == Direction.NORTH || traceResult.getDirection() == Direction.SOUTH) {
+            for(int x = -range; x <= range; x++) {
+                for(int y = -range; y <= range; y++) {
+                    positions.add(new BlockPos(initalBlockPos.getX() + x, initalBlockPos.getY() + y, initalBlockPos.getZ()));
+                }
             }
         }
+
+        if(traceResult.getDirection() == Direction.EAST || traceResult.getDirection() == Direction.WEST) {
+            for(int x = -range; x <= range; x++) {
+                for(int y = -range; y <= range; y++) {
+                    positions.add(new BlockPos(initalBlockPos.getX(), initalBlockPos.getY() + y, initalBlockPos.getZ() + x));
+                }
+            }
+        }
+
+        blockPosList = positions;
+        return positions;
     }
 
-    private boolean canHarvestBlock(BlockState state, Player player) {
-        ItemStack tool = player.getMainHandItem();
-        return tool.isCorrectToolForDrops(state);
-    }
-
-    public List<BlockPos> get3x3Area(BlockPos pos, Direction face, Player player) {
+    public static List<BlockPos> get3x3Area(BlockPos pos, Direction face, Player player) {
         List<BlockPos> blocks = new ArrayList<>();
         int startX = face.getAxis() == Direction.Axis.X ? 0 : -1;
         int endX = face.getAxis() == Direction.Axis.X ? 0 : 1;
@@ -154,10 +100,7 @@ public class ExcavatorBase extends ShovelItem
             for (int dy = startY; dy <= endY; dy++) {
                 for (int dz = startZ; dz <= endZ; dz++) {
                     BlockPos blockPos = pos.offset(dx, dy, dz);
-                    BlockState blockState = player.level().getBlockState(blockPos);
-                    if (isBreakableByTool(blockState) && !blockState.isAir()) {
-                        blocks.add(blockPos);
-                    }
+                    blocks.add(blockPos);
                 }
             }
         }

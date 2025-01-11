@@ -1,20 +1,25 @@
 package net.cathienova.havenksh.handler;
 
+import net.cathienova.havenksh.HavenKSH;
+import net.cathienova.havenksh.config.CommonConfig;
 import net.cathienova.havenksh.config.HavenConfig;
 import net.cathienova.havenksh.item.ModItems;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 
 import java.util.Random;
 
+@EventBusSubscriber(modid = HavenKSH.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class MobDropHandler
 {
-    @SubscribeEvent
-    public void onLivingDrops(LivingDropsEvent event){
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public static void onLivingDrops(LivingDropsEvent event){
         var entity = event.getEntity();
         var level = event.getEntity().level();
         int dragonScaleDropChance = HavenConfig.dragonScaleDropChance;

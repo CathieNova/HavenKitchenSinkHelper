@@ -19,6 +19,6 @@ public enum MobSeedDataProvider implements IServerDataProvider<BlockAccessor> {
 
     @Override
     public ResourceLocation getUid() {
-        return new ResourceLocation("havenksh", "mobseed_remaining_time");
+        return ResourceLocation.fromNamespaceAndPath("havenksh", "mobseed_remaining_time");
     }
 }

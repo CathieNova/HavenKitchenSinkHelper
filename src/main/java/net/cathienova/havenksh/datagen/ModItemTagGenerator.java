@@ -10,11 +10,10 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -63,6 +62,51 @@ public class ModItemTagGenerator extends ItemTagsProvider {
             .add(ModArmor.dragon_leggings.get())
             .add(ModArmor.dragon_boots.get())
         ;
+
+        this.tag(ItemTags.SWORDS)
+                .add(ModTools.bone_sword.get())
+                .add(ModTools.flint_sword.get())
+                .add(ModTools.copper_sword.get())
+                .add(ModTools.emerald_sword.get())
+                .add(ModTools.obsidian_sword.get())
+                .add(ModTools.dragon_sword.get())
+                ;
+
+        this.tag(ItemTags.PICKAXES)
+                .add(ModTools.bone_pickaxe.get())
+                .add(ModTools.flint_pickaxe.get())
+                .add(ModTools.copper_pickaxe.get())
+                .add(ModTools.emerald_pickaxe.get())
+                .add(ModTools.obsidian_pickaxe.get())
+                .add(ModTools.dragon_pickaxe.get())
+                ;
+
+        this.tag(ItemTags.AXES)
+                .add(ModTools.bone_axe.get())
+                .add(ModTools.flint_axe.get())
+                .add(ModTools.copper_axe.get())
+                .add(ModTools.emerald_axe.get())
+                .add(ModTools.obsidian_axe.get())
+                .add(ModTools.dragon_axe.get())
+                ;
+
+        this.tag(ItemTags.SHOVELS)
+                .add(ModTools.bone_shovel.get())
+                .add(ModTools.flint_shovel.get())
+                .add(ModTools.copper_shovel.get())
+                .add(ModTools.emerald_shovel.get())
+                .add(ModTools.obsidian_shovel.get())
+                .add(ModTools.dragon_shovel.get())
+                ;
+
+        this.tag(ItemTags.HOES)
+                .add(ModTools.bone_hoe.get())
+                .add(ModTools.flint_hoe.get())
+                .add(ModTools.copper_hoe.get())
+                .add(ModTools.emerald_hoe.get())
+                .add(ModTools.obsidian_hoe.get())
+                .add(ModTools.dragon_hoe.get())
+                ;
 
         this.tag(ModTags.Items.haveniteOres)
                 .add(ModBlocks.havenite_ore.get().asItem())
@@ -134,15 +178,6 @@ public class ModItemTagGenerator extends ItemTagsProvider {
             .add(ModBlocks.lamp_yellow.get().asItem())
             .add(ModBlocks.lamp_rainbow.get().asItem())
             ;
-
-        this.tag(ModTags.Items.crushers)
-                .add(ModTools.stone_crusher.get())
-                .add(ModTools.iron_crusher.get())
-                .add(ModTools.golden_crusher.get())
-                .add(ModTools.diamond_crusher.get())
-                .add(ModTools.netherite_crusher.get())
-                .add(ModTools.havenite_crusher.get())
-        ;
 
         this.tag(ModTags.Items.forgeCopperDust).add(ModItems.copper_dust.get());
         this.tag(ModTags.Items.forgeGoldDust).add(ModItems.gold_dust.get());

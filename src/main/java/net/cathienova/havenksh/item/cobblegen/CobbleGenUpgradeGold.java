@@ -41,10 +41,10 @@ public class CobbleGenUpgradeGold extends Item
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced)
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag)
     {
-        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        super.appendHoverText(stack, context, tooltip, tooltipFlag);
 
-        pTooltipComponents.add(Component.translatable("item.havenksh.cobble_gen_upgrade_gold.tooltip").withStyle(net.minecraft.ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("item.havenksh.cobble_gen_upgrade_gold.tooltip").withStyle(net.minecraft.ChatFormatting.GOLD));
     }
 }

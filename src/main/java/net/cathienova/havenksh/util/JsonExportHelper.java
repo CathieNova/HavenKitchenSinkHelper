@@ -2,19 +2,23 @@ package net.cathienova.havenksh.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.minecraft.core.BlockPos;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.fml.loading.FMLPaths;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -32,9 +36,9 @@ public class JsonExportHelper
     public static void exportItemsToJson()
     {
         List<String> items = new ArrayList<>();
-        for (var item : ForgeRegistries.ITEMS)
+        for (var item : BuiltInRegistries.ITEM)
         {
-            items.add(ForgeRegistries.ITEMS.getKey(item).toString());
+            items.add(BuiltInRegistries.ITEM.getKey(item).toString());
         }
 
         Collections.sort(items);
@@ -44,9 +48,9 @@ public class JsonExportHelper
     public static void exportEntityTypesToJson()
     {
         List<String> entityTypes = new ArrayList<>();
-        for (var entityType : ForgeRegistries.ENTITY_TYPES)
+        for (var entityType : BuiltInRegistries.ENTITY_TYPE)
         {
-            entityTypes.add(ForgeRegistries.ENTITY_TYPES.getKey(entityType).toString());
+            entityTypes.add(BuiltInRegistries.ENTITY_TYPE.getKey(entityType).toString());
         }
 
         Collections.sort(entityTypes);
@@ -56,9 +60,9 @@ public class JsonExportHelper
     public static void exportBlocksToJson()
     {
         List<String> blocks = new ArrayList<>();
-        for (var block : ForgeRegistries.BLOCKS)
+        for (var block : BuiltInRegistries.BLOCK)
         {
-            blocks.add(ForgeRegistries.BLOCKS.getKey(block).toString());
+            blocks.add(BuiltInRegistries.BLOCK.getKey(block).toString());
         }
 
         Collections.sort(blocks);
@@ -69,15 +73,18 @@ public class JsonExportHelper
     {
         List<String> taggedItems = new ArrayList<>();
         String actualTagName = tagName.replace('_', ':');
-        var tagResource = new ResourceLocation(actualTagName);
+        var tagResource = ResourceLocation.parse(actualTagName);
         var itemTagKey = ItemTags.create(tagResource);
+        Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
 
-        if (ForgeRegistries.ITEMS.tags().isKnownTagName(itemTagKey))
-        {
-            ForgeRegistries.ITEMS.tags().getTag(itemTagKey).forEach(item ->
+        if (itemRegistry.containsKey(itemTagKey.location())) {
+            HolderLookup<Item> itemHolderLookup = itemRegistry.asLookup();
+            Optional<HolderSet.Named<Item>> tagItems = itemHolderLookup.get(itemTagKey);
+
+            tagItems.ifPresent(holders -> holders.forEach(item ->
             {
-                taggedItems.add(ForgeRegistries.ITEMS.getKey(item).toString());
-            });
+                taggedItems.add(Objects.requireNonNull(item.getKey()).toString());
+            }));
         }
 
         Collections.sort(taggedItems);
@@ -88,15 +95,18 @@ public class JsonExportHelper
     {
         List<String> taggedBlocks = new ArrayList<>();
         String actualTagName = tagName.replace('_', ':');
-        var tagResource = new ResourceLocation(actualTagName);
-        var blockTagKey = BlockTags.create(tagResource);
+        var tagResource = ResourceLocation.parse(actualTagName);
+        var itemTagKey = BlockTags.create(tagResource);
+        Registry<Block> blockRegistry = BuiltInRegistries.BLOCK;
 
-        if (ForgeRegistries.BLOCKS.tags().isKnownTagName(blockTagKey))
-        {
-            ForgeRegistries.BLOCKS.tags().getTag(blockTagKey).forEach(block ->
+        if (blockRegistry.containsKey(itemTagKey.location())) {
+            HolderLookup<Block> itemHolderLookup = blockRegistry.asLookup();
+            Optional<HolderSet.Named<Block>> tagBlocks = itemHolderLookup.get(itemTagKey);
+
+            tagBlocks.ifPresent(holders -> holders.forEach(block ->
             {
-                taggedBlocks.add(ForgeRegistries.BLOCKS.getKey(block).toString());
-            });
+                taggedBlocks.add(Objects.requireNonNull(block.getKey()).toString());
+            }));
         }
 
         Collections.sort(taggedBlocks);
@@ -106,9 +116,9 @@ public class JsonExportHelper
     public static void exportModItemsToJson(String modId)
     {
         List<String> modItems = new ArrayList<>();
-        for (var item : ForgeRegistries.ITEMS)
+        for (var item : BuiltInRegistries.ITEM)
         {
-            var itemKey = ForgeRegistries.ITEMS.getKey(item);
+            var itemKey = BuiltInRegistries.ITEM.getKey(item);
             if (itemKey != null && itemKey.getNamespace().equals(modId))
             {
                 modItems.add(itemKey.toString());
@@ -122,9 +132,9 @@ public class JsonExportHelper
     public static void exportModBlocksToJson(String modId)
     {
         List<String> modBlocks = new ArrayList<>();
-        for (var block : ForgeRegistries.BLOCKS)
+        for (var block : BuiltInRegistries.BLOCK)
         {
-            var blockKey = ForgeRegistries.BLOCKS.getKey(block);
+            var blockKey = BuiltInRegistries.BLOCK.getKey(block);
             if (blockKey != null && blockKey.getNamespace().equals(modId))
             {
                 modBlocks.add(blockKey.toString());
@@ -149,7 +159,7 @@ public class JsonExportHelper
                 if (!itemStack.isEmpty())
                 {
                     Map<String, Object> itemData = new HashMap<>();
-                    String itemId = ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString();
+                    String itemId = BuiltInRegistries.ITEM.getKey(itemStack.getItem()).toString();
                     int amount = itemStack.getCount();
                     itemData.put("item", itemId);
                     itemData.put("amount", amount);
@@ -157,7 +167,7 @@ public class JsonExportHelper
                 }
             }
         }
-        else if (blockEntity != null && blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent())
+        /*else if (blockEntity != null && blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent())
         {
             blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler ->
             {
@@ -167,7 +177,7 @@ public class JsonExportHelper
                     if (!itemStack.isEmpty())
                     {
                         Map<String, Object> itemData = new HashMap<>();
-                        String itemId = ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString();
+                        String itemId = BuiltInRegistries.ITEM.getKey(itemStack.getItem()).toString();
                         int amount = itemStack.getCount();
                         itemData.put("item", itemId);
                         itemData.put("amount", amount);
@@ -175,7 +185,7 @@ public class JsonExportHelper
                     }
                 }
             });
-        }
+        }*/
         else
         {
             player.sendSystemMessage(Component.literal("No storage container found at the specified location"));
@@ -199,12 +209,12 @@ public class JsonExportHelper
                 ItemStack itemStack = container.getItem(i);
                 if (!itemStack.isEmpty() && itemStack.getItem() instanceof BlockItem)
                 {
-                    String blockId = ForgeRegistries.BLOCKS.getKey(((BlockItem) itemStack.getItem()).getBlock()).toString();
+                    String blockId = BuiltInRegistries.BLOCK.getKey(((BlockItem) itemStack.getItem()).getBlock()).toString();
                     containerBlocks.add(blockId);
                 }
             }
         }
-        else if (blockEntity != null && blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent())
+        /*else if (blockEntity != null && blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent())
         {
             blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler ->
             {
@@ -213,12 +223,12 @@ public class JsonExportHelper
                     ItemStack itemStack = handler.getStackInSlot(i);
                     if (!itemStack.isEmpty() && itemStack.getItem() instanceof BlockItem)
                     {
-                        String blockId = ForgeRegistries.BLOCKS.getKey(((BlockItem) itemStack.getItem()).getBlock()).toString();
+                        String blockId = BuiltInRegistries.BLOCK.getKey(((BlockItem) itemStack.getItem()).getBlock()).toString();
                         containerBlocks.add(blockId);
                     }
                 }
             });
-        }
+        }*/
         else
         {
             player.sendSystemMessage(Component.literal("No storage container found at the specified location"));
@@ -239,23 +249,23 @@ public class JsonExportHelper
                 if (!itemStack.isEmpty()) {
                     Map<String, Object> reward = new HashMap<>();
                     reward.put("count", itemStack.getCount());
-                    reward.put("item", ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString());
+                    reward.put("item", BuiltInRegistries.ITEM.getKey(itemStack.getItem()).toString());
                     rewards.add(reward);
                 }
             }
-        } else if (blockEntity != null && blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
+        } /*else if (blockEntity != null && blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
             blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
                 for (int i = 0; i < handler.getSlots(); i++) {
                     ItemStack itemStack = handler.getStackInSlot(i);
                     if (!itemStack.isEmpty()) {
                         Map<String, Object> reward = new HashMap<>();
                         reward.put("count", itemStack.getCount());
-                        reward.put("item", ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString());
+                        reward.put("item", BuiltInRegistries.ITEM.getKey(itemStack.getItem()).toString());
                         rewards.add(reward);
                     }
                 }
             });
-        } else {
+        }*/ else {
             player.sendSystemMessage(Component.literal("No storage container found at the specified location"));
             return;
         }
@@ -304,16 +314,16 @@ public class JsonExportHelper
         List<String> modElements = new ArrayList<>();
         String transformedTitle = formatTitle(title);
         // Fetch mod's items
-        for (var item : ForgeRegistries.ITEMS) {
-            var itemKey = ForgeRegistries.ITEMS.getKey(item);
+        for (var item : BuiltInRegistries.ITEM) {
+            var itemKey = BuiltInRegistries.ITEM.getKey(item);
             if (itemKey != null && itemKey.getNamespace().equals(modId)) {
                 modElements.add(itemKey.toString());
             }
         }
 
         // Fetch mod's blocks
-        for (var block : ForgeRegistries.BLOCKS) {
-            var blockKey = ForgeRegistries.BLOCKS.getKey(block);
+        for (var block : BuiltInRegistries.BLOCK) {
+            var blockKey = BuiltInRegistries.BLOCK.getKey(block);
             if (blockKey != null && blockKey.getNamespace().equals(modId)) {
                 modElements.add(blockKey.toString());
             }
@@ -445,56 +455,55 @@ public class JsonExportHelper
 
     private static String constructNBTItemString(ItemStack itemStack) {
         StringBuilder itemBuilder = new StringBuilder();
-        String itemId = ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString();
+        String itemId = BuiltInRegistries.ITEM.getKey(itemStack.getItem()).toString();
         int count = itemStack.getCount();
 
         itemBuilder.append("{\n")
-                .append("      Count: ").append(count).append(",\n")
-                .append("      id: \"").append(itemId).append("\",\n");
+                .append("  Count: ").append(count).append(",\n")
+                .append("  id: \"").append(itemId).append("\"");
 
-        if (itemStack.hasTag()) {
-            itemBuilder.append("      tag: {\n");
+        // Handle custom components
+        var components = itemStack.getComponents();
+        if (!components.isEmpty()) {
+            itemBuilder.append(",\n  components: {\n");
 
-            // Handle custom NBT data
-            if (itemStack.getTag().contains("Damage")) {
-                itemBuilder.append("        Damage: ").append(itemStack.getTag().getInt("Damage")).append(",\n");
+            // Handle damage (if applicable)
+            if (itemStack.isDamageableItem()) {
+                int damage = itemStack.getDamageValue();
+                itemBuilder.append("    Damage: ").append(damage).append(",\n");
             }
 
             // Handle enchantments
-            if (itemStack.getTag().contains("Enchantments")) {
-                itemBuilder.append("        Enchantments: [\n");
-                var enchantments = itemStack.getTag().getList("Enchantments", 10); // List of CompoundNBTs
-                for (int i = 0; i < enchantments.size(); i++) {
-                    var enchantment = enchantments.getCompound(i);
-                    itemBuilder.append("          { id: \"")
-                            .append(enchantment.getString("id"))
-                            .append("\", lvl: ")
-                            .append(enchantment.getShort("lvl"))
-                            .append("s },\n");
+            ItemEnchantments enchantments = itemStack.getEnchantments();
+            if (!enchantments.isEmpty()) {
+                itemBuilder.append("    Enchantments: [\n");
+                for (var entry : enchantments.entrySet()) {
+                    Holder<Enchantment> enchantment = entry.getKey();
+                    int level = entry.getValue();
+                    String enchantmentId = enchantment.unwrapKey().map(ResourceKey::location).orElseThrow().toString();
+                    itemBuilder.append("      { id: \"").append(enchantmentId).append("\", lvl: ").append(level).append(" },\n");
                 }
-                itemBuilder.setLength(itemBuilder.length() - 2); // Remove last comma
-                itemBuilder.append("\n        ],\n");
+                itemBuilder.setLength(itemBuilder.length() - 2); // Remove the last comma
+                itemBuilder.append("\n    ],\n");
             }
 
-            // Handle display names (if exists)
-            if (itemStack.getTag().contains("display")) {
-                var display = itemStack.getTag().getCompound("display");
-                if (display.contains("Name")) {
-                    itemBuilder.append("        display: {\n")
-                            .append("          Name: ").append(display.getString("Name")).append("\n")
-                            .append("        },\n");
-                }
+            // Handle display properties
+            Component displayName = itemStack.getHoverName();
+            if (displayName != null) {
+                itemBuilder.append("    display: {\n")
+                        .append("      Name: \"").append(displayName.getString()).append("\"\n")
+                        .append("    },\n");
             }
 
-            // Remove last comma
+            // Remove trailing comma
             if (itemBuilder.charAt(itemBuilder.length() - 2) == ',') {
                 itemBuilder.setLength(itemBuilder.length() - 2);
             }
 
-            itemBuilder.append("\n      }\n");
+            itemBuilder.append("\n  }");
         }
 
-        itemBuilder.append("    }");
+        itemBuilder.append("\n}");
         return itemBuilder.toString();
     }
 
@@ -520,25 +529,27 @@ public class JsonExportHelper
         }
     }
 
-    public static void exportAllTagsToJson()
-    {
-        // Export item tag names
+    public static void exportAllTagsToJson() {
         List<String> itemTags = new ArrayList<>();
-        for (var tag : ForgeRegistries.ITEMS.tags()) {
-            String tagName = tag.getKey().location().toString();
-            itemTags.add(tagName);
-        }
+        List<String> blockTags = new ArrayList<>();
+
+        // Retrieve all Item tags
+        BuiltInRegistries.ITEM.asLookup().listTags().forEach(tagKey -> {
+            if (tagKey != null) {
+                itemTags.add(tagKey.key().location().toString());
+            }
+        });
 
         // Sort and write item tags to JSON
         Collections.sort(itemTags);
         writeToJson("all_item_tags.json", itemTags, CONFIG_DIR);
 
-        // Export block tag names
-        List<String> blockTags = new ArrayList<>();
-        for (var tag : ForgeRegistries.BLOCKS.tags()) {
-            String tagName = tag.getKey().location().toString();
-            blockTags.add(tagName);
-        }
+        // Retrieve all Block tags
+        BuiltInRegistries.BLOCK.asLookup().listTags().forEach(tagKey -> {
+            if (tagKey != null) {
+                blockTags.add(tagKey.key().location().toString());
+            }
+        });
 
         // Sort and write block tags to JSON
         Collections.sort(blockTags);

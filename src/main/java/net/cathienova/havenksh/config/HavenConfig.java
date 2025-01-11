@@ -1,7 +1,7 @@
 package net.cathienova.havenksh.config;
 
 import net.cathienova.havenksh.HavenKSH;
-import net.minecraftforge.fml.config.ModConfig;
+import net.neoforged.fml.config.ModConfig;
 
 import java.util.List;
 

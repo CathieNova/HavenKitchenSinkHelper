@@ -1,11 +1,11 @@
 package net.cathienova.havenksh.block.mobseeds;
 
 import net.cathienova.havenksh.block.ModBlockEntities;
+import net.cathienova.havenksh.config.CommonConfig;
 import net.cathienova.havenksh.config.HavenConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.GlowSquid;
-import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class GlowSquidSeedEntity extends MobSeedEntity<GlowSquid> {

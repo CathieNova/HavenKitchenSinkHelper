@@ -1,7 +1,6 @@
 package net.cathienova.havenksh.events;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.cathienova.havenksh.HavenKSH;
 import net.cathienova.havenksh.block.mobseeds.MobSeedEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -12,16 +11,15 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class MobSeedRenderer<T extends MobSeedEntity<?>> implements BlockEntityRenderer<T> {
     private final EntityRenderDispatcher dispatcher;
 
     public MobSeedRenderer() {
-        this.dispatcher = null;//Minecraft.getInstance().getEntityRenderDispatcher();
+        this.dispatcher = null;
     }
 
     public MobSeedRenderer(BlockEntityRendererProvider.Context context)

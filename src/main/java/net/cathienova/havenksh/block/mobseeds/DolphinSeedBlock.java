@@ -1,5 +1,6 @@
 package net.cathienova.havenksh.block.mobseeds;
 
+import com.mojang.serialization.MapCodec;
 import net.cathienova.havenksh.block.ModBlockEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -7,12 +8,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -23,12 +25,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class DolphinSeedBlock extends MobSeedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final MapCodec<DolphinSeedBlock> CODEC = simpleCodec(DolphinSeedBlock::new);
 
     public DolphinSeedBlock(Properties properties) {
         super(properties);
@@ -45,6 +47,12 @@ public class DolphinSeedBlock extends MobSeedBlock {
     @Override
     protected BlockEntityType<?> getTileEntityType() {
         return ModBlockEntities.dolphin_seed_tile.get();
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec()
+    {
+        return CODEC;
     }
 
     @Override
@@ -88,7 +96,7 @@ public class DolphinSeedBlock extends MobSeedBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         Block[] blocks = {Blocks.WATER};
         String blockNames = "";
         for (Block block : blocks) {

@@ -4,6 +4,7 @@ import net.cathienova.havenksh.HavenKSH;
 import net.cathienova.havenksh.item.ModArmor;
 import net.cathienova.havenksh.item.ModItems;
 import net.cathienova.havenksh.item.ModTools;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -15,16 +16,17 @@ import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.LinkedHashMap;
 
-public class ModItemModelProvider extends ItemModelProvider {
+public class ModItemModelProvider extends ItemModelProvider
+{
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, HavenKSH.MOD_ID, existingFileHelper);
     }
@@ -54,13 +56,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         handHeldItem(ModTools.emerald_ore_hammer);
         handHeldItem(ModTools.netherite_ore_hammer);
         handHeldItem(ModTools.havenite_ore_hammer);
-
-        handHeldItem(ModTools.stone_crusher);
-        handHeldItem(ModTools.iron_crusher);
-        handHeldItem(ModTools.golden_crusher);
-        handHeldItem(ModTools.diamond_crusher);
-        handHeldItem(ModTools.netherite_crusher);
-        handHeldItem(ModTools.havenite_crusher);
 
         simpleItem(ModItems.diamond_nugget);
         simpleItem(ModItems.emerald_nugget);
@@ -230,83 +225,77 @@ public class ModItemModelProvider extends ItemModelProvider {
         //bowItem(ModTools.dragon_bow);
     }
 
-    private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
+    private ItemModelBuilder simpleItem(DeferredItem<Item> item) {
         return withExistingParent(item.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(HavenKSH.MOD_ID,"item/" + item.getId().getPath()));
+                ResourceLocation.parse("item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID,"item/" + item.getId().getPath()));
     }
 
-    private ItemModelBuilder bowItem(RegistryObject<BowItem> bow) {
+    private ItemModelBuilder bowItem(DeferredItem<BowItem> bow) {
         return getBuilder(bow.getId().getPath())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", new ResourceLocation(HavenKSH.MOD_ID, "item/" + bow.getId().getPath()))
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, "item/" + bow.getId().getPath()))
                 .override()
-                .predicate(new ResourceLocation("pulling"), 1.0F)
-                .model(new ModelFile.UncheckedModelFile(new ResourceLocation(HavenKSH.MOD_ID, "item/" + bow.getId().getPath() + "_pulling_0")))
+                .predicate(ResourceLocation.parse("pulling"), 1.0F)
+                .model(new ModelFile.UncheckedModelFile(ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, "item/" + bow.getId().getPath() + "_pulling_0")))
                 .end()
                 .override()
-                .predicate(new ResourceLocation("pulling"), 1.0F)
-                .predicate(new ResourceLocation("pull"), 0.65F)
-                .model(new ModelFile.UncheckedModelFile(new ResourceLocation(HavenKSH.MOD_ID, "item/" + bow.getId().getPath() + "_pulling_1")))
+                .predicate(ResourceLocation.parse("pulling"), 1.0F)
+                .predicate(ResourceLocation.parse("pull"), 0.65F)
+                .model(new ModelFile.UncheckedModelFile(ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, "item/" + bow.getId().getPath() + "_pulling_1")))
                 .end()
                 .override()
-                .predicate(new ResourceLocation("pulling"), 1.0F)
-                .predicate(new ResourceLocation("pull"), 0.9F)
-                .model(new ModelFile.UncheckedModelFile(new ResourceLocation(HavenKSH.MOD_ID, "item/" + bow.getId().getPath() + "_pulling_2")))
+                .predicate(ResourceLocation.parse("pulling"), 1.0F)
+                .predicate(ResourceLocation.parse("pull"), 0.9F)
+                .model(new ModelFile.UncheckedModelFile(ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, "item/" + bow.getId().getPath() + "_pulling_2")))
                 .end();
     }
 
-    private ItemModelBuilder ShearsItem(RegistryObject<ShearsItem> item)
+    private ItemModelBuilder ShearsItem(DeferredItem<ShearsItem> item)
     {
         return withExistingParent(item.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(HavenKSH.MOD_ID, "item/" + item.getId().getPath()));
+                ResourceLocation.parse("item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, "item/" + item.getId().getPath()));
     }
 
-    private ItemModelBuilder handHeldItem(RegistryObject<Item> item) {
+    private ItemModelBuilder handHeldItem(DeferredItem<Item> item) {
         return withExistingParent(item.getId().getPath(),
-                new ResourceLocation("item/handheld")).texture("layer0",
-                new ResourceLocation(HavenKSH.MOD_ID,"item/" + item.getId().getPath()));
+                ResourceLocation.parse("item/handheld")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID,"item/" + item.getId().getPath()));
     }
 
-    private void simpleBlockItem(RegistryObject<Block> block) {
+    private void simpleBlockItem(DeferredBlock<Block> block) {
         String path = block.getId().getPath();
         withExistingParent(path, modLoc("block/" + path + "_stage3"));
     }
 
-    public void evenSimplerBlockItem(RegistryObject<Block> block)
+    public void evenSimplerBlockItem(DeferredBlock<Block> block)
     {
-        this.withExistingParent(HavenKSH.MOD_ID + ":" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath(),
-                modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath()));
+        this.withExistingParent(HavenKSH.MOD_ID + ":" + BuiltInRegistries.BLOCK.getKey(block.get()).getPath(),
+                modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block.get()).getPath()));
     }
 
-    private void trimmedArmorItem(RegistryObject<Item> itemRegistryObject)
-    {
-        final String MOD_ID = HavenKSH.MOD_ID;
+    private void trimmedArmorItem(DeferredItem<ArmorItem> itemDeferredItem) {
+        final String MOD_ID = HavenKSH.MOD_ID; // Change this to your mod id
 
-        if (itemRegistryObject.get() instanceof ArmorItem armorItem)
-        {
-            trimMaterials.entrySet().forEach(entry ->
-            {
+        if(itemDeferredItem.get() instanceof ArmorItem armorItem) {
+            trimMaterials.forEach((trimMaterial, value) -> {
+                float trimValue = value;
 
-                ResourceKey<TrimMaterial> trimMaterial = entry.getKey();
-                float trimValue = entry.getValue();
+                String armorType = switch (armorItem.getEquipmentSlot()) {
+                    case HEAD -> "helmet";
+                    case CHEST -> "chestplate";
+                    case LEGS -> "leggings";
+                    case FEET -> "boots";
+                    default -> "";
+                };
 
-                String armorType = switch (armorItem.getEquipmentSlot())
-                        {
-                            case HEAD -> "helmet";
-                            case CHEST -> "chestplate";
-                            case LEGS -> "leggings";
-                            case FEET -> "boots";
-                            default -> "";
-                        };
-
-                String armorItemPath = "item/" + armorItem;
+                String armorItemPath = armorItem.toString();
                 String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
                 String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
-                ResourceLocation armorItemResLoc = new ResourceLocation(MOD_ID, armorItemPath);
-                ResourceLocation trimResLoc = new ResourceLocation(trimPath); // minecraft namespace
-                ResourceLocation trimNameResLoc = new ResourceLocation(MOD_ID, currentTrimName);
+                ResourceLocation armorItemResLoc = ResourceLocation.parse(armorItemPath);
+                ResourceLocation trimResLoc = ResourceLocation.parse(trimPath); // minecraft namespace
+                ResourceLocation trimNameResLoc = ResourceLocation.parse(currentTrimName);
 
                 // This is used for making the ExistingFileHelper acknowledge that this texture exist, so this will
                 // avoid an IllegalArgumentException
@@ -315,18 +304,18 @@ public class ModItemModelProvider extends ItemModelProvider {
                 // Trimmed armorItem files
                 getBuilder(currentTrimName)
                         .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                        .texture("layer0", armorItemResLoc)
+                        .texture("layer0", armorItemResLoc.getNamespace() + ":item/" + armorItemResLoc.getPath())
                         .texture("layer1", trimResLoc);
 
                 // Non-trimmed armorItem file (normal variant)
-                this.withExistingParent(itemRegistryObject.getId().getPath(),
+                this.withExistingParent(itemDeferredItem.getId().getPath(),
                                 mcLoc("item/generated"))
                         .override()
-                        .model(new ModelFile.UncheckedModelFile(trimNameResLoc))
+                        .model(new ModelFile.UncheckedModelFile(trimNameResLoc.getNamespace()  + ":item/" + trimNameResLoc.getPath()))
                         .predicate(mcLoc("trim_type"), trimValue).end()
                         .texture("layer0",
-                                new ResourceLocation(MOD_ID,
-                                        "item/" + itemRegistryObject.getId().getPath()));
+                                ResourceLocation.fromNamespaceAndPath(MOD_ID,
+                                        "item/" + itemDeferredItem.getId().getPath()));
             });
         }
     }

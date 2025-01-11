@@ -6,16 +6,17 @@ import net.cathienova.havenksh.events.MobSeedRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
-@Mod.EventBusSubscriber(modid = HavenKSH.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = HavenKSH.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class HavenKSHClient {
     public HavenKSHClient() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+        ModLoadingContext.get().getActiveContainer().getEventBus().addListener(this::clientSetup);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -80,5 +81,10 @@ public class HavenKSHClient {
         BlockEntityRenderers.register(ModBlockEntities.polar_bear_seed_tile.get(), MobSeedRenderer::new);
         BlockEntityRenderers.register(ModBlockEntities.squid_seed_tile.get(), MobSeedRenderer::new);
         BlockEntityRenderers.register(ModBlockEntities.villager_seed_tile.get(), MobSeedRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void onClientSetup(FMLClientSetupEvent event)
+    {
     }
 }

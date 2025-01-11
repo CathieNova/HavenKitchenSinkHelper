@@ -1,6 +1,7 @@
 package net.cathienova.havenksh.block.mobseeds;
 
 import net.cathienova.havenksh.block.ModBlockEntities;
+import net.cathienova.havenksh.config.CommonConfig;
 import net.cathienova.havenksh.config.HavenConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;

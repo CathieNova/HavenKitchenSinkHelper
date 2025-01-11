@@ -23,7 +23,7 @@ public class JEIHavenAlchemyPlugin implements IModPlugin
     @Override
     public ResourceLocation getPluginUid()
     {
-        return new ResourceLocation(HavenKSH.MOD_ID, "jei_plugin");
+        return ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, "jei_plugin");
     }
 
     @Override

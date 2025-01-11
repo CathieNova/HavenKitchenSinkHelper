@@ -6,28 +6,28 @@ import net.cathienova.havenksh.item.ModArmor;
 import net.cathienova.havenksh.item.ModItems;
 import net.cathienova.havenksh.item.ModTools;
 import net.cathienova.havenksh.util.ModTags;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder
 {
-    public ModRecipeProvider(PackOutput pOutput)
+    public ModRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> registries)
     {
-        super(pOutput);
+        super(pOutput, registries);
     }
 
     public static final List<ItemLike> HAVENITE_SMELTABLES = List.of(
@@ -40,7 +40,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
             ModBlocks.raw_havenite_block.get());
 
     @Override
-    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> output)
+    protected void buildRecipes(RecipeOutput output)
     {
         BaseCobbleGenRecipe(output, ModBlocks.wooden_cobble_gen.get());
         UpgradeCobbleGenRecipe(output, ModBlocks.stone_cobble_gen.get(), Blocks.COBBLESTONE, ModBlocks.wooden_cobble_gen.get());
@@ -1151,23 +1151,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('W', Items.WHEAT_SEEDS)
                 .unlockedBy("has_emerald", has(Items.EMERALD))
                 .save(output, HavenKSH.MOD_ID + ":craft/villager_seed");
-
-        crusherRecipe(output, ModTools.stone_crusher.get(), Items.STONE);
-        crusherRecipe(output, ModTools.iron_crusher.get(), Items.IRON_INGOT);
-        crusherRecipe(output, ModTools.golden_crusher.get(), Items.GOLD_INGOT);
-        crusherRecipe(output, ModTools.diamond_crusher.get(), Items.DIAMOND);
-        upgradeSmithing(output, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, ModTools.diamond_crusher.get(), Items.NETHERITE_INGOT, ModTools.netherite_crusher.get());
-        crusherRecipe(output, ModTools.havenite_crusher.get(), ModItems.havenite_ingot.get());
     }
 
-    protected static void upgradeSmithing(Consumer<FinishedRecipe> consumer, ItemLike template, ItemLike base, ItemLike addition, Item result)
+    protected static void upgradeSmithing(RecipeOutput consumer, ItemLike template, ItemLike base, ItemLike addition, Item result)
     {
         SmithingTransformRecipeBuilder.smithing(Ingredient.of(template), Ingredient.of(base), Ingredient.of(addition), RecipeCategory.MISC, result)
                 .unlocks("has_" + getItemName(base), has(base))
                 .save(consumer, HavenKSH.MOD_ID + ":smithing/" + getItemName(result));
     }
 
-    protected static void ChopperCraft(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient, ItemLike ingredient2)
+    protected static void ChopperCraft(RecipeOutput consumer, ItemLike result, ItemLike ingredient, ItemLike ingredient2)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("III")
@@ -1179,7 +1172,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void ExcavatorCraft(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient, ItemLike ingredient2)
+    protected static void ExcavatorCraft(RecipeOutput consumer, ItemLike result, ItemLike ingredient, ItemLike ingredient2)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern(" L ")
@@ -1191,7 +1184,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void HammerCraft(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient, ItemLike ingredient2)
+    protected static void HammerCraft(RecipeOutput consumer, ItemLike result, ItemLike ingredient, ItemLike ingredient2)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("LLL")
@@ -1203,7 +1196,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void WateringCanRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    protected static void WateringCanRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("II ")
@@ -1215,7 +1208,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void HelmetRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    protected static void HelmetRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("III")
@@ -1225,7 +1218,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void ChestplateRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    protected static void ChestplateRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("I I")
@@ -1236,7 +1229,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void LeggingsRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    protected static void LeggingsRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("III")
@@ -1247,7 +1240,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void BootsRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    protected static void BootsRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("I I")
@@ -1257,7 +1250,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void SwordRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    protected static void SwordRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("I")
@@ -1269,7 +1262,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void PickaxeRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    protected static void PickaxeRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("III")
@@ -1281,7 +1274,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void AxeRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    protected static void AxeRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("II")
@@ -1293,7 +1286,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void ShovelRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    protected static void ShovelRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("I")
@@ -1305,7 +1298,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void HoeRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    protected static void HoeRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("II")
@@ -1317,7 +1310,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void crusherRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    protected static void crusherRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern(" IS")
@@ -1329,7 +1322,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result) + "_from_" + getItemName(ingredient));
     }
 
-    protected static void DragonRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient1, ItemLike ingredient2, ItemLike ingredient3)
+    protected static void DragonRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient1, ItemLike ingredient2, ItemLike ingredient3)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("SSS")
@@ -1342,7 +1335,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void LampRecipe(Consumer<FinishedRecipe> consumer, ItemLike result)
+    protected static void LampRecipe(RecipeOutput consumer, ItemLike result)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("BBB")
@@ -1354,7 +1347,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void BaseCobbleGenRecipe(Consumer<FinishedRecipe> consumer, ItemLike result)
+    protected static void BaseCobbleGenRecipe(RecipeOutput consumer, ItemLike result)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("III")
@@ -1368,7 +1361,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void UpgradeCobbleGenRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient, ItemLike cobblegen)
+    protected static void UpgradeCobbleGenRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient, ItemLike cobblegen)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("III")
@@ -1382,7 +1375,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result));
     }
 
-    protected static void BlockRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    protected static void BlockRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .pattern("LLL")
@@ -1393,7 +1386,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(ingredient) + "_to_" + getItemName(result));
     }
 
-    protected static void UnBlockRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient)
+    protected static void UnBlockRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient)
     {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result, 9)
                 .requires(ingredient, 1)
@@ -1401,7 +1394,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(result) + "_from_" + getItemName(ingredient));
     }
     
-    protected static void SmallBlockRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike ingredient, int amount)
+    protected static void SmallBlockRecipe(RecipeOutput consumer, ItemLike result, ItemLike ingredient, int amount)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, amount)
                 .pattern("LL")
@@ -1411,7 +1404,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(ingredient) + "_to_" + getItemName(result));
     }
     
-    protected static void UnSmallBlockRecipe(Consumer<FinishedRecipe> consumer, ItemLike result, int resultAmount, ItemLike ingredient, int inputAmount)
+    protected static void UnSmallBlockRecipe(RecipeOutput consumer, ItemLike result, int resultAmount, ItemLike ingredient, int inputAmount)
     {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingredient, resultAmount)
                 .requires(result, inputAmount)
@@ -1419,23 +1412,27 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, HavenKSH.MOD_ID + ":craft/" + getItemName(ingredient) + "_from_" + getItemName(result));
     }
 
-    protected static void oreSmelting(Consumer<FinishedRecipe> pFinishedRecipeConsumer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTIme, String pGroup) {
-        oreCooking(pFinishedRecipeConsumer, RecipeSerializer.SMELTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTIme, pGroup, "_from_smelting");
+    protected static void oreSmelting(RecipeOutput recipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult,
+                                      float pExperience, int pCookingTIme, String pGroup) {
+        oreCooking(recipeOutput, RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, pIngredients, pCategory, pResult,
+                pExperience, pCookingTIme, pGroup, "_from_smelting");
     }
 
-    protected static void oreBlasting(Consumer<FinishedRecipe> pFinishedRecipeConsumer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
-        oreCooking(pFinishedRecipeConsumer, RecipeSerializer.BLASTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_blasting");
+    protected static void oreBlasting(RecipeOutput recipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult,
+                                      float pExperience, int pCookingTime, String pGroup) {
+        oreCooking(recipeOutput, RecipeSerializer.BLASTING_RECIPE, BlastingRecipe::new, pIngredients, pCategory, pResult,
+                pExperience, pCookingTime, pGroup, "_from_blasting");
     }
-    protected static void oreCooking(Consumer<FinishedRecipe> pFinishedRecipeConsumer, RecipeSerializer<? extends AbstractCookingRecipe> pCookingSerializer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup, String pRecipeName) {
+
+    protected static <T extends AbstractCookingRecipe> void oreCooking(RecipeOutput recipeOutput, RecipeSerializer<T> pCookingSerializer, AbstractCookingRecipe.Factory<T> factory,
+                                                                       List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup, String pRecipeName) {
         for(ItemLike itemlike : pIngredients) {
-            SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), pCategory, pResult,
-                            pExperience, pCookingTime, pCookingSerializer)
-                    .group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike))
-                    .save(pFinishedRecipeConsumer,  HavenKSH.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
+            SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), pCategory, pResult, pExperience, pCookingTime, pCookingSerializer, factory).group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike))
+                    .save(recipeOutput,  HavenKSH.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
         }
     }
 
-    protected static void stoneCutterRecipe(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ItemLike pResult, ItemLike pIngredient) {
+    protected static void stoneCutterRecipe(RecipeOutput pFinishedRecipeConsumer, ItemLike pResult, ItemLike pIngredient) {
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(pIngredient), RecipeCategory.MISC, pResult)
                 .unlockedBy(getHasName(pIngredient), has(pIngredient))
                 .save(pFinishedRecipeConsumer, HavenKSH.MOD_ID + ":" + getItemName(pResult) + "_from_stonecutting_" + getItemName(pIngredient));

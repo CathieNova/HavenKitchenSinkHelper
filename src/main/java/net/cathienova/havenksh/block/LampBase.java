@@ -1,7 +1,6 @@
 package net.cathienova.havenksh.block;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -9,10 +8,10 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -166,7 +165,7 @@ public class LampBase extends Block implements SimpleWaterloggedBlock
     }
 
     @Override
-    public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player)
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player)
     {
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
@@ -175,10 +174,13 @@ public class LampBase extends Block implements SimpleWaterloggedBlock
             double d2 = (double) pos.getZ() + random.nextDouble();
             world.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, state), d0, d1, d2, 0.0D, 0.0D, 0.0D);
         }
+        return state;
     }
 
+
+
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit)
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult)
     {
         if (!level.isClientSide)
         {
@@ -204,9 +206,9 @@ public class LampBase extends Block implements SimpleWaterloggedBlock
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag)
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag)
     {
-        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-        pTooltip.add(Component.translatable("block.havenksh.lamp.tooltip").withStyle(ChatFormatting.GOLD));
+        super.appendHoverText(stack, context, tooltip, tooltipFlag);
+        tooltip.add(Component.translatable("block.havenksh.lamp.tooltip").withStyle(ChatFormatting.GOLD));
     }
 }

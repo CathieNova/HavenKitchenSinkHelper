@@ -1,13 +1,22 @@
 package net.cathienova.havenksh.block.cobblegen;
 
+import net.cathienova.havenksh.config.HavenConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
-public class CobbleGenInventory
-{
+import java.util.List;
+import java.util.Random;
+
+public class CobbleGenInventory {
     private final ItemStackHandler inventory;
     private final int stackSize;
 
@@ -21,16 +30,32 @@ public class CobbleGenInventory
             public int getSlotLimit(int slot) {
                 return stackSize;
             }
+
+            @Override
+            public void setStackInSlot(int slot, ItemStack stack) {
+                if (stack.getCount() > stack.getMaxStackSize()) {
+                    stack.setCount(stack.getMaxStackSize());
+                }
+                super.setStackInSlot(slot, stack);
+            }
+
+            @Override
+            public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+                if (stack.getCount() > stack.getMaxStackSize()) {
+                    stack.setCount(stack.getMaxStackSize());
+                }
+                return super.insertItem(slot, stack, simulate);
+            }
         };
         this.stackSize = stackSize;
     }
 
-    public CompoundTag serializeNBT() {
-        return inventory.serializeNBT();
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
+        return inventory.serializeNBT(provider);
     }
 
-    public void deserializeNBT(CompoundTag nbt) {
-        inventory.deserializeNBT(nbt);
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
+        inventory.deserializeNBT(provider, nbt);
     }
 
     public ItemStackHandler getHandler() {
@@ -93,5 +118,37 @@ public class CobbleGenInventory
         for (int i = 0; i < inventory.getSlots(); ++i) {
             inventory.setStackInSlot(i, ItemStack.EMPTY);
         }
+    }
+
+    public Block getBlockToGenerate(Level level, BlockPos pos) {
+        List<? extends String> validBlocks = HavenConfig.cobbleGenValidBlocks;
+        Random random = new Random();
+
+        // Loop through all six directions (up, down, north, south, east, west)
+        for (Direction direction : Direction.values()) {
+            assert level != null;
+            Block blockAtSide = level.getBlockState(pos.relative(direction)).getBlock();
+            String blockAtSideName = BuiltInRegistries.BLOCK.getKey(blockAtSide).toString();
+
+            // Iterate over each config entry (formatted as blockToCheck;blockToGenerate1,blockToGenerate2,...)
+            for (String entry : validBlocks) {
+                String[] parts = entry.split(";");
+                if (parts.length == 2) {
+                    String blockToCheck = parts[0];  // The block to check on the side
+                    String[] blockToGenerateList = parts[1].split(",");  // Blocks to randomly choose from
+
+                    // If the blockAtSide matches blockToCheck, randomly select a block from blockToGenerateList
+                    if (blockAtSideName.equals(blockToCheck)) {
+                        String randomBlockToGenerate = blockToGenerateList[random.nextInt(blockToGenerateList.length)];
+                        Block generateBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(randomBlockToGenerate));
+                        if (generateBlock != null) {
+                            return generateBlock;
+                        }
+                    }
+                }
+            }
+        }
+        // Default to cobblestone if no match
+        return Blocks.COBBLESTONE;
     }
 }

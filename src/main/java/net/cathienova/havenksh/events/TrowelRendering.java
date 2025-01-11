@@ -3,9 +3,7 @@ package net.cathienova.havenksh.events;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.cathienova.havenksh.HavenKSH;
-import net.cathienova.havenksh.config.HavenConfig;
 import net.cathienova.havenksh.item.TrowelItem;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -16,13 +14,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderHighlightEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RenderHighlightEvent;
 
-@Mod.EventBusSubscriber(modid = HavenKSH.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@EventBusSubscriber(modid = HavenKSH.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class TrowelRendering {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
@@ -32,6 +30,7 @@ public class TrowelRendering {
         BlockHitResult rtr = event.getTarget();
         Entity entity = event.getCamera().getEntity();
         if (!(entity instanceof Player player)) return;
+        if (player.isCrouching()) return;
 
         ItemStack itemStack = player.getMainHandItem();
         if (!(itemStack.getItem() instanceof TrowelItem)) return;
@@ -42,7 +41,7 @@ public class TrowelRendering {
         MultiBufferSource bufferSource = event.getMultiBufferSource();
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.LINES);
 
-        double partialTicks = event.getPartialTick();
+        double partialTicks = event.getDeltaTracker().getGameTimeDeltaPartialTick(true);
         double dx = player.xOld + (player.getX() - player.xOld) * partialTicks;
         double dy = player.yOld + player.getEyeHeight() + (player.getY() - player.yOld) * partialTicks;
         double dz = player.zOld + (player.getZ() - player.zOld) * partialTicks;

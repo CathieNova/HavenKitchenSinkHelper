@@ -1,7 +1,9 @@
 package net.cathienova.havenksh.item;
 
+import net.cathienova.havenksh.config.CommonConfig;
 import net.cathienova.havenksh.config.HavenConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -11,12 +13,10 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class TrowelItem extends Item
         ItemStack randomBlockItem = blockItems.get(new Random().nextInt(blockItems.size()));
         BlockPos pos = context.getClickedPos().relative(context.getClickedFace());
 
-        AABB targetBlockArea = new AABB(pos, pos.offset(1, 1, 1));
+        AABB targetBlockArea = new AABB(Vec3.atCenterOf(pos), Vec3.atCenterOf(pos.offset(1, 1, 1)));
         if (!context.getLevel().getEntities(null, targetBlockArea).isEmpty() || !context.getLevel().getBlockState(pos).isAir())
         {
             return InteractionResult.FAIL;
@@ -81,8 +81,8 @@ public class TrowelItem extends Item
         {
             randomBlockItem.shrink(1);
 
-            if (HavenConfig.enable_trowel_durability)
-                context.getItemInHand().hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(context.getHand()));
+            /*if (HavenConfig.enable_trowel_durability)
+                context.getItemInHand().hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(context.getHand()));*/
         }
 
         return InteractionResult.sidedSuccess(context.getLevel().isClientSide());
@@ -115,16 +115,17 @@ public class TrowelItem extends Item
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced)
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag)
     {
-        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 
     private static boolean isBlacklisted(BlockState state) {
-        String blockId = ForgeRegistries.BLOCKS.getKey(state.getBlock()).toString();
+        String blockId = BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString();
+        if (HavenConfig.trowel_blacklist == null || HavenConfig.trowel_blacklist.isEmpty()) return false;
         for (String id : HavenConfig.trowel_blacklist) {
             if (id.startsWith("#")) {
-                if (state.is(TagKey.create(Registries.BLOCK, new ResourceLocation(id.substring(1))))) {
+                if (state.is(TagKey.create(Registries.BLOCK, ResourceLocation.parse(id.substring(1))))) {
                     return true;
                 }
             } else if (id.equals(blockId)) {

@@ -1,6 +1,7 @@
 package net.cathienova.havenksh.item.artifacts;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,6 +22,24 @@ public class Magnet extends ArtifactBase
     public Magnet(Properties properties, int range) {
         super(properties);
         this.range = range;
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected)
+    {
+        Player player = (Player) entity;
+
+        if (!level.isClientSide())
+        {
+            ServerPlayer serverPlayer = (ServerPlayer) player;
+            if (!serverPlayer.isCrouching())
+            {
+                if (serverPlayer.tickCount % 5 == 0)
+                {
+                    attractItemsToPlayer(player, stack);
+                }
+            }
+        }
     }
 
     @Override

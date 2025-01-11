@@ -19,14 +19,15 @@ public enum MobSeedComponentProvider implements IBlockComponentProvider {
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
         if (accessor.getServerData().contains("RemainingTime")) {
-            IElementHelper elements = tooltip.getElementHelper();
-            IElement icon = elements.item(new ItemStack(Items.CLOCK), 0.5f).size(new Vec2(10, 10)).translate(new Vec2(0, -1));
+            IElement icon = IElementHelper.get().item(new ItemStack(Items.CLOCK), 0.5f).size(new Vec2(10, 10)).translate(new Vec2(0, -1));
             icon.message(null);
             tooltip.add(icon);
             int remainingTime = accessor.getServerData().getInt("RemainingTime");
             tooltip.append(Component.translatable("mobseed.remaining_time", remainingTime));
 
-            if (accessor.getPlayer() != null && accessor.getPlayer().distanceToSqr(accessor.getPosition().getX(), accessor.getPosition().getY(), accessor.getPosition().getZ()) < Math.pow(HavenConfig.playerGrowthDistance, 2)) {
+            if (accessor.getPlayer() != null && accessor.getPlayer()
+                    .distanceToSqr(accessor.getPosition().getX(), accessor.getPosition().getY(), accessor.getPosition().getZ()) <
+                    Math.pow(HavenConfig.playerGrowthDistance, 2)) {
                 tooltip.add(Component.translatable("mobseed.tooclose"));
             }
         }
@@ -34,6 +35,6 @@ public enum MobSeedComponentProvider implements IBlockComponentProvider {
 
     @Override
     public ResourceLocation getUid() {
-        return new ResourceLocation("havenksh", "mobseed_remaining_time");
+        return ResourceLocation.fromNamespaceAndPath("havenksh", "mobseed_remaining_time");
     }
 }

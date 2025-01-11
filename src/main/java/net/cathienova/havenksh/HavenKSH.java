@@ -10,19 +10,18 @@ import net.cathienova.havenksh.events.*;
 import net.cathienova.havenksh.handler.BlockBreakHandler;
 import net.cathienova.havenksh.handler.MobDropHandler;
 import net.cathienova.havenksh.item.*;
+import net.cathienova.havenksh.util.DistUtils;
 import net.cathienova.havenksh.util.ModVillagers;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 @Mod(HavenKSH.MOD_ID)
@@ -31,20 +30,20 @@ public class HavenKSH
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "havenksh";
     public static final String MOD_NAME = "HavenKitchenSinkHelper";
-    static final ForgeConfigSpec commonSpec;
+    static final ModConfigSpec commonSpec;
     public static final CommonConfig c_config;
 
     static
     {
-        final Pair<CommonConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(CommonConfig::new);
+        final Pair<CommonConfig, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(CommonConfig::new);
         commonSpec = specPair.getRight();
         c_config = specPair.getLeft();
     }
 
-    public HavenKSH()
+    public HavenKSH(IEventBus modEventBus, ModContainer modContainer)
     {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, commonSpec, MOD_NAME + "-Config.toml");
+        modEventBus.addListener(this::setup);
+        modContainer.registerConfig(ModConfig.Type.COMMON, commonSpec);
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
         ModFoods.register(modEventBus);
@@ -52,15 +51,12 @@ public class HavenKSH
         ModTools.register(modEventBus);
         ModVillagers.register(modEventBus);
         ModBlockEntities.register(modEventBus);
-        MinecraftForge.EVENT_BUS.register(new MobDropHandler());
-        MinecraftForge.EVENT_BUS.register(new BlockBreakHandler());
         ModCreativeModTabs.register(modEventBus);
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ExcavatorRendering::new);
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> HammerRendering::new);
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> TrowelRendering::new);
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> MobSeedRenderer::new);
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> HavenKSHClient::new);
-        MinecraftForge.EVENT_BUS.register(this);
+        DistUtils.runIfOn(Dist.CLIENT, ExcavatorRendering::new);
+        DistUtils.runIfOn(Dist.CLIENT, HammerRendering::new);
+        DistUtils.runIfOn(Dist.CLIENT, TrowelRendering::new);
+        DistUtils.runIfOn(Dist.CLIENT, MobSeedRenderer::new);
+        DistUtils.runIfOn(Dist.CLIENT, HavenKSHClient::new);
     }
 
     public static void Log(String message)

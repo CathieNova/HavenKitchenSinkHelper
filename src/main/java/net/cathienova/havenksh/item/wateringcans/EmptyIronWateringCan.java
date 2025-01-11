@@ -61,8 +61,8 @@ public class EmptyIronWateringCan extends Item
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced)
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag)
     {
-        pTooltipComponents.add(Component.translatable("item.havenksh.empty_watering_can.tooltip").withStyle(net.minecraft.ChatFormatting.GOLD));
+        tooltipComponents.add(Component.translatable("item.havenksh.empty_watering_can.tooltip").withStyle(net.minecraft.ChatFormatting.GOLD));
     }
 }

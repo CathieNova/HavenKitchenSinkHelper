@@ -1,19 +1,16 @@
-package net.cathienova.havenksh.item.orehammers;
+package net.cathienova.havenksh.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class DiamondOreHammer extends Item
+public class OreHammerBase extends Item
 {
-    public DiamondOreHammer(Properties pProperties)
+    public OreHammerBase(Properties pProperties)
     {
         super(pProperties);
     }
@@ -38,12 +35,13 @@ public class DiamondOreHammer extends Item
             return ItemStack.EMPTY;
         }
     }
+
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag isAdvanced)
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag)
     {
-        super.appendHoverText(stack, level, tooltip, isAdvanced);
+        super.appendHoverText(stack, context, tooltip, tooltipFlag);
 
         tooltip.add(Component.translatable("tooltip.havenksh.ore_hammer").withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("tooltip.havenksh.ore_hammer.durability", "§2" + stack.getMaxDamage()).withStyle(ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("tooltip.havenksh.ore_hammer.durability", "§2" + (stack.getMaxDamage() - stack.getDamageValue())).withStyle(ChatFormatting.GOLD));
     }
 }

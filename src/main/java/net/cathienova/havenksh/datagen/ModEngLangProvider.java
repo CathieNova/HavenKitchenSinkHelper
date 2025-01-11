@@ -7,7 +7,7 @@ import net.cathienova.havenksh.HavenKSH;
 import net.cathienova.havenksh.item.ModItems;
 import net.cathienova.havenksh.item.ModTools;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.common.data.LanguageProvider;
 
 public class ModEngLangProvider extends LanguageProvider
 {
@@ -93,6 +93,11 @@ public class ModEngLangProvider extends LanguageProvider
         add("mobseed.remaining_time", "Growing time: %d seconds");
         add("mobseed.tooclose", "§cYou're too close to the seed for it to grow.");
         add("config.jade.plugin_havenksh.mobseed_remaining_time", "Remaining Time");
+
+        add("tooltip.cobblegen.amount", "Cobblestone: %d / %d");
+        add("tooltip.cobblegen.full", "Cobblestone Generator is Full: %d");
+        add("tooltip.cobblegen.generating", "Generating %d");
+        add("config.jade.plugin_havenksh.cobblegen_data", "Cobblestone Generator Info");
 
         add("block.havenksh.placement_on", "§7Can only be placed on %s");
         add("block.havenksh.placement_in", "§7Can only be placed in %s");
@@ -330,17 +335,6 @@ public class ModEngLangProvider extends LanguageProvider
         add("item.havenksh.chopper.tooltip1", "Chops down entire trees.");
         add("item.havenksh.chopper.tooltip2", "Crouch§r while breaking only breaks 1 Log.");
         add("item.havenksh.chopper.tooltip3", "It breaks every log connected to the one you break.");
-
-        addItem(ModTools.stone_crusher, "Stone Crusher");
-        addItem(ModTools.iron_crusher, "Iron Crusher");
-        addItem(ModTools.golden_crusher, "Golden Crusher");
-        addItem(ModTools.diamond_crusher, "Diamond Crusher");
-        addItem(ModTools.netherite_crusher, "Netherite Crusher");
-        addItem(ModTools.havenite_crusher, "Havenite Crusher");
-        add("item.havenksh.crusher.tooltip", "Crushes various blocks.");
-
-
-
 
 
 
