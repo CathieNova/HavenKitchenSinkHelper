@@ -12,6 +12,7 @@ import net.cathienova.havenksh.handler.MobDropHandler;
 import net.cathienova.havenksh.item.*;
 import net.cathienova.havenksh.util.DistUtils;
 import net.cathienova.havenksh.util.ModVillagers;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -20,8 +21,12 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.neoforged.neoforge.registries.RegisterEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 @Mod(HavenKSH.MOD_ID)
@@ -52,10 +57,10 @@ public class HavenKSH
         ModVillagers.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModCreativeModTabs.register(modEventBus);
+        NeoForge.EVENT_BUS.addListener(this::registerCommands);
         DistUtils.runIfOn(Dist.CLIENT, ExcavatorRendering::new);
         DistUtils.runIfOn(Dist.CLIENT, HammerRendering::new);
         DistUtils.runIfOn(Dist.CLIENT, TrowelRendering::new);
-        DistUtils.runIfOn(Dist.CLIENT, MobSeedRenderer::new);
         DistUtils.runIfOn(Dist.CLIENT, HavenKSHClient::new);
     }
 
@@ -64,10 +69,8 @@ public class HavenKSH
         LogUtils.getLogger().info("[" + MOD_NAME + "] " + message);
     }
 
-    @SubscribeEvent
-    public void onRegisterCommands(RegisterCommandsEvent event)
-    {
-        ModCommands.register(event.getDispatcher());
+    private void registerCommands(RegisterCommandsEvent evt) {
+        ModCommands.register(evt.getDispatcher(), evt.getBuildContext());
     }
 
     private void setup(final FMLCommonSetupEvent event)
