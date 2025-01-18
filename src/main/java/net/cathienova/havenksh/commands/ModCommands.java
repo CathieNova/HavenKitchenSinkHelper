@@ -2,76 +2,78 @@ package net.cathienova.havenksh.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.cathienova.havenksh.util.JsonExportHelper;
+import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.Random;
 
 import static net.cathienova.havenksh.util.JsonExportHelper.exportFTBQuestRewardsToJson;
 
 public class ModCommands
 {
 
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher)
-    {
-        dispatcher.register(Commands.literal("havenksh")
-                .requires(cs -> cs.hasPermission(2))
-                .then(Commands.literal("admin")
-                        .then(Commands.literal("reload")
-                                .executes(ModCommands::reloadConfig))
-                        .then(Commands.literal("generatejsons")
-                                .then(Commands.literal("items")
-                                        .executes(ModCommands::generateItemJsons))
-                                .then(Commands.literal("mobs")
-                                        .executes(ModCommands::generateMobJsons))
-                                .then(Commands.literal("blocks")
-                                        .executes(ModCommands::generateBlockJsons))
-                                .then(Commands.literal("chest")
-                                        .then(Commands.literal("items")
-                                                .executes(ModCommands::generateChestItemsJsons))
-                                        .then(Commands.literal("blocks")
-                                                .executes(ModCommands::generateChestBlocksJsons)))
-                                .then(Commands.literal("tags")
-                                        .then(Commands.argument("tagname", StringArgumentType.string())
-                                                .then(Commands.literal("items")
-                                                        .executes(context ->
-                                                        {
-                                                            String tagName = StringArgumentType.getString(context, "tagname");
-                                                            JsonExportHelper.exportItemTagsToJson(tagName);
-                                                            return 1;
-                                                        }))
-                                                .then(Commands.literal("blocks")
-                                                        .executes(context ->
-                                                        {
-                                                            String tagName = StringArgumentType.getString(context, "tagname");
-                                                            JsonExportHelper.exportBlockTagsToJson(tagName);
-                                                            return 1;
-                                                        }))))
-                                .then(Commands.literal("moditems")
-                                        .then(Commands.argument("modid", StringArgumentType.string())
-                                                .executes(ModCommands::generateModItemsJsons)))
-                                .then(Commands.literal("modblocks")
-                                        .then(Commands.argument("modid", StringArgumentType.string())
-                                                .executes(ModCommands::generateModBlocksJsons)))
-                                .then(Commands.literal("ftbquestrewards")
-                                        .then(Commands.argument("title", StringArgumentType.string())
-                                                .executes(ModCommands::generateFTBQuestRewardsJson)))
-                                .then(Commands.literal("ftbquestchapter")
-                                        .then(Commands.argument("title", StringArgumentType.string())
-                                                .then(Commands.argument("modid", StringArgumentType.string())
-                                                        .executes(ModCommands::generateFTBQuestChapterJson))))
-                                .then(Commands.literal("alltags")
-                                        .executes(ModCommands::generateAllTagsJsons))
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher,
+                                CommandBuildContext buildContext) {
 
-                        )));
+        LiteralArgumentBuilder<CommandSourceStack> havenkshCommand = Commands.literal("havenksh");
+
+        havenkshCommand.then(Commands.literal("admin")
+                .requires(cs -> cs.hasPermission(2))
+                .then(Commands.literal("reload").executes(ModCommands::reloadConfig))
+                .then(Commands.literal("generatejsons")
+                        .then(Commands.literal("items").executes(ModCommands::generateItemJsons))
+                        .then(Commands.literal("mobs").executes(ModCommands::generateMobJsons))
+                        .then(Commands.literal("blocks").executes(ModCommands::generateBlockJsons))
+                        .then(Commands.literal("chest")
+                                .then(Commands.literal("items").executes(ModCommands::generateChestItemsJsons))
+                                .then(Commands.literal("blocks").executes(ModCommands::generateChestBlocksJsons)))
+                        .then(Commands.literal("tags")
+                                .then(Commands.argument("tagname", StringArgumentType.string())
+                                        .then(Commands.literal("items").executes(context -> {
+                                            String tagName = StringArgumentType.getString(context, "tagname");
+                                            JsonExportHelper.exportItemTagsToJson(tagName);
+                                            return 1;
+                                        }))
+                                        .then(Commands.literal("blocks").executes(context -> {
+                                            String tagName = StringArgumentType.getString(context, "tagname");
+                                            JsonExportHelper.exportBlockTagsToJson(tagName);
+                                            return 1;
+                                        }))))
+                        .then(Commands.literal("moditems")
+                                .then(Commands.argument("modid", StringArgumentType.string())
+                                        .executes(ModCommands::generateModItemsJsons)))
+                        .then(Commands.literal("modblocks")
+                                .then(Commands.argument("modid", StringArgumentType.string())
+                                        .executes(ModCommands::generateModBlocksJsons)))
+                        .then(Commands.literal("ftbquestrewards")
+                                .then(Commands.argument("title", StringArgumentType.string())
+                                        .executes(ModCommands::generateFTBQuestRewardsJson)))
+                        .then(Commands.literal("ftbquestchapter")
+                                .then(Commands.argument("title", StringArgumentType.string())
+                                        .then(Commands.argument("modid", StringArgumentType.string())
+                                                .executes(ModCommands::generateFTBQuestChapterJson))))
+                        .then(Commands.literal("alltags").executes(ModCommands::generateAllTagsJsons))
+                )
+        );
+
+        dispatcher.register(havenkshCommand);
     }
 
     private static int generateItemJsons(CommandContext<CommandSourceStack> context) throws CommandSyntaxException
