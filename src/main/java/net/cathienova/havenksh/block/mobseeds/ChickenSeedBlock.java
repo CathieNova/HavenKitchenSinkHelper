@@ -67,6 +67,6 @@ public class ChickenSeedBlock extends MobSeedBlock {
         for (Block block : blocks) {
             blockNames += block.getName().getString() + ", ";
         }
-        tooltip.add(Component.translatable("block.havenanimalseeds.placement_on", blockNames.substring(0, blockNames.length() - 2)).withStyle(ChatFormatting.DARK_GREEN));
+        tooltip.add(Component.translatable("block.havenksh.placement_on", blockNames.substring(0, blockNames.length() - 2)).withStyle(ChatFormatting.DARK_GREEN));
     }
 }
