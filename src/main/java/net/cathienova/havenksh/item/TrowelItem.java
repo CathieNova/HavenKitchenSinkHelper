@@ -2,6 +2,7 @@ package net.cathienova.havenksh.item;
 
 import net.cathienova.havenksh.config.CommonConfig;
 import net.cathienova.havenksh.config.HavenConfig;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -115,9 +116,14 @@ public class TrowelItem extends Item
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag)
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag)
     {
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+        super.appendHoverText(stack, context, tooltip, tooltipFlag);
+
+        if (HavenConfig.enable_inventory_blocks)
+            tooltip.add(Component.translatable("item.havenksh.trowel.tooltip.inventory").withStyle(ChatFormatting.GOLD));
+        else
+            tooltip.add(Component.translatable("item.havenksh.trowel.tooltip.hotbar").withStyle(ChatFormatting.GOLD));
     }
 
     private static boolean isBlacklisted(BlockState state) {
