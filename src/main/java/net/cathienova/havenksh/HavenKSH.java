@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.cathienova.havenksh.block.ModBlockEntities;
 import net.cathienova.havenksh.block.ModBlocks;
 import net.cathienova.havenksh.commands.ModCommands;
+import net.cathienova.havenksh.compat.REIHavenKSHPlugin;
 import net.cathienova.havenksh.events.MobSeedRenderer;
 import net.cathienova.havenksh.config.CommonConfig;
 import net.cathienova.havenksh.events.*;
@@ -57,6 +58,7 @@ public class HavenKSH
         ModVillagers.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModCreativeModTabs.register(modEventBus);
+        modEventBus.addListener(this::setup);
         NeoForge.EVENT_BUS.addListener(this::registerCommands);
         DistUtils.runIfOn(Dist.CLIENT, ExcavatorRendering::new);
         DistUtils.runIfOn(Dist.CLIENT, HammerRendering::new);
@@ -75,5 +77,6 @@ public class HavenKSH
 
     private void setup(final FMLCommonSetupEvent event)
     {
+        REIHavenKSHPlugin.populateItemDescriptions();
     }
 }

@@ -11,14 +11,12 @@ import net.cathienova.havenksh.block.ModBlocks;
 import net.cathienova.havenksh.item.ModArmor;
 import net.cathienova.havenksh.item.ModItems;
 import net.cathienova.havenksh.item.ModTools;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeManager;
 
 @JeiPlugin
-public class JEIHavenAlchemyPlugin implements IModPlugin
+public class JEIHavenKSHPlugin implements IModPlugin
 {
     @Override
     public ResourceLocation getPluginUid()
