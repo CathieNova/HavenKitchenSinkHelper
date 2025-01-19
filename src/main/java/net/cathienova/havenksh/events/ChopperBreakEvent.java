@@ -4,6 +4,7 @@ import net.cathienova.havenksh.HavenKSH;
 import net.cathienova.havenksh.item.ChopperBase;
 import net.cathienova.havenksh.util.ModTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
@@ -14,8 +15,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @EventBusSubscriber(modid = HavenKSH.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class ChopperBreakEvent {
@@ -41,8 +41,7 @@ public class ChopperBreakEvent {
                 HARVESTED_BLOCKS.remove(initialBlockPos);
             } else {
                 Level level = player.level();
-                Set<BlockPos> logsToBreak = new HashSet<>();
-                findLogs(level, initialBlockPos, logsToBreak, chopper.getMaxBlocksToBreak());
+                List<BlockPos> logsToBreak = findLogs(level, initialBlockPos, chopper.getMaxBlocksToBreak());
 
                 for (BlockPos pos : logsToBreak) {
                     if (!level.getBlockState(pos).isAir()) {
@@ -58,27 +57,49 @@ public class ChopperBreakEvent {
         }
     }
 
-    public static void findLogs(Level world, BlockPos pos, Set<BlockPos> logsToBreak, int maxBlocksToBreak) {
-        BlockState state = world.getBlockState(pos);
-        boolean isLog = state.is(BlockTags.LOGS) ||
-                state.is(BlockTags.LOGS_THAT_BURN) ||
-                state.is(ModTags.Blocks.minecraftLogs) ||
-                state.is(ModTags.Blocks.minecraftLogsThatBurn);
+    public static List<BlockPos> findLogs(Level world, BlockPos startPos, int maxBlocksToBreak) {
+        Queue<BlockPos> queue = new LinkedList<>();
+        Set<BlockPos> visited = new HashSet<>();
+        List<BlockPos> logsToBreak = new ArrayList<>();
 
-        if (logsToBreak.contains(pos) || logsToBreak.size() >= maxBlocksToBreak || !isLog)
-            return;
+        queue.add(startPos);
 
-        logsToBreak.add(pos);
+        while (!queue.isEmpty() && logsToBreak.size() < maxBlocksToBreak) {
+            BlockPos currentPos = queue.poll();
 
-        // Search all adjacent blocks
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = -1; dy <= 1; dy++) {
-                for (int dz = -1; dz <= 1; dz++) {
-                    if (dx == 0 && dy == 0 && dz == 0) continue;
-                    BlockPos adjacentPos = pos.offset(dx, dy, dz);
-                    findLogs(world, adjacentPos, logsToBreak, maxBlocksToBreak);
+            if (visited.contains(currentPos)) {
+                continue;
+            }
+
+            BlockState state = world.getBlockState(currentPos);
+            boolean isLog = state.is(BlockTags.LOGS) ||
+                    state.is(BlockTags.LOGS_THAT_BURN) ||
+                    state.is(ModTags.Blocks.minecraftLogs) ||
+                    state.is(ModTags.Blocks.minecraftLogsThatBurn);
+
+            if (!isLog) {
+                continue;
+            }
+
+            visited.add(currentPos);
+            logsToBreak.add(currentPos);
+
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    for (int dz = -1; dz <= 1; dz++) {
+                        if (dx == 0 && dy == 0 && dz == 0) continue;
+
+                        BlockPos adjacentPos = currentPos.offset(dx, dy, dz);
+                        if (!visited.contains(adjacentPos)) {
+                            queue.add(adjacentPos);
+                        }
+                    }
                 }
             }
         }
+
+        logsToBreak.sort(Comparator.comparingInt(BlockPos::getY));
+
+        return logsToBreak;
     }
 }
