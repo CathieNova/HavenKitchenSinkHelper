@@ -358,6 +358,7 @@ public class ModEngLangProvider extends LanguageProvider
         add("jei.havenksh.dragonscale.desc.line1", "A scale that drops from the Ender Dragon.");
         add("jei.havenksh.dragonscale.desc.line2", "It can be used to craft more powerful tools and armor than Netherite.");
 
+        add("rei.category.havenksh.item_info", "REI Information");
 
 
 
