@@ -14,11 +14,10 @@ import net.cathienova.havenksh.item.artifacts.RepairTalisman;
 import net.cathienova.havenksh.util.DistUtils;
 import net.cathienova.havenksh.util.ModVillagers;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -76,7 +75,8 @@ public class HavenKSH
     {
         AccessoriesAPI.registerAccessory(ModArmor.magnet.get(), new Magnet());
         AccessoriesAPI.registerAccessory(ModArmor.repair_talisman.get(), new RepairTalisman());
-        REIHavenKSHPlugin.populateItemDescriptions();
+        if (ModList.get().isLoaded("roughlyenoughitems"))
+            REIHavenKSHPlugin.populateItemDescriptions();
     }
     public static ResourceLocation loc(String name) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
