@@ -1,39 +1,23 @@
 package net.cathienova.havenksh.item.artifacts;
 
+import io.wispforest.accessories.api.slot.SlotReference;
 import net.cathienova.havenksh.config.HavenConfig;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import top.theillusivec4.curios.api.SlotContext;
 
 public class RepairTalisman extends ArtifactBase
 {
-    public RepairTalisman(Properties properties) {
+    /*public RepairTalisman(Properties properties) {
         super(properties);
-    }
+    }*/
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected)
+    public void tick(ItemStack stack, SlotReference reference)
     {
-        Player player = (Player) entity;
-
-        if (!level.isClientSide())
-        {
-            ServerPlayer serverPlayer = (ServerPlayer) player;
-
-            if (serverPlayer.tickCount % HavenConfig.mendingNecklaceRepairInterval == 0)
-            {
-                repairItems(serverPlayer);
-            }
-        }
-    }
-
-    @Override
-    public void curioTick(SlotContext slotContext, ItemStack stack)
-    {
-        Player player = (Player) slotContext.entity();
+        Player player = (Player) reference.entity();
 
         if (player != null)
         {
@@ -48,12 +32,6 @@ public class RepairTalisman extends ArtifactBase
                 }
             }
         }
-    }
-
-    @Override
-    public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack)
-    {
-        return true;
     }
 
     private static void repairItems(ServerPlayer serverPlayer) {
@@ -76,9 +54,9 @@ public class RepairTalisman extends ArtifactBase
         });
     }
 
-    @Override
+    /*@Override
     protected boolean isCosmetic()
     {
         return false;
-    }
+    }*/
 }

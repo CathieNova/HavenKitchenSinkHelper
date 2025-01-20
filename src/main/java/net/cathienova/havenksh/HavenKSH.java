@@ -1,22 +1,23 @@
 package net.cathienova.havenksh;
 
 import com.mojang.logging.LogUtils;
+import io.wispforest.accessories.api.AccessoriesAPI;
 import net.cathienova.havenksh.block.ModBlockEntities;
 import net.cathienova.havenksh.block.ModBlocks;
 import net.cathienova.havenksh.commands.ModCommands;
 import net.cathienova.havenksh.compat.REIHavenKSHPlugin;
-import net.cathienova.havenksh.events.MobSeedRenderer;
 import net.cathienova.havenksh.config.CommonConfig;
 import net.cathienova.havenksh.events.*;
-import net.cathienova.havenksh.handler.BlockBreakHandler;
-import net.cathienova.havenksh.handler.MobDropHandler;
 import net.cathienova.havenksh.item.*;
+import net.cathienova.havenksh.item.artifacts.Magnet;
+import net.cathienova.havenksh.item.artifacts.RepairTalisman;
 import net.cathienova.havenksh.util.DistUtils;
 import net.cathienova.havenksh.util.ModVillagers;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
@@ -24,10 +25,6 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import net.neoforged.neoforge.registries.RegisterEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 @Mod(HavenKSH.MOD_ID)
@@ -46,19 +43,19 @@ public class HavenKSH
         c_config = specPair.getLeft();
     }
 
-    public HavenKSH(IEventBus modEventBus, ModContainer modContainer)
+    public HavenKSH(IEventBus bus, ModContainer modContainer)
     {
-        modEventBus.addListener(this::setup);
+        bus.addListener(this::setup);
         modContainer.registerConfig(ModConfig.Type.COMMON, commonSpec);
-        ModBlocks.register(modEventBus);
-        ModItems.register(modEventBus);
-        ModFoods.register(modEventBus);
-        ModArmor.register(modEventBus);
-        ModTools.register(modEventBus);
-        ModVillagers.register(modEventBus);
-        ModBlockEntities.register(modEventBus);
-        ModCreativeModTabs.register(modEventBus);
-        modEventBus.addListener(this::setup);
+        ModBlocks.register(bus);
+        ModItems.register(bus);
+        ModFoods.register(bus);
+        ModArmor.register(bus);
+        ModTools.register(bus);
+        ModVillagers.register(bus);
+        ModBlockEntities.register(bus);
+        ModCreativeModTabs.register(bus);
+        bus.addListener(this::setup);
         NeoForge.EVENT_BUS.addListener(this::registerCommands);
         DistUtils.runIfOn(Dist.CLIENT, ExcavatorRendering::new);
         DistUtils.runIfOn(Dist.CLIENT, HammerRendering::new);
@@ -75,8 +72,13 @@ public class HavenKSH
         ModCommands.register(evt.getDispatcher(), evt.getBuildContext());
     }
 
-    private void setup(final FMLCommonSetupEvent event)
+    private void setup(FMLCommonSetupEvent event)
     {
+        AccessoriesAPI.registerAccessory(ModArmor.magnet.get(), new Magnet());
+        AccessoriesAPI.registerAccessory(ModArmor.repair_talisman.get(), new RepairTalisman());
         REIHavenKSHPlugin.populateItemDescriptions();
+    }
+    public static ResourceLocation loc(String name) {
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
     }
 }

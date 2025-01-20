@@ -230,7 +230,7 @@ public class ModAdvancementProvider extends AdvancementProvider
                             ItemPredicate.Builder.item().of(ModArmor.magnet.get()).build()))
                     .save(consumer, ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, "magnet").toString());
 
-            /*AdvancementHolder repair_talisman = Advancement.Builder.advancement()
+            AdvancementHolder repair_talisman = Advancement.Builder.advancement()
                     .parent(root)
                     .display(ModArmor.repair_talisman.get(),
                             Component.translatable("advancements.havenksh.repair_talisman.title"),
@@ -239,7 +239,7 @@ public class ModAdvancementProvider extends AdvancementProvider
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("repair_talisman", InventoryChangeTrigger.TriggerInstance.hasItems(
                             ItemPredicate.Builder.item().of(ModArmor.repair_talisman.get()).build()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, "repair_talisman").toString());*/
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, "repair_talisman").toString());
 
             AdvancementHolder trowel = Advancement.Builder.advancement()
                     .parent(root)

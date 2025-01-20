@@ -1,5 +1,6 @@
 package net.cathienova.havenksh.item.artifacts;
 
+import io.wispforest.accessories.api.slot.SlotReference;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -8,44 +9,25 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.List;
 
 public class Magnet extends ArtifactBase
 {
-    private final int range;
+    private final int range = 5;
     public int getRange() {
         return range;
     }
 
-    public Magnet(Properties properties, int range) {
+    /*public Magnet(Properties properties, int range) {
         super(properties);
         this.range = range;
-    }
+    }*/
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected)
+    public void tick(ItemStack stack, SlotReference reference)
     {
-        Player player = (Player) entity;
-
-        if (!level.isClientSide())
-        {
-            ServerPlayer serverPlayer = (ServerPlayer) player;
-            if (!serverPlayer.isCrouching())
-            {
-                if (serverPlayer.tickCount % 5 == 0)
-                {
-                    attractItemsToPlayer(player, stack);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void curioTick(SlotContext slotContext, ItemStack stack)
-    {
-        Player player = (Player) slotContext.entity();
+        Player player = (Player) reference.entity();
 
         if (player != null)
         {
@@ -68,7 +50,7 @@ public class Magnet extends ArtifactBase
         double x = player.getX();
         double y = player.getY();
         double z = player.getZ();
-        int range = ((Magnet) stack.getItem()).getRange();
+        int range = 5;//((Magnet) stack.getItem()).getRange();
 
         List<ItemEntity> items = player.level().getEntitiesOfClass(ItemEntity.class,
                 new AABB(x - range, y - range, z - range, x + range, y + range, z + range),
@@ -83,9 +65,9 @@ public class Magnet extends ArtifactBase
         }
     }
 
-    @Override
+    /*@Override
     protected boolean isCosmetic()
     {
         return false;
-    }
+    }*/
 }

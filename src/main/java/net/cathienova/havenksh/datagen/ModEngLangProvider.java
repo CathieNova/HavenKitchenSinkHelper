@@ -206,11 +206,6 @@ public class ModEngLangProvider extends LanguageProvider
         addItem(ModItems.mangrove_bark, "Mangrove Bark");
         addItem(ModItems.cherry_bark, "Cherry Bark");
 
-        addItem(ModArmor.magnet, "Magnet");
-        add("havenksh.tooltip.item.magnet", "Attracts items if equipped with a range of 5 blocks.");
-        addItem(ModArmor.repair_talisman, "Repair Talisman");
-        add("havenksh.tooltip.item.repair_talisman", "Repairs items in your inventory over time.");
-
         add(ModItems.dragon_scale.get(), "Dragon Scale");
         add(ModItems.empty_iron_watering_can.get(), "Empty Iron Watering Can");
         add("item.havenksh.empty_watering_can.tooltip", "§bRight click§r on water to fill the watering can.");
@@ -335,6 +330,14 @@ public class ModEngLangProvider extends LanguageProvider
         add("item.havenksh.chopper.tooltip1", "Chops down entire trees.");
         add("item.havenksh.chopper.tooltip2", "Crouch§r while breaking only breaks 1 Log.");
         add("item.havenksh.chopper.tooltip3", "It breaks every log connected to the one you break.");
+
+
+
+
+        addItem(ModArmor.magnet, "Magnet");
+        add("havenksh.tooltip.item.magnet", "Attracts items if equipped with a range of 5 blocks.");
+        addItem(ModArmor.repair_talisman, "Repair Talisman");
+        add("havenksh.tooltip.item.repair_talisman", "Repairs items in your inventory over time.");
 
 
 

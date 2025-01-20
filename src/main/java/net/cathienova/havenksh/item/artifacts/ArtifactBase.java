@@ -1,22 +1,25 @@
 package net.cathienova.havenksh.item.artifacts;
 
+import io.wispforest.accessories.api.Accessory;
+import io.wispforest.accessories.api.SoundEventData;
+import io.wispforest.accessories.api.slot.SlotReference;
 import net.cathienova.havenksh.HavenKSH;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurioItem;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract  class ArtifactBase extends Item implements ICurioItem
+public abstract  class ArtifactBase implements Accessory
 {
-    protected abstract boolean isCosmetic();
+    /*protected abstract boolean isCosmetic();
 
     public ArtifactBase(Properties pProperties){super(pProperties);}
 
@@ -40,8 +43,18 @@ public abstract  class ArtifactBase extends Item implements ICurioItem
         tooltip.add(Component.translatable("%s.tooltip.item.%s".formatted(HavenKSH.MOD_ID, getTooltipItemName())));
     }
 
-    protected String getTooltipItemName() {return BuiltInRegistries.ITEM.getKey(this).getPath();}
+    protected String getTooltipItemName() {return BuiltInRegistries.ITEM.getKey(this).getPath();}*/
 
     @Override
-    public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {return true;}
+    public boolean canEquipFromUse(ItemStack stack)
+    {
+        return true;
+    }
+
+    @Override
+    @Nullable
+    public SoundEventData getEquipSound(ItemStack stack, SlotReference reference)
+    {
+        return new SoundEventData(SoundEvents.ARMOR_EQUIP_LEATHER, 1.0F, 1.0F);
+    }
 }

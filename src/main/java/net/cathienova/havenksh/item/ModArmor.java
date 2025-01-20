@@ -119,10 +119,10 @@ public class ModArmor
 
 
     public static final DeferredItem<Item> repair_talisman = ARMOR.register("repair_talisman",
-            () -> new RepairTalisman(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
 
     public static final DeferredItem<Item> magnet = ARMOR.register("magnet",
-            () -> new Magnet(new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 5));
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
 
 
     public static void register(IEventBus eventBus) {
