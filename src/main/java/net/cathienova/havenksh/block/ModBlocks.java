@@ -1,8 +1,6 @@
 package net.cathienova.havenksh.block;
 
 import net.cathienova.havenksh.HavenKSH;
-import net.cathienova.havenksh.block.cobblegen.*;
-import net.cathienova.havenksh.block.mobseeds.*;
 import net.cathienova.havenksh.item.ModItems;
 import net.cathienova.havenksh.item.fuel.FuelBlockItem;
 import net.minecraft.core.BlockPos;
@@ -27,30 +25,6 @@ import java.util.function.Supplier;
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(HavenKSH.MOD_ID);
-
-    public static final DeferredBlock<Block> wooden_cobble_gen = registerBlock("wooden_cobble_gen",
-            () -> new WoodenCobbleGen(BlockBehaviour.Properties.of().strength(2.0f)));
-
-    public static final DeferredBlock<Block> stone_cobble_gen = registerBlock("stone_cobble_gen",
-            () -> new StoneCobbleGen(BlockBehaviour.Properties.of().strength(2.0f)));
-
-    public static final DeferredBlock<Block> iron_cobble_gen = registerBlock("iron_cobble_gen",
-            () -> new IronCobbleGen(BlockBehaviour.Properties.of().strength(2.0f)));
-
-    public static final DeferredBlock<Block> gold_cobble_gen = registerBlock("gold_cobble_gen",
-            () -> new GoldCobbleGen(BlockBehaviour.Properties.of().strength(2.0f)));
-
-    public static final DeferredBlock<Block> diamond_cobble_gen = registerBlock("diamond_cobble_gen",
-            () -> new DiamondCobbleGen(BlockBehaviour.Properties.of().strength(2.0f)));
-
-    public static final DeferredBlock<Block> emerald_cobble_gen = registerBlock("emerald_cobble_gen",
-            () -> new EmeraldCobbleGen(BlockBehaviour.Properties.of().strength(2.0f)));
-
-    public static final DeferredBlock<Block> netherite_cobble_gen = registerBlock("netherite_cobble_gen",
-            () -> new NetheriteCobbleGen(BlockBehaviour.Properties.of().strength(2.0f)));
-
-    public static final DeferredBlock<Block> creative_cobble_gen = registerBlock("creative_cobble_gen",
-            () -> new CreativeCobbleGen(BlockBehaviour.Properties.of().strength(2.0f)));
 
     public static final DeferredBlock<Block> charcoal_block = registerFuelBlockBlock("charcoal_block",
             () -> new FuelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COAL_BLOCK).strength(5.0F, 3.0F)));
@@ -219,84 +193,6 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> raw_havenite_block = registerBlock("raw_havenite_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERITE_BLOCK).strength(3.0F, 5.0F)));
-
-    public static final DeferredBlock<Block> axolotl_seed = registerBlock("axolotl_seed",
-            () -> new AxolotlSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> bee_seed = registerBlock("bee_seed",
-            () -> new BeeSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> cat_seed = registerBlock("cat_seed",
-            () -> new CatSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> chicken_seed = registerBlock("chicken_seed",
-            () -> new ChickenSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> cow_seed = registerBlock("cow_seed",
-            () -> new CowSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> donkey_seed = registerBlock("donkey_seed",
-            () -> new DonkeySeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> fox_seed = registerBlock("fox_seed",
-            () -> new FoxSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> goat_seed = registerBlock("goat_seed",
-            () -> new GoatSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> horse_seed = registerBlock("horse_seed",
-            () -> new HorseSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> llama_seed = registerBlock("llama_seed",
-            () -> new LlamaSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> mooshroom_seed = registerBlock("mooshroom_seed",
-            () -> new MooshroomSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> mule_seed = registerBlock("mule_seed",
-            () -> new MuleSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> ocelot_seed = registerBlock("ocelot_seed",
-            () -> new OcelotSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> panda_seed = registerBlock("panda_seed",
-            () -> new PandaSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> pig_seed = registerBlock("pig_seed",
-            () -> new PigSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> rabbit_seed = registerBlock("rabbit_seed",
-            () -> new RabbitSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> sheep_seed = registerBlock("sheep_seed",
-            () -> new SheepSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> sniffer_seed = registerBlock("sniffer_seed",
-            () -> new SnifferSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> turtle_seed = registerBlock("turtle_seed",
-            () -> new TurtleSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> parrot_seed = registerBlock("parrot_seed",
-            () -> new ParrotSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> wolf_seed = registerBlock("wolf_seed",
-            () -> new WolfSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> dolphin_seed = registerBlock("dolphin_seed",
-            () -> new DolphinSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> glow_squid_seed = registerBlock("glow_squid_seed",
-            () -> new GlowSquidSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> polar_bear_seed = registerBlock("polar_bear_seed",
-            () -> new PolarBearSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> squid_seed = registerBlock("squid_seed",
-            () -> new SquidSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final DeferredBlock<Block> villager_seed = registerBlock("villager_seed",
-            () -> new VillagerSeedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).noLootTable()));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

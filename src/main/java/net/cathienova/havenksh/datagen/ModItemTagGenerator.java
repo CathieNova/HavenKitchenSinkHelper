@@ -218,27 +218,6 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(ModItems.mangrove_bark.get())
                 ;
 
-        this.tag(ModTags.Items.cobbleGens)
-                .add(ModBlocks.wooden_cobble_gen.get().asItem())
-                .add(ModBlocks.stone_cobble_gen.get().asItem())
-                .add(ModBlocks.iron_cobble_gen.get().asItem())
-                .add(ModBlocks.gold_cobble_gen.get().asItem())
-                .add(ModBlocks.diamond_cobble_gen.get().asItem())
-                .add(ModBlocks.emerald_cobble_gen.get().asItem())
-                .add(ModBlocks.netherite_cobble_gen.get().asItem())
-                .add(ModBlocks.creative_cobble_gen.get().asItem())
-                ;
-
-        this.tag(ModTags.Items.cobbleGenUpgrades)
-                .add(ModItems.cobble_gen_upgrade_wooden.get())
-                .add(ModItems.cobble_gen_upgrade_stone.get())
-                .add(ModItems.cobble_gen_upgrade_iron.get())
-                .add(ModItems.cobble_gen_upgrade_gold.get())
-                .add(ModItems.cobble_gen_upgrade_diamond.get())
-                .add(ModItems.cobble_gen_upgrade_emerald.get())
-                .add(ModItems.cobble_gen_upgrade_netherite.get())
-                ;
-
         this.tag(ModTags.Items.oreHammers)
                 .add(ModTools.copper_ore_hammer.get())
                 .add(ModTools.iron_ore_hammer.get())

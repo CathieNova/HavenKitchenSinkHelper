@@ -118,15 +118,6 @@ public class ModItemModelProvider extends ItemModelProvider
         simpleItem(ModArmor.magnet);
         simpleItem(ModArmor.repair_talisman);
 
-
-        simpleItem(ModItems.cobble_gen_upgrade_wooden);
-        simpleItem(ModItems.cobble_gen_upgrade_stone);
-        simpleItem(ModItems.cobble_gen_upgrade_iron);
-        simpleItem(ModItems.cobble_gen_upgrade_gold);
-        simpleItem(ModItems.cobble_gen_upgrade_diamond);
-        simpleItem(ModItems.cobble_gen_upgrade_emerald);
-        simpleItem(ModItems.cobble_gen_upgrade_netherite);
-
         handHeldItem(ModTools.stone_hammer);
         handHeldItem(ModTools.copper_hammer);
         handHeldItem(ModTools.iron_hammer);

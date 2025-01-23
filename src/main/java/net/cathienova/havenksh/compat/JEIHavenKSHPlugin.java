@@ -33,36 +33,6 @@ public class JEIHavenKSHPlugin implements IModPlugin
     @Override
     public void registerRecipes(IRecipeRegistration registration)
     {
-        Component[] cobble_gen_descriptions = new Component[] {
-                Component.translatable("jei.havenksh.cobble_gen.desc.line1"),
-                Component.literal(" "),
-                Component.translatable("jei.havenksh.cobble_gen.desc.line2")
-        };
-
-        ItemStack wooden_cobble_gen = new ItemStack(ModBlocks.wooden_cobble_gen.get());
-        registration.addIngredientInfo(wooden_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack stone_cobble_gen = new ItemStack(ModBlocks.stone_cobble_gen.get());
-        registration.addIngredientInfo(stone_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack iron_cobble_gen = new ItemStack(ModBlocks.iron_cobble_gen.get());
-        registration.addIngredientInfo(iron_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack gold_cobble_gen = new ItemStack(ModBlocks.gold_cobble_gen.get());
-        registration.addIngredientInfo(gold_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack diamond_cobble_gen = new ItemStack(ModBlocks.diamond_cobble_gen.get());
-        registration.addIngredientInfo(diamond_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack emerald_cobble_gen = new ItemStack(ModBlocks.emerald_cobble_gen.get());
-        registration.addIngredientInfo(emerald_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack netherite_cobble_gen = new ItemStack(ModBlocks.netherite_cobble_gen.get());
-        registration.addIngredientInfo(netherite_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack creative_cobble_gen = new ItemStack(ModBlocks.creative_cobble_gen.get());
-        registration.addIngredientInfo(creative_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
         Component[] ore_hammer_description = new Component[] {
                 Component.translatable("jei.havenksh.ore_hammer.desc.line1"),
                 Component.literal(" "),

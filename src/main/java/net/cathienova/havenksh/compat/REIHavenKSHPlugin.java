@@ -4,7 +4,6 @@ import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.forge.REIPluginClient;
-import net.cathienova.havenksh.block.ModBlocks;
 import net.cathienova.havenksh.compat.rei.ItemInfoCategory;
 import net.cathienova.havenksh.compat.rei.ItemInfoDisplay;
 import net.cathienova.havenksh.item.ModArmor;
@@ -24,14 +23,6 @@ public class REIHavenKSHPlugin implements REIClientPlugin {
     public void registerCategories(CategoryRegistry registry) {
         registry.add(new ItemInfoCategory());
     }
-
-
-    static Component[] cobble_gen_descriptions = new Component[] {
-            Component.translatable("jei.havenksh.cobble_gen.desc.line1"),
-            Component.literal(" "),
-            Component.translatable("jei.havenksh.cobble_gen.desc.line2")
-    };
-
     static Component[] ore_hammer_description = new Component[] {
             Component.translatable("jei.havenksh.ore_hammer.desc.line1"),
             Component.literal(" "),
@@ -61,18 +52,6 @@ public class REIHavenKSHPlugin implements REIClientPlugin {
     };
 
     public static void populateItemDescriptions() {
-        // Add items and their corresponding descriptions here
-
-        // Cobblestone Generators
-        ITEM_DESCRIPTIONS.put(ModBlocks.wooden_cobble_gen.asItem(), cobble_gen_descriptions);
-        ITEM_DESCRIPTIONS.put(ModBlocks.stone_cobble_gen.asItem(), cobble_gen_descriptions);
-        ITEM_DESCRIPTIONS.put(ModBlocks.iron_cobble_gen.asItem(), cobble_gen_descriptions);
-        ITEM_DESCRIPTIONS.put(ModBlocks.gold_cobble_gen.asItem(), cobble_gen_descriptions);
-        ITEM_DESCRIPTIONS.put(ModBlocks.diamond_cobble_gen.asItem(), cobble_gen_descriptions);
-        ITEM_DESCRIPTIONS.put(ModBlocks.emerald_cobble_gen.asItem(), cobble_gen_descriptions);
-        ITEM_DESCRIPTIONS.put(ModBlocks.netherite_cobble_gen.asItem(), cobble_gen_descriptions);
-        ITEM_DESCRIPTIONS.put(ModBlocks.creative_cobble_gen.asItem(), cobble_gen_descriptions);
-
         // Ore Hammer
         ITEM_DESCRIPTIONS.put(ModTools.copper_ore_hammer.get(), ore_hammer_description);
         ITEM_DESCRIPTIONS.put(ModTools.iron_ore_hammer.get(), ore_hammer_description);

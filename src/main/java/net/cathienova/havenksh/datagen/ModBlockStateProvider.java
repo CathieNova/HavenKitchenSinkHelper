@@ -48,32 +48,6 @@ public class ModBlockStateProvider extends BlockStateProvider
         blockWithItem(ModBlocks.havenite_ore);
         blockWithItem(ModBlocks.deepslate_havenite_ore);
         blockWithItem(ModBlocks.raw_havenite_block);
-        crossBlock(ModBlocks.axolotl_seed);
-        crossBlock(ModBlocks.bee_seed);
-        crossBlock(ModBlocks.cat_seed);
-        crossBlock(ModBlocks.chicken_seed);
-        crossBlock(ModBlocks.cow_seed);
-        crossBlock(ModBlocks.donkey_seed);
-        crossBlock(ModBlocks.fox_seed);
-        crossBlock(ModBlocks.goat_seed);
-        crossBlock(ModBlocks.horse_seed);
-        crossBlock(ModBlocks.llama_seed);
-        crossBlock(ModBlocks.mooshroom_seed);
-        crossBlock(ModBlocks.mule_seed);
-        crossBlock(ModBlocks.ocelot_seed);
-        crossBlock(ModBlocks.panda_seed);
-        crossBlock(ModBlocks.parrot_seed);
-        crossBlock(ModBlocks.pig_seed);
-        crossBlock(ModBlocks.rabbit_seed);
-        crossBlock(ModBlocks.sheep_seed);
-        crossBlock(ModBlocks.sniffer_seed);
-        crossBlock(ModBlocks.turtle_seed);
-        crossBlock(ModBlocks.wolf_seed);
-        crossBlock(ModBlocks.dolphin_seed);
-        crossBlock(ModBlocks.glow_squid_seed);
-        crossBlock(ModBlocks.polar_bear_seed);
-        crossBlock(ModBlocks.squid_seed);
-        crossBlock(ModBlocks.villager_seed);
     }
 
     private void blockItem(DeferredBlock<Block> blockRegistryObject) {

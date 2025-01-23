@@ -88,23 +88,6 @@ public class ModCreativeModTabs
                         add.accept(new ItemStack(ModItems.mini_coal.get()));
                         add.accept(new ItemStack(ModItems.mini_charcoal.get()));
 
-                        add.accept(new ItemStack(ModBlocks.wooden_cobble_gen.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.stone_cobble_gen.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.iron_cobble_gen.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.gold_cobble_gen.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.diamond_cobble_gen.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.emerald_cobble_gen.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.netherite_cobble_gen.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.creative_cobble_gen.get().asItem()));
-
-                        add.accept(new ItemStack(ModItems.cobble_gen_upgrade_wooden.get()));
-                        add.accept(new ItemStack(ModItems.cobble_gen_upgrade_stone.get()));
-                        add.accept(new ItemStack(ModItems.cobble_gen_upgrade_iron.get()));
-                        add.accept(new ItemStack(ModItems.cobble_gen_upgrade_gold.get()));
-                        add.accept(new ItemStack(ModItems.cobble_gen_upgrade_diamond.get()));
-                        add.accept(new ItemStack(ModItems.cobble_gen_upgrade_emerald.get()));
-                        add.accept(new ItemStack(ModItems.cobble_gen_upgrade_netherite.get()));
-
                         add.accept(new ItemStack(ModTools.copper_ore_hammer.get()));
                         add.accept(new ItemStack(ModTools.iron_ore_hammer.get()));
                         add.accept(new ItemStack(ModTools.gold_ore_hammer.get()));
@@ -160,31 +143,6 @@ public class ModCreativeModTabs
                         add.accept(new ItemStack(ModBlocks.flint_block.get().asItem()));
                         add.accept(new ItemStack(ModBlocks.ender_block.get().asItem()));
                         add.accept(new ItemStack(ModBlocks.nether_star_block.get().asItem()));
-
-                        add.accept(new ItemStack(ModBlocks.axolotl_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.bee_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.cat_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.chicken_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.cow_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.donkey_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.fox_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.goat_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.horse_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.llama_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.mooshroom_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.mule_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.pig_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.rabbit_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.sheep_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.sniffer_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.parrot_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.turtle_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.wolf_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.dolphin_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.glow_squid_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.polar_bear_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.squid_seed.get().asItem()));
-                        add.accept(new ItemStack(ModBlocks.villager_seed.get().asItem()));
 
                         add.accept(new ItemStack(ModBlocks.lamp_white.get().asItem()));
                         add.accept(new ItemStack(ModBlocks.lamp_aqua.get().asItem()));
