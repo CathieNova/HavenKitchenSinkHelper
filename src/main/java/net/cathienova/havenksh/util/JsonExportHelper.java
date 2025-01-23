@@ -35,6 +35,7 @@ public class JsonExportHelper
     private static final File CONFIG_DIR = FMLPaths.CONFIGDIR.get().resolve("havenksh/generated_jsons").toFile();
     private static final File FTBQUEST_DIR = FMLPaths.CONFIGDIR.get().resolve("ftbquests/quests/chapters").toFile();
     private static final File FTBQUESTREWARD_DIR = FMLPaths.CONFIGDIR.get().resolve("ftbquests/quests/reward_tables").toFile();
+    private static final File FTBQUESTLANG_DIR = FMLPaths.CONFIGDIR.get().resolve("ftbquests/quests/lang").toFile();
 
     public static void exportItemsToJson()
     {
@@ -318,34 +319,78 @@ public class JsonExportHelper
         addRewardTableToLangFile(rewardTableId, title);
     }
 
-
     private static void addRewardTableToLangFile(String rewardTableId, String title) {
-        File langFile = new File(FTBQUESTREWARD_DIR.getParent(), "lang/en_us.snbt");
+        File langFile = new File(FTBQUESTLANG_DIR + "/en_us.snbt");
 
-        StringBuilder langContent = new StringBuilder();
+        // Ensure the directories exist
+        if (!langFile.getParentFile().exists()) {
+            langFile.getParentFile().mkdirs();
+        }
 
-        if (langFile.exists()) {
+        // Ensure the file exists and is initialized
+        if (!langFile.exists()) {
             try {
-                langContent.append(new String(Files.readAllBytes(langFile.toPath())));
+                langFile.createNewFile();
+                try (FileWriter writer = new FileWriter(langFile, false)) {
+                    writer.write("{\n}\n"); // Write an empty structure
+                }
             } catch (IOException e) {
                 e.printStackTrace();
+                return;
             }
         }
 
-        String langEntry = "reward_table." + rewardTableId + ".title: \"" + title + "\"";
+        StringBuilder langContent = new StringBuilder();
 
-        // Avoid duplicate entries
-        if (!langContent.toString().contains(langEntry)) {
-            if (!langContent.toString().endsWith("\n")) {
-                langContent.append("\n");
-            }
-            langContent.append(langEntry).append("\n");
+        // Read the content of the file
+        try {
+            langContent.append(new String(Files.readAllBytes(langFile.toPath())));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
 
-            try (FileWriter writer = new FileWriter(langFile, false)) {
-                writer.write(langContent.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
+        String langEntry = "    reward_table." + rewardTableId + ".title: \"" + title + "\"";
+
+        // Check if the entry already exists
+        if (langContent.toString().contains(langEntry)) {
+            return; // Do nothing if the entry already exists
+        }
+
+        // Find the closing brace
+        int closingBraceIndex = langContent.lastIndexOf("}");
+        if (closingBraceIndex == -1) {
+            // If the structure is malformed, reinitialize it
+            langContent.setLength(0);
+            langContent.append("{\n}\n");
+            closingBraceIndex = langContent.lastIndexOf("}");
+        }
+
+        // Check if there are existing entries
+        boolean hasEntries = langContent.lastIndexOf(":") != -1;
+
+        // Insert the new entry
+        if (hasEntries) {
+            // Add a comma to the last entry if not already present
+            int lastEntryIndex = langContent.lastIndexOf("\n", closingBraceIndex - 1);
+            if (lastEntryIndex != -1) {
+                int lastCharIndex = closingBraceIndex - 1;
+                if (langContent.charAt(lastCharIndex) != ',') {
+                    langContent.insert(lastCharIndex, ",");
+                }
             }
+            // Add the new entry with no extra newline
+            langContent.insert(closingBraceIndex, "\n" + langEntry);
+        } else {
+            // Add the first entry with proper indentation
+            langContent.insert(closingBraceIndex, langEntry + "\n");
+        }
+
+        // Write the updated content back to the file
+        try (FileWriter writer = new FileWriter(langFile, false)) {
+            writer.write(langContent.toString().trim() + "\n"); // Ensure a single newline at the end of the file
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
