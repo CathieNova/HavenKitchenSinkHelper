@@ -5,11 +5,14 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.suggestion.Suggestions;
+import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.cathienova.havenksh.util.JsonExportHelper;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -21,8 +24,11 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.fml.ModList;
+import net.neoforged.neoforgespi.language.IModInfo;
 
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 
 import static net.cathienova.havenksh.util.JsonExportHelper.exportFTBQuestRewardsToJson;
 
@@ -58,9 +64,11 @@ public class ModCommands
                                         }))))
                         .then(Commands.literal("moditems")
                                 .then(Commands.argument("modid", StringArgumentType.string())
+                                        .suggests(ModCommands::suggestMods)
                                         .executes(ModCommands::generateModItemsJsons)))
                         .then(Commands.literal("modblocks")
                                 .then(Commands.argument("modid", StringArgumentType.string())
+                                        .suggests(ModCommands::suggestMods)
                                         .executes(ModCommands::generateModBlocksJsons)))
                         .then(Commands.literal("ftbquestrewards")
                                 .then(Commands.argument("title", StringArgumentType.string())
@@ -68,12 +76,21 @@ public class ModCommands
                         .then(Commands.literal("ftbquestchapter")
                                 .then(Commands.argument("title", StringArgumentType.string())
                                         .then(Commands.argument("modid", StringArgumentType.string())
+                                                .suggests(ModCommands::suggestMods)
                                                 .executes(ModCommands::generateFTBQuestChapterJson))))
                         .then(Commands.literal("alltags").executes(ModCommands::generateAllTagsJsons))
                 )
         );
 
         dispatcher.register(havenkshCommand);
+    }
+
+    private static CompletableFuture<Suggestions> suggestMods(CommandContext<CommandSourceStack> context, SuggestionsBuilder builder) {
+        ModList.get().getMods().stream()
+                .map(IModInfo::getModId)
+                .sorted()
+                .forEach(builder::suggest);
+        return builder.buildFuture();
     }
 
     private static int generateItemJsons(CommandContext<CommandSourceStack> context) throws CommandSyntaxException
