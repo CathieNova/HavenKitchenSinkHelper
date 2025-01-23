@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @EventBusSubscriber(modid = HavenKSH.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
-public class ExcavatorBeakEvent
+public class ExcavatorBreakEvent
 {
     private static final Set<BlockPos> BlocksBroken = new HashSet<>();
 
