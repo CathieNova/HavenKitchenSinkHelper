@@ -17,7 +17,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.fml.loading.FMLPaths;
 
 import java.io.File;
@@ -240,79 +243,116 @@ public class JsonExportHelper
 
     public static void exportFTBQuestRewardsToJson(ServerPlayer player, BlockPos containerPos, String title) {
         List<Map<String, Object>> rewards = new ArrayList<>();
+
         BlockEntity blockEntity = player.level().getBlockEntity(containerPos);
 
-        if (blockEntity instanceof Container) {
-            Container container = (Container) blockEntity;
+        if (blockEntity instanceof ChestBlockEntity chestEntity) {
+            // Handle single or double chest inventory
+            BlockState state = player.level().getBlockState(containerPos);
+            if (state.getBlock() instanceof ChestBlock chestBlock) {
+                Container inventory = ChestBlock.getContainer(chestBlock, state, player.level(), containerPos, false);
+                if (inventory != null) {
+                    for (int i = 0; i < inventory.getContainerSize(); i++) {
+                        ItemStack itemStack = inventory.getItem(i);
+                        if (!itemStack.isEmpty()) {
+                            Map<String, Object> reward = new HashMap<>();
+                            reward.put("count", itemStack.getCount());
+                            reward.put("item_id", BuiltInRegistries.ITEM.getKey(itemStack.getItem()).toString());
+                            rewards.add(reward);
+                        }
+                    }
+                }
+            }
+        } else if (blockEntity instanceof Container container) {
+            // Handle generic containers
             for (int i = 0; i < container.getContainerSize(); i++) {
                 ItemStack itemStack = container.getItem(i);
                 if (!itemStack.isEmpty()) {
                     Map<String, Object> reward = new HashMap<>();
                     reward.put("count", itemStack.getCount());
-                    reward.put("item", BuiltInRegistries.ITEM.getKey(itemStack.getItem()).toString());
+                    reward.put("item_id", BuiltInRegistries.ITEM.getKey(itemStack.getItem()).toString());
                     rewards.add(reward);
                 }
             }
-        } /*else if (blockEntity != null && blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
-            blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-                for (int i = 0; i < handler.getSlots(); i++) {
-                    ItemStack itemStack = handler.getStackInSlot(i);
-                    if (!itemStack.isEmpty()) {
-                        Map<String, Object> reward = new HashMap<>();
-                        reward.put("count", itemStack.getCount());
-                        reward.put("item", BuiltInRegistries.ITEM.getKey(itemStack.getItem()).toString());
-                        rewards.add(reward);
-                    }
-                }
-            });
-        }*/ else {
-            player.sendSystemMessage(Component.literal("No storage container found at the specified location"));
+        } else {
+            player.sendSystemMessage(Component.literal("No valid container found at the specified location"));
             return;
         }
 
-        // Transform the title to capitalized words with spaces
-        String transformedTitle = formatTitle(title);
-
-        // Check if file exists
+        String rewardTableId = generateRandomHexID();
         File snbtFile = new File(FTBQUESTREWARD_DIR, title.toLowerCase() + ".snbt");
+
         if (snbtFile.exists()) {
-            // If the file exists, append the new rewards to the existing rewards
             String existingContent = readSnbtFile(snbtFile);
             String updatedContent = addRewardsToExistingSnbt(existingContent, rewards);
             writeToSnbtFile(title.toLowerCase() + ".snbt", updatedContent, FTBQUESTREWARD_DIR);
         } else {
-            // If file does not exist, create a new one
             StringBuilder snbtBuilder = new StringBuilder();
             snbtBuilder.append("{\n")
-                    .append("  hide_tooltip: true,\n")
-                    .append("  icon: \"havenksh:research_tier_basic\",\n")
-                    .append("  id: \"").append(generateRandomHexID()).append("\",\n")
+                    .append("  id: \"").append(rewardTableId).append("\",\n")
                     .append("  loot_size: 1,\n")
                     .append("  order_index: 0,\n")
                     .append("  rewards: [\n");
 
-            // Add rewards without the trailing comma
             for (int i = 0; i < rewards.size(); i++) {
-                snbtBuilder.append("    { count: ").append(rewards.get(i).get("count"))
-                        .append(", item: \"").append(rewards.get(i).get("item")).append("\" }");
+                snbtBuilder.append("    {\n")
+                        .append("      count: ").append(rewards.get(i).get("count")).append(",\n")
+                        .append("      id: \"").append(generateRandomHexID()).append("\",\n")
+                        .append("      item: {\n")
+                        .append("        count: ").append(rewards.get(i).get("count")).append(",\n")
+                        .append("        id: \"").append(rewards.get(i).get("item_id")).append("\"\n")
+                        .append("      }\n")
+                        .append("    }");
                 if (i < rewards.size() - 1) {
-                    snbtBuilder.append(",");  // Add a comma if it's not the last item
+                    snbtBuilder.append(",");
                 }
                 snbtBuilder.append("\n");
             }
 
-            snbtBuilder.append("  ],\n")
-                    .append("  title: \"").append(transformedTitle).append("\"\n")
+            snbtBuilder.append("  ]\n")
                     .append("}");
 
-            // Write to SNBT file
             writeToSnbtFile(title.toLowerCase() + ".snbt", snbtBuilder.toString(), FTBQUESTREWARD_DIR);
+        }
+
+        addRewardTableToLangFile(rewardTableId, title);
+    }
+
+
+    private static void addRewardTableToLangFile(String rewardTableId, String title) {
+        File langFile = new File(FTBQUESTREWARD_DIR.getParent(), "lang/en_us.snbt");
+
+        StringBuilder langContent = new StringBuilder();
+
+        if (langFile.exists()) {
+            try {
+                langContent.append(new String(Files.readAllBytes(langFile.toPath())));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String langEntry = "reward_table." + rewardTableId + ".title: \"" + title + "\"";
+
+        // Avoid duplicate entries
+        if (!langContent.toString().contains(langEntry)) {
+            if (!langContent.toString().endsWith("\n")) {
+                langContent.append("\n");
+            }
+            langContent.append(langEntry).append("\n");
+
+            try (FileWriter writer = new FileWriter(langFile, false)) {
+                writer.write(langContent.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public static void exportFTBQuestChapterToJson(String title, String modId) {
         List<String> modElements = new ArrayList<>();
         String transformedTitle = formatTitle(title);
+
         // Fetch mod's items
         for (var item : BuiltInRegistries.ITEM) {
             var itemKey = BuiltInRegistries.ITEM.getKey(item);
@@ -329,16 +369,16 @@ public class JsonExportHelper
             }
         }
 
-        // Calculate total number of mod elements (items + blocks)
+        // Calculate total number of mod elements
         int totalElements = modElements.size();
         if (totalElements == 0) {
             return; // No items or blocks, exit early
         }
 
-        // Calculate rows and columns for a balanced grid (closest to square)
-        int gridSize = (int) Math.ceil(Math.sqrt(totalElements)); // Square root to get approx grid size
+        // Calculate rows and columns for a balanced grid
+        int gridSize = (int) Math.ceil(Math.sqrt(totalElements));
         int rows = gridSize;
-        int columns = (int) Math.ceil((double) totalElements / rows); // Adjust column count
+        int columns = (int) Math.ceil((double) totalElements / rows);
 
         // Build SNBT for quests
         StringBuilder snbtBuilder = new StringBuilder();
@@ -346,7 +386,7 @@ public class JsonExportHelper
                 .append("  default_hide_dependency_lines: false,\n")
                 .append("  default_quest_shape: \"\",\n")
                 .append("  filename: \"").append(title.toLowerCase()).append("\",\n")
-                .append("  group: \"").append("\",\n")
+                .append("  group: \"").append(generateRandomHexID()).append("\",\n")
                 .append("  id: \"").append(generateRandomHexID()).append("\",\n")
                 .append("  order_index: 0,\n")
                 .append("  quest_links: [ ],\n")
@@ -356,16 +396,25 @@ public class JsonExportHelper
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < columns; x++) {
                 if (elementIndex >= totalElements) {
-                    break; // If we've processed all elements, break out
+                    break; // If we've processed all elements, exit loop
                 }
                 String element = modElements.get(elementIndex);
 
                 // Append quest data for each element
                 snbtBuilder.append("    {\n")
                         .append("      id: \"").append(generateRandomHexID()).append("\",\n")
-                        .append("      tasks: [{ id: \"").append(generateRandomHexID()).append("\", item: \"").append(element).append("\", type: \"item\" }],\n")
-                        .append("      x: ").append(x).append("d,\n")
-                        .append("      y: ").append(y).append("d\n")
+                        .append("      tasks: [{\n")
+                        .append("        id: \"").append(generateRandomHexID()).append("\",\n")
+                        .append("        item: { count: 1, id: \"").append(element).append("\" },\n")
+                        .append("        type: \"item\"\n")
+                        .append("      }],\n")
+                        .append("      rewards: [{\n")
+                        .append("        id: \"").append(generateRandomHexID()).append("\",\n")
+                        .append("        item: { count: 1, id: \"").append(element).append("\" },\n")
+                        .append("        type: \"item\"\n")
+                        .append("      }],\n")
+                        .append("      x: ").append(x).append(".0d,\n")
+                        .append("      y: ").append(y).append(".0d\n")
                         .append("    },\n");
 
                 elementIndex++;
