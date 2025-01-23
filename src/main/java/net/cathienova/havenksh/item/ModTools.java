@@ -318,9 +318,6 @@ public class ModTools
                     .attributes(AxeItem.createAttributes(ModToolTiers.havenite, 6,  -2.4F))
                     .stacksTo(1).durability(50000), 50000));
 
-    public static final DeferredItem<Item> trowel = TOOLS.register("trowel",
-            () -> new TrowelItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).durability(512)));
-
     public static void register(IEventBus eventBus) {
         TOOLS.register(eventBus);
     }

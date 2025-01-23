@@ -61,9 +61,6 @@ public class JEIHavenKSHPlugin implements IModPlugin
                 Component.translatable("jei.havenksh.trowel.desc.line1")
         };
 
-        ItemStack trowel = new ItemStack(ModTools.trowel.get());
-        registration.addIngredientInfo(trowel, VanillaTypes.ITEM_STACK, trowelDescription);
-
         Component[] barkDescription = new Component[] {
                 Component.translatable("jei.havenksh.bark.desc.line1"),
                 Component.literal(" "),

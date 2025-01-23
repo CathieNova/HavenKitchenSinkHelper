@@ -153,17 +153,6 @@ public class ModAdvancementProvider extends AdvancementProvider
                             ItemPredicate.Builder.item().of(ModArmor.repair_talisman.get()).build()))
                     .save(consumer, ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, "repair_talisman").toString());
 
-            AdvancementHolder trowel = Advancement.Builder.advancement()
-                    .parent(root)
-                    .display(ModTools.trowel.get(),
-                            Component.translatable("advancements.havenksh.trowel.title"),
-                            Component.translatable("advancements.havenksh.trowel.description"),
-                            null,
-                            AdvancementType.TASK, true, true, false)
-                    .addCriterion("trowel", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            ItemPredicate.Builder.item().of(ModTools.trowel.get()).build()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(HavenKSH.MOD_ID, "trowel").toString());
-
             AdvancementHolder acacia_bark = Advancement.Builder.advancement()
                     .parent(root)
                     .display(ModItems.acacia_bark.get(),

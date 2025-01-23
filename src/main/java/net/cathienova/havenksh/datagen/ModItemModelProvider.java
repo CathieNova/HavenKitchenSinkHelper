@@ -113,8 +113,6 @@ public class ModItemModelProvider extends ItemModelProvider
         simpleItem(ModItems.research_tier_elite);
         simpleItem(ModItems.research_tier_ultimate);
 
-        handHeldItem(ModTools.trowel);
-
         simpleItem(ModArmor.magnet);
         simpleItem(ModArmor.repair_talisman);
 

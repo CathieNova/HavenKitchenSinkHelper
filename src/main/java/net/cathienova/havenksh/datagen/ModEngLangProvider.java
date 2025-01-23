@@ -118,10 +118,6 @@ public class ModEngLangProvider extends LanguageProvider
         addItem(ModItems.research_tier_elite, "Elite Research Tier");
         addItem(ModItems.research_tier_ultimate, "Ultimate Research Tier");
 
-        addItem(ModTools.trowel, "Trowel");
-        add("item.havenksh.trowel.tooltip.hotbar", "§bRight click§r to place random blocks from the hotbar.");
-        add("item.havenksh.trowel.tooltip.inventory", "§bRight click§r to place random blocks from the inventory and hotbar.");
-
         addItem(ModItems.acacia_bark, "Acacia Bark");
         addItem(ModItems.birch_bark, "Birch Bark");
         addItem(ModItems.dark_oak_bark, "Dark Oak Bark");
@@ -271,8 +267,6 @@ public class ModEngLangProvider extends LanguageProvider
         add("jei.havenksh.ore_hammer.desc.line1", "Ore Hammers are used to crush ores into dust. The higher the tier, the higher the durability it has.");
         add("jei.havenksh.ore_hammer.desc.line2", "The dust can be smelted into ingots or used in other recipes.");
 
-        add("jei.havenksh.trowel.desc.line1", "Trowels are used to place random blocks from the hotbar. Right click to place a block.");
-
         add("jei.havenksh.bark.desc.line1", "Bark can be obtained by stripping logs. It can be used to craft various items.");
         add("jei.havenksh.bark.desc.line2", "You can use the Bark to Right Click the equivalent stripped log to turn it back into a log.");
         add("jei.havenksh.bark.desc.line3", "It can also be used as fuel in a furnace.");
@@ -314,9 +308,6 @@ public class ModEngLangProvider extends LanguageProvider
 
         add("advancements.havenksh.netherite_ore_hammer.title", "Netherite Ore Hammer");
         add("advancements.havenksh.netherite_ore_hammer.description", "Your basic ore doubling tool");
-
-        add("advancements.havenksh.trowel.title", "Trowel");
-        add("advancements.havenksh.trowel.description", "A tool for placing random blocks from the hotbar.");
 
         add("advancements.havenksh.magnet.title", "Magnet");
         add("advancements.havenksh.magnet.description", "Attracts items if equipped with a range of 5 blocks.");

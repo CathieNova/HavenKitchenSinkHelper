@@ -418,15 +418,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', Items.STICK)
                 .unlockedBy("has_netherite_block", has(ModTags.Items.forgeNetheriteBlocks))
                 .save(output, HavenKSH.MOD_ID + ":craft/netherite_ore_hammer");
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModTools.trowel.get(), 1)
-                .pattern(" II")
-                .pattern(" SI")
-                .pattern("S  ")
-                .define('I', Items.IRON_INGOT)
-                .define('S', Items.STICK)
-                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-                .save(output, HavenKSH.MOD_ID + ":craft/trowel");
         
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModTools.wooden_shears.get(), 1)
                 .pattern(" P")

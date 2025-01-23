@@ -54,7 +54,6 @@ public class ModCreativeModTabs
                         add.accept(new ItemStack(ModItems.empty_iron_watering_can.get()));
                         add.accept(new ItemStack(ModItems.iron_watering_can.get()));
                         add.accept(new ItemStack(ModItems.dragon_scale.get()));
-                        add.accept(new ItemStack(ModTools.trowel.get()));
 
                         add.accept(new ItemStack(ModItems.havenite_nugget.get()));
                         add.accept(new ItemStack(ModItems.diamond_nugget.get()));

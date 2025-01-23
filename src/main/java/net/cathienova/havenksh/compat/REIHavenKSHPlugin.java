@@ -60,9 +60,6 @@ public class REIHavenKSHPlugin implements REIClientPlugin {
         ITEM_DESCRIPTIONS.put(ModTools.emerald_ore_hammer.get(), ore_hammer_description);
         ITEM_DESCRIPTIONS.put(ModTools.netherite_ore_hammer.get(), ore_hammer_description);
 
-        // Trowel
-        ITEM_DESCRIPTIONS.put(ModTools.trowel.get(), trowelDescription);
-
         // Bark
         ITEM_DESCRIPTIONS.put(ModItems.acacia_bark.get(), barkDescription);
         ITEM_DESCRIPTIONS.put(ModItems.birch_bark.get(), barkDescription);
