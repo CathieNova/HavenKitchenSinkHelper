@@ -58,7 +58,6 @@ public class HavenKSH
         NeoForge.EVENT_BUS.addListener(this::registerCommands);
         DistUtils.runIfOn(Dist.CLIENT, ExcavatorRendering::new);
         DistUtils.runIfOn(Dist.CLIENT, HammerRendering::new);
-        DistUtils.runIfOn(Dist.CLIENT, TrowelRendering::new);
         DistUtils.runIfOn(Dist.CLIENT, HavenKSHClient::new);
     }
 
