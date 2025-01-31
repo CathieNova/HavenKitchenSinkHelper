@@ -33,6 +33,7 @@ license="${mod_license}"
     side="BOTH"
 [[dependencies.havenksh]]
     modId="jade"
+    type="optional"
     versionRange="[11.7.0,)"
     ordering="NONE"
     side="BOTH"
