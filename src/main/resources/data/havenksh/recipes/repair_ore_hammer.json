@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "tag": "havenksh:ore_hammers" },
+    { "tag": "havenksh:ore_hammers" }
+  ],
+  "result": {
+    "item": "minecraft:air"
+  }
+}

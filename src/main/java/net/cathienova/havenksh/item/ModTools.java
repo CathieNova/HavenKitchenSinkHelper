@@ -122,52 +122,52 @@ public class ModTools
             () -> new ShieldItem(new Item.Properties().stacksTo(1).durability(4096)));
 
     public static final RegistryObject<Item> copper_ore_hammer = TOOLS.register("copper_ore_hammer",
-            () -> new CopperOreHammer(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).defaultDurability(64)));
+            () -> new CopperOreHammer(new Item.Properties().setNoRepair().stacksTo(1).rarity(Rarity.UNCOMMON).defaultDurability(64)));
 
     public static final RegistryObject<Item> iron_ore_hammer = TOOLS.register("iron_ore_hammer",
-            () -> new IronOreHammer(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).defaultDurability(128)));
+            () -> new IronOreHammer(new Item.Properties().setNoRepair().stacksTo(1).rarity(Rarity.UNCOMMON).defaultDurability(128)));
 
     public static final RegistryObject<Item> gold_ore_hammer = TOOLS.register("gold_ore_hammer",
-            () -> new GoldOreHammer(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).defaultDurability(256)));
+            () -> new GoldOreHammer(new Item.Properties().setNoRepair().stacksTo(1).rarity(Rarity.UNCOMMON).defaultDurability(256)));
 
     public static final RegistryObject<Item> diamond_ore_hammer = TOOLS.register("diamond_ore_hammer",
-            () -> new DiamondOreHammer(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).defaultDurability(512)));
+            () -> new DiamondOreHammer(new Item.Properties().setNoRepair().stacksTo(1).rarity(Rarity.RARE).defaultDurability(512)));
 
     public static final RegistryObject<Item> emerald_ore_hammer = TOOLS.register("emerald_ore_hammer",
-            () -> new EmeraldOreHammer(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).defaultDurability(1024)));
+            () -> new EmeraldOreHammer(new Item.Properties().setNoRepair().stacksTo(1).rarity(Rarity.RARE).defaultDurability(1024)));
 
     public static final RegistryObject<Item> netherite_ore_hammer = TOOLS.register("netherite_ore_hammer",
-            () -> new NetheriteOreHammer(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).defaultDurability(2048)));
+            () -> new NetheriteOreHammer(new Item.Properties().setNoRepair().stacksTo(1).rarity(Rarity.EPIC).defaultDurability(2048)));
 
     public static final RegistryObject<Item> havenite_ore_hammer = TOOLS.register("havenite_ore_hammer",
-            () -> new HaveniteOreHammer(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).defaultDurability(-1)));
+            () -> new HaveniteOreHammer(new Item.Properties().setNoRepair().stacksTo(1).rarity(Rarity.EPIC).defaultDurability(-1)));
 
     public static final RegistryObject<Item> stone_hammer = TOOLS.register("stone_hammer",
-            () -> new HammerBase(ModToolTiers.stone, 1, -2.8F,
+            () -> new HammerBase(Tiers.STONE, 1, -2.8F,
                     new Item.Properties().stacksTo(1).durability(131)));
 
     public static final RegistryObject<Item> copper_hammer = TOOLS.register("copper_hammer",
-            () -> new HammerBase(ModToolTiers.iron, 1, -2.8F,
+            () -> new HammerBase(Tiers.STONE, 1, -2.8F,
                     new Item.Properties().stacksTo(1).durability(250)));
 
     public static final RegistryObject<Item> iron_hammer = TOOLS.register("iron_hammer",
-            () -> new HammerBase(ModToolTiers.iron, 2, -2.8F,
+            () -> new HammerBase(Tiers.IRON, 2, -2.8F,
                     new Item.Properties().stacksTo(1).durability(250)));
 
     public static final RegistryObject<Item> golden_hammer = TOOLS.register("golden_hammer",
-            () -> new HammerBase(ModToolTiers.gold, 3, -2.8F,
+            () -> new HammerBase(Tiers.GOLD, 3, -2.8F,
                     new Item.Properties().stacksTo(1).durability(169)));
 
     public static final RegistryObject<Item> diamond_hammer = TOOLS.register("diamond_hammer",
-            () -> new HammerBase(ModToolTiers.diamond, 4, -2.8F,
+            () -> new HammerBase(Tiers.DIAMOND, 4, -2.8F,
                     new Item.Properties().stacksTo(1).durability(1561)));
 
     public static final RegistryObject<Item> emerald_hammer = TOOLS.register("emerald_hammer",
-            () -> new HammerBase(ModToolTiers.diamond, 4, -2.8F,
+            () -> new HammerBase(Tiers.DIAMOND, 4, -2.8F,
                     new Item.Properties().stacksTo(1).durability(1561)));
 
     public static final RegistryObject<Item> netherite_hammer = TOOLS.register("netherite_hammer",
-            () -> new HammerBase(ModToolTiers.netherite, 5, -2.8F,
+            () -> new HammerBase(Tiers.NETHERITE, 5, -2.8F,
                     new Item.Properties().stacksTo(1).durability(2031)));
 
     public static final RegistryObject<Item> havenite_hammer = TOOLS.register("havenite_hammer",

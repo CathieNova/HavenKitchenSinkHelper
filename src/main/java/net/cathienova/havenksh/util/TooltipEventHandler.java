@@ -27,6 +27,10 @@ public class TooltipEventHandler {
         {
             event.getToolTip().add(Component.translatable("tooltip.havenksh.hammer.durability.infinite").withStyle(ChatFormatting.GOLD));
         }
+        if (item == ModTools.havenite_ore_hammer.get())
+        {
+            event.getToolTip().add(Component.translatable("tooltip.havenksh.hammer.durability.infinite").withStyle(ChatFormatting.GOLD));
+        }
         if (item == ModTools.trowel.get())
         {
             if (HavenConfig.enable_inventory_blocks)

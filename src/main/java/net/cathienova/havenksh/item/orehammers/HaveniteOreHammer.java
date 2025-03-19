@@ -19,13 +19,23 @@ public class HaveniteOreHammer extends Item
     }
 
     @Override
+    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+        return false;
+    }
+
+    @Override
+    public boolean canBeDepleted() {
+        return true;
+    }
+
+    @Override
     public boolean hasCraftingRemainingItem(ItemStack stack) {
         return true;
     }
 
     @Override
     public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
-        if (itemStack.isDamageableItem() && itemStack.getDamageValue() < itemStack.getMaxDamage() - 1) {
+        if (itemStack.isDamageableItem() && itemStack.getMaxDamage() > 0) {
             ItemStack damaged = itemStack.copy();
             int newDamage = damaged.getDamageValue() + 1;
             if (newDamage >= damaged.getMaxDamage()) {
@@ -34,17 +44,13 @@ public class HaveniteOreHammer extends Item
                 damaged.setDamageValue(newDamage);
                 return damaged;
             }
-        } else {
-            return ItemStack.EMPTY;
         }
+        return itemStack.copy();
     }
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag isAdvanced)
     {
         super.appendHoverText(stack, level, tooltip, isAdvanced);
-
-        tooltip.add(Component.translatable("tooltip.havenksh.ore_hammer").withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("tooltip.havenksh.ore_hammer.durability.infinite").withStyle(ChatFormatting.GOLD));
     }
 }
