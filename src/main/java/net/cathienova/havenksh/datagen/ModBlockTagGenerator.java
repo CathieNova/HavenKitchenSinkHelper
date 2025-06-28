@@ -32,14 +32,6 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.scorched_stone.get())
                 .add(ModBlocks.scorched_stone_bricks.get())
                 .add(ModBlocks.scorched_cobblestone.get())
-                .add(ModBlocks.wooden_cobble_gen.get())
-                .add(ModBlocks.stone_cobble_gen.get())
-                .add(ModBlocks.iron_cobble_gen.get())
-                .add(ModBlocks.gold_cobble_gen.get())
-                .add(ModBlocks.diamond_cobble_gen.get())
-                .add(ModBlocks.emerald_cobble_gen.get())
-                .add(ModBlocks.netherite_cobble_gen.get())
-                .add(ModBlocks.creative_cobble_gen.get())
                 .add(ModBlocks.scorched_coal_ore.get())
                 .add(ModBlocks.scorched_redstone_ore.get())
                 .add(ModBlocks.scorched_copper_ore.get())
@@ -77,7 +69,6 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
             ;
 
         this.tag(ModTags.Blocks.needs_stone_tool)
-                .add(ModBlocks.stone_cobble_gen.get())
                 .add(ModBlocks.scorched_iron_ore.get())
                 .add(ModBlocks.scorched_copper_ore.get())
                 .add(ModBlocks.scorched_lapis_ore.get())
@@ -100,8 +91,6 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
             ;
 
         this.tag(ModTags.Blocks.needs_iron_tool)
-                .add(ModBlocks.iron_cobble_gen.get())
-                .add(ModBlocks.gold_cobble_gen.get())
                 .add(ModBlocks.scorched_gold_ore.get())
                 .add(ModBlocks.scorched_redstone_ore.get())
                 .add(ModBlocks.scorched_emerald_ore.get())
@@ -110,13 +99,9 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
             ;
 
         this.tag(ModTags.Blocks.needs_diamond_tool)
-                .add(ModBlocks.diamond_cobble_gen.get())
-                .add(ModBlocks.emerald_cobble_gen.get())
             ;
 
         this.tag(ModTags.Blocks.needs_netherite_tool)
-                .add(ModBlocks.netherite_cobble_gen.get())
-                .add(ModBlocks.creative_cobble_gen.get())
                 .add(ModBlocks.havenite_block.get())
                 .add(ModBlocks.havenite_ore.get())
                 .add(ModBlocks.deepslate_havenite_ore.get())

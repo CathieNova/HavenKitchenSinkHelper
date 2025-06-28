@@ -20,82 +20,11 @@ public class ModEngLangProvider extends LanguageProvider
     protected void addTranslations()
     {
         add(ModCreativeModTabs.HavenKSH_tab_title, "Haven Kitchen Sink Helper");
-        add("tooltip.cobblegen_1", "§7Holds §6%d §7Blocks!");
-        add("tooltip.cobblegen_2", "§7Generates §6%.2f §7Blocks per second!");
-        add("tooltip.cobblegen_3", "§7Outputs to an Inventory Above!");
-        add("tooltip.cobblegen_4", "§7Outputs to Hopper Below!");
 
         add("tooltip.havenksh.ore_hammer", "Used to craft raw ore into dust.");
         add("tooltip.havenksh.ore_hammer.durability", "Durability: %s");
         add("tooltip.havenksh.ore_hammer.durability.infinite", "Durability: §2Infinite§r");
         add("tooltip.havenksh.hammer.durability.infinite", "Durability: §2Infinite§r");
-
-        add("entity.minecraft.villager.havenksh.cobblemaster", "Cobble Master");
-
-        add(ModBlocks.wooden_cobble_gen.get(), "Wooden Cobblestone Generator");
-        add(ModBlocks.stone_cobble_gen.get(), "Stone Cobblestone Generator");
-        add(ModBlocks.iron_cobble_gen.get(), "Iron Cobblestone Generator");
-        add(ModBlocks.gold_cobble_gen.get(), "Gold Cobblestone Generator");
-        add(ModBlocks.diamond_cobble_gen.get(), "Diamond Cobblestone Generator");
-        add(ModBlocks.emerald_cobble_gen.get(), "Emerald Cobblestone Generator");
-        add(ModBlocks.netherite_cobble_gen.get(), "Netherite Cobblestone Generator");
-        add(ModBlocks.creative_cobble_gen.get(), "Creative Cobblestone Generator");
-
-        add(ModItems.cobble_gen_upgrade_wooden.get(), "Wooden Cobblestone Generator Upgrade");
-        add("item.havenksh.cobble_gen_upgrade_wooden.tooltip", "§bCrouch+Right Click§r to upgrade a §2Wooden§r to §5Stone§r");
-
-        add(ModItems.cobble_gen_upgrade_stone.get(), "Stone Cobblestone Generator Upgrade");
-        add("item.havenksh.cobble_gen_upgrade_stone.tooltip", "§bCrouch+Right Click§r to upgrade a §2Stone§r to §5Iron§r.");
-
-        add(ModItems.cobble_gen_upgrade_iron.get(), "Iron Cobblestone Generator Upgrade");
-        add("item.havenksh.cobble_gen_upgrade_iron.tooltip", "§bCrouch+Right Click§r to upgrade a §2Iron§r to §5Gold§r.");
-
-        add(ModItems.cobble_gen_upgrade_gold.get(), "Gold Cobblestone Generator Upgrade");
-        add("item.havenksh.cobble_gen_upgrade_gold.tooltip", "§bCrouch+Right Click§r to upgrade a §2Gold§r to §5Diamond§r.");
-
-        add(ModItems.cobble_gen_upgrade_diamond.get(), "Diamond Cobblestone Generator Upgrade");
-        add("item.havenksh.cobble_gen_upgrade_diamond.tooltip", "§bCrouch+Right Click§r to upgrade a §2Diamond§r to §5Emerald§r.");
-
-        add(ModItems.cobble_gen_upgrade_emerald.get(), "Emerald Cobblestone Generator Upgrade");
-        add("item.havenksh.cobble_gen_upgrade_emerald.tooltip", "§bCrouch+Right Click§r to upgrade a §2Emerald§r to §5Netherite§r.");
-
-        add(ModItems.cobble_gen_upgrade_netherite.get(), "Netherite Cobblestone Generator Upgrade");
-        add("item.havenksh.cobble_gen_upgrade_netherite.tooltip", "§bCrouch+Right Click§r to upgrade a §2Netherite§r to §5Creative§r.");
-
-
-        add(ModBlocks.axolotl_seed.get(), "Axolotl Seed");
-        add(ModBlocks.bee_seed.get(), "Bee Seed");
-        add(ModBlocks.cat_seed.get(), "Cat Seed");
-        add(ModBlocks.chicken_seed.get(), "Chicken Seed");
-        add(ModBlocks.cow_seed.get(), "Cow Seed");
-        add(ModBlocks.donkey_seed.get(), "Donkey Seed");
-        add(ModBlocks.fox_seed.get(), "Fox Seed");
-        add(ModBlocks.goat_seed.get(), "Goat Seed");
-        add(ModBlocks.horse_seed.get(), "Horse Seed");
-        add(ModBlocks.llama_seed.get(), "Llama Seed");
-        add(ModBlocks.mooshroom_seed.get(), "Mooshroom Seed");
-        add(ModBlocks.mule_seed.get(), "Mule Seed");
-        add(ModBlocks.ocelot_seed.get(), "Ocelot Seed");
-        add(ModBlocks.panda_seed.get(), "Panda Seed");
-        add(ModBlocks.pig_seed.get(), "Pig Seed");
-        add(ModBlocks.rabbit_seed.get(), "Rabbit Seed");
-        add(ModBlocks.sheep_seed.get(), "Sheep Seed");
-        add(ModBlocks.sniffer_seed.get(), "Sniffer Seed");
-        add(ModBlocks.parrot_seed.get(), "Parrot Seed");
-        add(ModBlocks.turtle_seed.get(), "Turtle Seed");
-        add(ModBlocks.wolf_seed.get(), "Wolf Seed");
-        add(ModBlocks.dolphin_seed.get(), "Dolphin Seed");
-        add(ModBlocks.glow_squid_seed.get(), "Glow Squid Seed");
-        add(ModBlocks.polar_bear_seed.get(), "Polar Bear Seed");
-        add(ModBlocks.squid_seed.get(), "Squid Seed");
-        add(ModBlocks.villager_seed.get(), "Village Seed");
-
-        add("mobseed.remaining_time", "Growing time: %d seconds");
-        add("mobseed.tooclose", "§cYou're too close to the seed for it to grow.");
-        add("config.jade.plugin_havenksh.mobseed_remaining_time", "Remaining Time");
-
-        add("block.havenksh.placement_on", "§7Can only be placed on %s");
-        add("block.havenksh.placement_in", "§7Can only be placed in %s");
 
         add(ModBlocks.andesite_brick.get(), "Andesite Brick");
         add(ModBlocks.diorite_brick.get(), "Diorite Brick");
@@ -185,10 +114,6 @@ public class ModEngLangProvider extends LanguageProvider
         addItem(ModItems.research_tier_advanced, "Advanced Research Tier");
         addItem(ModItems.research_tier_elite, "Elite Research Tier");
         addItem(ModItems.research_tier_ultimate, "Ultimate Research Tier");
-
-        addItem(ModTools.trowel, "Trowel");
-        add("item.havenksh.trowel.tooltip.hotbar", "§bRight click§r to place random blocks from the hotbar.");
-        add("item.havenksh.trowel.tooltip.inventory", "§bRight click§r to place random blocks from the inventory and hotbar.");
 
         addItem(ModItems.acacia_bark, "Acacia Bark");
         addItem(ModItems.birch_bark, "Birch Bark");
@@ -352,8 +277,6 @@ public class ModEngLangProvider extends LanguageProvider
         add("jei.havenksh.ore_hammer.desc.line1", "Ore Hammers are used to crush ores into dust. The higher the tier, the higher the durability it has.");
         add("jei.havenksh.ore_hammer.desc.line2", "The dust can be smelted into ingots or used in other recipes.");
 
-        add("jei.havenksh.trowel.desc.line1", "Trowels are used to place random blocks from the hotbar. Right click to place a block.");
-
         add("jei.havenksh.bark.desc.line1", "Bark can be obtained by stripping logs. It can be used to craft various items.");
         add("jei.havenksh.bark.desc.line2", "You can use the Bark to Right Click the equivalent stripped log to turn it back into a log.");
         add("jei.havenksh.bark.desc.line3", "It can also be used as fuel in a furnace.");
@@ -370,30 +293,6 @@ public class ModEngLangProvider extends LanguageProvider
 
         add("advancements.havenksh.root.title", "Haven: Kitchen Sink Helper");
         add("advancements.havenksh.root.description", "The beginning of your journey in Haven: Kitchen Sink Helper");
-
-        add("advancements.havenksh.wooden_cobble_gen.title", "Wooden Cobble Generator");
-        add("advancements.havenksh.wooden_cobble_gen.description", "Starting small: a wooden wonder for all your cobblestone dreams.");
-
-        add("advancements.havenksh.stone_cobble_gen.title", "Stone Cobble Generator");
-        add("advancements.havenksh.stone_cobble_gen.description", "Upgrading to stone, because wood just wasn't rock solid enough.");
-
-        add("advancements.havenksh.iron_cobble_gen.title", "Iron Cobble Generator");
-        add("advancements.havenksh.iron_cobble_gen.description", "Stronger than stone, shinier than wood. Iron: now you're serious.");
-
-        add("advancements.havenksh.gold_cobble_gen.title", "Gold Cobble Generator");
-        add("advancements.havenksh.gold_cobble_gen.description", "Golden cobbles, for when you want your rocks to have bling.");
-
-        add("advancements.havenksh.diamond_cobble_gen.title", "Diamond Cobble Generator");
-        add("advancements.havenksh.diamond_cobble_gen.description", "Diamonds are forever, just like your endless supply of cobblestone.");
-
-        add("advancements.havenksh.emerald_cobble_gen.title", "Emerald Cobble Generator");
-        add("advancements.havenksh.emerald_cobble_gen.description", "Green with envy? Get your emerald cobble generator now!");
-
-        add("advancements.havenksh.netherite_cobble_gen.title", "Netherite Cobble Generator");
-        add("advancements.havenksh.netherite_cobble_gen.description", "From the depths of the nether, cobble that's tougher than tough.");
-
-        add("advancements.havenksh.creative_cobble_gen.title", "Creative Cobble Generator");
-        add("advancements.havenksh.creative_cobble_gen.description", "Unlimited cobblestone. Your pickaxe can finally retire.");
 
         add("advancements.havenksh.lamp.title", "Lamp");
         add("advancements.havenksh.lamp.description", "Let there be light!");

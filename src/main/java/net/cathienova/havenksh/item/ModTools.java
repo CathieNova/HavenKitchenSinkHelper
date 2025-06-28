@@ -262,9 +262,6 @@ public class ModTools
             () -> new CrusherBase(ModToolTiers.havenite, 1, -2.8F,
                     new Item.Properties().stacksTo(1).durability(-1)));
 
-    public static final RegistryObject<Item> trowel = TOOLS.register("trowel",
-            () -> new TrowelItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).durability(512)));
-
     public static void register(IEventBus eventBus) {
         TOOLS.register(eventBus);
     }

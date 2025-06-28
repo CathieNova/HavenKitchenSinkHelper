@@ -2,7 +2,6 @@ package net.cathienova.havenksh.datagen;
 
 import net.cathienova.havenksh.HavenKSH;
 import net.cathienova.havenksh.block.ModBlocks;
-import net.cathienova.havenksh.block.cobblegen.WoodenCobbleGen;
 import net.cathienova.havenksh.item.ModArmor;
 import net.cathienova.havenksh.item.ModItems;
 import net.cathienova.havenksh.item.ModTools;
@@ -16,7 +15,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -41,94 +39,6 @@ public class ModAdvancementProvider extends ForgeAdvancementProvider {
                             FrameType.TASK, true, true, false)
                     .addCriterion("tick", new ImpossibleTrigger.TriggerInstance())
                     .save(consumer, new ResourceLocation(HavenKSH.MOD_ID, "root").toString());
-
-            Advancement woodenCobbleGen = Advancement.Builder.advancement()
-                    .parent(root)
-                    .display(ModBlocks.wooden_cobble_gen.get(),
-                            Component.translatable("advancements.havenksh.wooden_cobble_gen.title"),
-                            Component.translatable("advancements.havenksh.wooden_cobble_gen.description"),
-                            null,
-                            FrameType.TASK, true, true, false)
-                    .addCriterion("wooden_cobble_gen", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            ItemPredicate.Builder.item().of(ModBlocks.wooden_cobble_gen.get()).build()))
-                    .save(consumer, new ResourceLocation(HavenKSH.MOD_ID, "wooden_cobble_gen").toString());
-
-            Advancement woodenCobbleGen2 = Advancement.Builder.advancement()
-                    .parent(woodenCobbleGen)
-                    .display(ModBlocks.stone_cobble_gen.get(),
-                            Component.translatable("advancements.havenksh.stone_cobble_gen.title"),
-                            Component.translatable("advancements.havenksh.stone_cobble_gen.description"),
-                            null,
-                            FrameType.TASK, true, true, false)
-                    .addCriterion("stone_cobble_gen", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            ItemPredicate.Builder.item().of(ModBlocks.stone_cobble_gen.get()).build()))
-                    .save(consumer, new ResourceLocation(HavenKSH.MOD_ID, "stone_cobble_gen").toString());
-
-            Advancement woodenCobbleGen3 = Advancement.Builder.advancement()
-                    .parent(woodenCobbleGen2)
-                    .display(ModBlocks.iron_cobble_gen.get(),
-                            Component.translatable("advancements.havenksh.iron_cobble_gen.title"),
-                            Component.translatable("advancements.havenksh.iron_cobble_gen.description"),
-                            null,
-                            FrameType.TASK, true, true, false)
-                    .addCriterion("iron_cobble_gen", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            ItemPredicate.Builder.item().of(ModBlocks.iron_cobble_gen.get()).build()))
-                    .save(consumer, new ResourceLocation(HavenKSH.MOD_ID, "iron_cobble_gen").toString());
-
-            Advancement woodenCobbleGen4 = Advancement.Builder.advancement()
-                    .parent(woodenCobbleGen3)
-                    .display(ModBlocks.gold_cobble_gen.get(),
-                            Component.translatable("advancements.havenksh.gold_cobble_gen.title"),
-                            Component.translatable("advancements.havenksh.gold_cobble_gen.description"),
-                            null,
-                            FrameType.TASK, true, true, false)
-                    .addCriterion("gold_cobble_gen", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            ItemPredicate.Builder.item().of(ModBlocks.gold_cobble_gen.get()).build()))
-                    .save(consumer, new ResourceLocation(HavenKSH.MOD_ID, "gold_cobble_gen").toString());
-
-            Advancement woodenCobbleGen5 = Advancement.Builder.advancement()
-                    .parent(woodenCobbleGen4)
-                    .display(ModBlocks.diamond_cobble_gen.get(),
-                            Component.translatable("advancements.havenksh.diamond_cobble_gen.title"),
-                            Component.translatable("advancements.havenksh.diamond_cobble_gen.description"),
-                            null,
-                            FrameType.TASK, true, true, false)
-                    .addCriterion("diamond_cobble_gen", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            ItemPredicate.Builder.item().of(ModBlocks.diamond_cobble_gen.get()).build()))
-                    .save(consumer, new ResourceLocation(HavenKSH.MOD_ID, "diamond_cobble_gen").toString());
-
-            Advancement woodenCobbleGen6 = Advancement.Builder.advancement()
-                    .parent(woodenCobbleGen5)
-                    .display(ModBlocks.emerald_cobble_gen.get(),
-                            Component.translatable("advancements.havenksh.emerald_cobble_gen.title"),
-                            Component.translatable("advancements.havenksh.emerald_cobble_gen.description"),
-                            null,
-                            FrameType.TASK, true, true, false)
-                    .addCriterion("emerald_cobble_gen", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            ItemPredicate.Builder.item().of(ModBlocks.emerald_cobble_gen.get()).build()))
-                    .save(consumer, new ResourceLocation(HavenKSH.MOD_ID, "emerald_cobble_gen").toString());
-
-            Advancement woodenCobbleGen7 = Advancement.Builder.advancement()
-                    .parent(woodenCobbleGen6)
-                    .display(ModBlocks.netherite_cobble_gen.get(),
-                            Component.translatable("advancements.havenksh.netherite_cobble_gen.title"),
-                            Component.translatable("advancements.havenksh.netherite_cobble_gen.description"),
-                            null,
-                            FrameType.TASK, true, true, false)
-                    .addCriterion("netherite_cobble_gen", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            ItemPredicate.Builder.item().of(ModBlocks.netherite_cobble_gen.get()).build()))
-                    .save(consumer, new ResourceLocation(HavenKSH.MOD_ID, "netherite_cobble_gen").toString());
-
-            Advancement woodenCobbleGen8 = Advancement.Builder.advancement()
-                    .parent(woodenCobbleGen7)
-                    .display(ModBlocks.creative_cobble_gen.get(),
-                            Component.translatable("advancements.havenksh.creative_cobble_gen.title"),
-                            Component.translatable("advancements.havenksh.creative_cobble_gen.description"),
-                            null,
-                            FrameType.TASK, true, true, false)
-                    .addCriterion("creative_cobble_gen", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            ItemPredicate.Builder.item().of(ModBlocks.creative_cobble_gen.get()).build()))
-                    .save(consumer, new ResourceLocation(HavenKSH.MOD_ID, "creative_cobble_gen").toString());
 
             Advancement lamps = Advancement.Builder.advancement()
                     .parent(root)
@@ -239,17 +149,6 @@ public class ModAdvancementProvider extends ForgeAdvancementProvider {
                     .addCriterion("repair_talisman", InventoryChangeTrigger.TriggerInstance.hasItems(
                             ItemPredicate.Builder.item().of(ModArmor.repair_talisman.get()).build()))
                     .save(consumer, new ResourceLocation(HavenKSH.MOD_ID, "repair_talisman").toString());*/
-
-            Advancement trowel = Advancement.Builder.advancement()
-                    .parent(root)
-                    .display(ModTools.trowel.get(),
-                            Component.translatable("advancements.havenksh.trowel.title"),
-                            Component.translatable("advancements.havenksh.trowel.description"),
-                            null,
-                            FrameType.TASK, true, true, false)
-                    .addCriterion("trowel", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            ItemPredicate.Builder.item().of(ModTools.trowel.get()).build()))
-                    .save(consumer, new ResourceLocation(HavenKSH.MOD_ID, "trowel").toString());
 
             Advancement acacia_bark = Advancement.Builder.advancement()
                     .parent(root)

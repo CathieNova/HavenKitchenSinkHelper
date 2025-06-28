@@ -33,15 +33,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     @Override
     protected void generate()
     {
-        this.dropSelf(ModBlocks.wooden_cobble_gen.get());
-        this.dropSelf(ModBlocks.stone_cobble_gen.get());
-        this.dropSelf(ModBlocks.iron_cobble_gen.get());
-        this.dropSelf(ModBlocks.gold_cobble_gen.get());
-        this.dropSelf(ModBlocks.diamond_cobble_gen.get());
-        this.dropSelf(ModBlocks.emerald_cobble_gen.get());
-        this.dropSelf(ModBlocks.netherite_cobble_gen.get());
-        this.dropSelf(ModBlocks.creative_cobble_gen.get());
-
         this.dropSelf(ModBlocks.charcoal_block.get());
         this.dropSelf(ModBlocks.andesite_brick.get());
         this.dropSelf(ModBlocks.diorite_brick.get());

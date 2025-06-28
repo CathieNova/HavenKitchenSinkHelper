@@ -31,12 +31,5 @@ public class TooltipEventHandler {
         {
             event.getToolTip().add(Component.translatable("tooltip.havenksh.hammer.durability.infinite").withStyle(ChatFormatting.GOLD));
         }
-        if (item == ModTools.trowel.get())
-        {
-            if (HavenConfig.enable_inventory_blocks)
-                event.getToolTip().add(Component.translatable("item.havenksh.trowel.tooltip.inventory").withStyle(ChatFormatting.GOLD));
-            else
-                event.getToolTip().add(Component.translatable("item.havenksh.trowel.tooltip.hotbar").withStyle(ChatFormatting.GOLD));
-        }
     }
 }

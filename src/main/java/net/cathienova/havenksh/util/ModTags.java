@@ -57,8 +57,6 @@ public class ModTags
     {
         public static final TagKey<Item> logs = forgeTag("logs");
         public static final TagKey<Item> lamp = tag("lamp");
-        public static final TagKey<Item> cobbleGens = tag("cobble_gens");
-        public static final TagKey<Item> cobbleGenUpgrades = tag("cobble_gen_upgrades");
         public static final TagKey<Item> forgeOres = forgeTag("ores");
         public static final TagKey<Item> seeds = tag("seeds");
         public static final TagKey<Item> bark = tag("bark");

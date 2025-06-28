@@ -11,14 +11,12 @@ import net.cathienova.havenksh.block.ModBlocks;
 import net.cathienova.havenksh.item.ModArmor;
 import net.cathienova.havenksh.item.ModItems;
 import net.cathienova.havenksh.item.ModTools;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeManager;
 
 @JeiPlugin
-public class JEIHavenAlchemyPlugin implements IModPlugin
+public class JEIHavenPlugin implements IModPlugin
 {
     @Override
     public ResourceLocation getPluginUid()
@@ -40,30 +38,6 @@ public class JEIHavenAlchemyPlugin implements IModPlugin
                 Component.literal(" "),
                 Component.translatable("jei.havenksh.cobble_gen.desc.line2")
         };
-
-        ItemStack wooden_cobble_gen = new ItemStack(ModBlocks.wooden_cobble_gen.get());
-        registration.addIngredientInfo(wooden_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack stone_cobble_gen = new ItemStack(ModBlocks.stone_cobble_gen.get());
-        registration.addIngredientInfo(stone_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack iron_cobble_gen = new ItemStack(ModBlocks.iron_cobble_gen.get());
-        registration.addIngredientInfo(iron_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack gold_cobble_gen = new ItemStack(ModBlocks.gold_cobble_gen.get());
-        registration.addIngredientInfo(gold_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack diamond_cobble_gen = new ItemStack(ModBlocks.diamond_cobble_gen.get());
-        registration.addIngredientInfo(diamond_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack emerald_cobble_gen = new ItemStack(ModBlocks.emerald_cobble_gen.get());
-        registration.addIngredientInfo(emerald_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack netherite_cobble_gen = new ItemStack(ModBlocks.netherite_cobble_gen.get());
-        registration.addIngredientInfo(netherite_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
-
-        ItemStack creative_cobble_gen = new ItemStack(ModBlocks.creative_cobble_gen.get());
-        registration.addIngredientInfo(creative_cobble_gen, VanillaTypes.ITEM_STACK, cobble_gen_descriptions);
 
         Component[] ore_hammer_description = new Component[] {
                 Component.translatable("jei.havenksh.ore_hammer.desc.line1"),
@@ -88,13 +62,6 @@ public class JEIHavenAlchemyPlugin implements IModPlugin
 
         ItemStack netherite_ore_hammer = new ItemStack(ModTools.netherite_ore_hammer.get());
         registration.addIngredientInfo(netherite_ore_hammer, VanillaTypes.ITEM_STACK, ore_hammer_description);
-
-        Component[] trowelDescription = new Component[] {
-                Component.translatable("jei.havenksh.trowel.desc.line1")
-        };
-
-        ItemStack trowel = new ItemStack(ModTools.trowel.get());
-        registration.addIngredientInfo(trowel, VanillaTypes.ITEM_STACK, trowelDescription);
 
         Component[] barkDescription = new Component[] {
                 Component.translatable("jei.havenksh.bark.desc.line1"),

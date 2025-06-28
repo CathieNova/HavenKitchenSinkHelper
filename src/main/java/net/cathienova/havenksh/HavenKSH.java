@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils;
 import net.cathienova.havenksh.block.ModBlockEntities;
 import net.cathienova.havenksh.block.ModBlocks;
 import net.cathienova.havenksh.commands.ModCommands;
-import net.cathienova.havenksh.events.MobSeedRenderer;
 import net.cathienova.havenksh.config.CommonConfig;
 import net.cathienova.havenksh.events.*;
 import net.cathienova.havenksh.handler.BlockBreakHandler;
@@ -57,8 +56,6 @@ public class HavenKSH
         ModCreativeModTabs.register(modEventBus);
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ExcavatorRendering::new);
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> HammerRendering::new);
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> TrowelRendering::new);
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> MobSeedRenderer::new);
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> HavenKSHClient::new);
         MinecraftForge.EVENT_BUS.register(this);
     }

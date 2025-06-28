@@ -1,8 +1,6 @@
 package net.cathienova.havenksh.block;
 
 import net.cathienova.havenksh.HavenKSH;
-import net.cathienova.havenksh.block.cobblegen.*;
-import net.cathienova.havenksh.block.mobseeds.*;
 import net.cathienova.havenksh.item.ModItems;
 import net.cathienova.havenksh.item.fuel.FuelBlockItem;
 import net.minecraft.core.BlockPos;
@@ -27,30 +25,6 @@ import java.util.function.Supplier;
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, HavenKSH.MOD_ID);
-
-    public static final RegistryObject<Block> wooden_cobble_gen = registerBlock("wooden_cobble_gen",
-            WoodenCobbleGen::new);
-
-    public static final RegistryObject<Block> stone_cobble_gen = registerBlock("stone_cobble_gen",
-            StoneCobbleGen::new);
-
-    public static final RegistryObject<Block> iron_cobble_gen = registerBlock("iron_cobble_gen",
-            IronCobbleGen::new);
-
-    public static final RegistryObject<Block> gold_cobble_gen = registerBlock("gold_cobble_gen",
-            GoldCobbleGen::new);
-
-    public static final RegistryObject<Block> diamond_cobble_gen = registerBlock("diamond_cobble_gen",
-            DiamondCobbleGen::new);
-
-    public static final RegistryObject<Block> emerald_cobble_gen = registerBlock("emerald_cobble_gen",
-            EmeraldCobbleGen::new);
-
-    public static final RegistryObject<Block> netherite_cobble_gen = registerBlock("netherite_cobble_gen",
-            NetheriteCobbleGen::new);
-
-    public static final RegistryObject<Block> creative_cobble_gen = registerBlock("creative_cobble_gen",
-            CreativeCobbleGen::new);
 
     public static final RegistryObject<Block> charcoal_block = registerFuelBlockBlock("charcoal_block",
             () -> new FuelBlock(BlockBehaviour.Properties.copy(Blocks.COAL_BLOCK).strength(5.0F, 3.0F)));
@@ -219,84 +193,6 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> raw_havenite_block = registerBlock("raw_havenite_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK).strength(3.0F, 5.0F)));
-
-    public static final RegistryObject<Block> axolotl_seed = registerBlock("axolotl_seed",
-            () -> new AxolotlSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> bee_seed = registerBlock("bee_seed",
-            () -> new BeeSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> cat_seed = registerBlock("cat_seed",
-            () -> new CatSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> chicken_seed = registerBlock("chicken_seed",
-            () -> new ChickenSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> cow_seed = registerBlock("cow_seed",
-            () -> new CowSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> donkey_seed = registerBlock("donkey_seed",
-            () -> new DonkeySeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> fox_seed = registerBlock("fox_seed",
-            () -> new FoxSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> goat_seed = registerBlock("goat_seed",
-            () -> new GoatSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> horse_seed = registerBlock("horse_seed",
-            () -> new HorseSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> llama_seed = registerBlock("llama_seed",
-            () -> new LlamaSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> mooshroom_seed = registerBlock("mooshroom_seed",
-            () -> new MooshroomSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> mule_seed = registerBlock("mule_seed",
-            () -> new MuleSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> ocelot_seed = registerBlock("ocelot_seed",
-            () -> new OcelotSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> panda_seed = registerBlock("panda_seed",
-            () -> new PandaSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> pig_seed = registerBlock("pig_seed",
-            () -> new PigSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> rabbit_seed = registerBlock("rabbit_seed",
-            () -> new RabbitSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> sheep_seed = registerBlock("sheep_seed",
-            () -> new SheepSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> sniffer_seed = registerBlock("sniffer_seed",
-            () -> new SnifferSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> turtle_seed = registerBlock("turtle_seed",
-            () -> new TurtleSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> parrot_seed = registerBlock("parrot_seed",
-            () -> new ParrotSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> wolf_seed = registerBlock("wolf_seed",
-            () -> new WolfSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> dolphin_seed = registerBlock("dolphin_seed",
-            () -> new DolphinSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> glow_squid_seed = registerBlock("glow_squid_seed",
-            () -> new GlowSquidSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> polar_bear_seed = registerBlock("polar_bear_seed",
-            () -> new PolarBearSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> squid_seed = registerBlock("squid_seed",
-            () -> new SquidSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
-
-    public static final RegistryObject<Block> villager_seed = registerBlock("villager_seed",
-            () -> new VillagerSeedBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BARS).noLootTable()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

@@ -40,14 +40,14 @@ public class IronWateringCan extends Item
             waterArea((ServerLevel) level, pos);
             spawnParticles((ServerLevel) level, pos);
 
+            level.gameEvent(player, GameEvent.FLUID_PLACE, pos);
+            itemstack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+            player.getCooldowns().addCooldown(this, HavenConfig.wateringCanCooldown);
+
             if (itemstack.getDamageValue() >= itemstack.getMaxDamage() - 1) {
                 ItemStack emptyWateringCan = new ItemStack(ModItems.empty_iron_watering_can.get());
                 player.setItemInHand(hand, emptyWateringCan);
             }
-
-            level.gameEvent(player, GameEvent.FLUID_PLACE, pos);
-            itemstack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
-            player.getCooldowns().addCooldown(this, HavenConfig.wateringCanCooldown);
         }
 
         return InteractionResultHolder.pass(itemstack);
